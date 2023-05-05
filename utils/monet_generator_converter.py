@@ -18,8 +18,8 @@ def down_sample(filters, size, apply_instancenorm=True):
     layer.add(layers.Conv2D(filters, size, strides=2, padding='same', kernel_initializer=initializer, use_bias=False))
 
     if apply_instancenorm:
-        layer.add(tfa.layers.InstanceNormalization(gamma_initializer=gamma_init))
-
+        #layer.add(tfa.layers.InstanceNormalization(gamma_initializer=gamma_init))
+        layer.add(tf.keras.layers.BatchNormalization(gamma_initializer=gamma_init))
     layer.add(layers.LeakyReLU())
 
     return layer
@@ -30,8 +30,8 @@ def up_sample(filters, size, apply_dropout=False):
 
     layer = keras.Sequential()
     layer.add(layers.Conv2DTranspose(filters, size, strides=2, padding='same', kernel_initializer=initializer,use_bias=False))
-    layer.add(tfa.layers.InstanceNormalization(gamma_initializer=gamma_init))
-
+    #ayer.add(tfa.layers.InstanceNormalization(gamma_initializer=gamma_init))
+    layer.add(tf.keras.layers.BatchNormalization(gamma_initializer=gamma_init))
     if apply_dropout:
         layer.add(layers.Dropout(0.5))
 
@@ -91,7 +91,9 @@ model = Generator()
 #model.summary()
 
 #Load weights from .h5 file
-model.load_weights('utils/monet_generator.h5')
+MODEL_NAME='monet_generator_larjek.h5'
+
+model.load_weights('utils/' + MODEL_NAME)
 
 # Test the model with the 1.jpg
 
@@ -125,4 +127,4 @@ for i,image in enumerate(images):
 import os
 
 import tensorflowjs as tfjs
-tfjs.converters.save_keras_model(model, 'utils/monet_generator')
+tfjs.converters.save_keras_model(model, 'utils/'+MODEL_NAME[:-3])

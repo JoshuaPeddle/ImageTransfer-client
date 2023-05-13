@@ -1,6 +1,4 @@
-import Image from 'next/image';
 import { Inter } from 'next/font/google';
-import Script from 'next/script';
 import TFView from '@/components/TFView';
 
 const inter = Inter({ subsets: [ 'latin' ] });

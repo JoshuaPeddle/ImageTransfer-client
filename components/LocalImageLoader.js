@@ -7,7 +7,6 @@ export default function LocalImageLoader({setImage}) {
     const file = e.target.files[0];
     const reader = new FileReader();
     reader.onload = (e) => {
-      console.log(e.target.result);
       setImage(e.target.result);
     };
     reader.readAsDataURL(file);

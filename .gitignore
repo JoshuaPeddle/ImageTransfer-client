@@ -34,4 +34,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-/utils/monet_generator.h5
+
+env.local
+utils.zip

@@ -4,7 +4,7 @@ import Script from 'next/script';
 export default function Document() {
   return (
     <Html lang="en">
-      <Head > <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"/>
+      <Head > 
       </Head>
       <body>
         <Main />

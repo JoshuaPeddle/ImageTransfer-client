@@ -2,7 +2,8 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: [ '127.0.0.1', process.env.NEXT_PUBLIC_IMAGE_SERVER ],
+    domains: [ '127.0.0.1', process.env.NEXT_PUBLIC_IMAGE_SERVER, 'example.joshuapeddle.com' ],
   },
+  output: 'standalone',
 };
 module.exports = nextConfig;

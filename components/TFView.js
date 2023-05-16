@@ -2,21 +2,21 @@
 import { useState } from 'react';
 import LocalImageLoader from './LocalImageLoader';
 import _Image from 'next/image';
-const API_URL = 'http://'+process.env.NEXT_PUBLIC_IMAGE_SERVER+':5000/monet';
+const API_URL = 'http://'+process.env.NEXT_PUBLIC_IMAGE_SERVER+':5000/';
 export default function TFView() {
   const [ image, setImage ] = useState(null);
   const [ result, setResult ] = useState(null);
   const [ error, setError ] = useState(false);
-  const predict = async () => {
+  const predict = async (model, img) => {
     console.log(API_URL);
     console.log(process.env.NEXT_PUBLIC_IMAGE_SERVER);
-    fetch(image)
+    fetch(img)
       .then((res) => res.blob())
       .then(async (blob) => {
         const fd = new FormData();
         const file = new File([ blob ], 'filename.jpeg');
         fd.append('image', file);
-        fetch(API_URL, {method: 'POST', body: fd})
+        fetch(API_URL+model, {method: 'POST', body: fd})
           .then(async (res) => {
             res.blob().then((blob) => {
               try {
@@ -43,7 +43,9 @@ export default function TFView() {
       <LocalImageLoader setImage={setImage} />
       {image ? <_Image src={image} width="256" height="256" alt="" /> : ''}
       {result ? <_Image src={result} width="256" height="256" alt="" /> : ''}
-      <button onClick={predict} >Predict</button>
+      <button onClick={() => predict('monet', image)} >Monet</button>
+      <br></br>
+      <button onClick={() => predict('upscale', result)} >Upscale</button>
     </div>
   );
 }

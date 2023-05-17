@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: [ '127.0.0.1', process.env.NEXT_PUBLIC_IMAGE_SERVER, 'example.joshuapeddle.com', 'github.com' ],
+    domains: [ '127.0.0.1', process.env.NEXT_PUBLIC_IMAGE_SERVER, '*cyclegan.site', 'github.com' ],
   },
   output: 'standalone',
 };

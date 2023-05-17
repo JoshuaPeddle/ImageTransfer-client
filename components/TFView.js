@@ -3,7 +3,7 @@ import { useState } from 'react';
 import LocalImageLoader from './LocalImageLoader';
 import _Image from 'next/image';
 
-const API_URL = 'http://'+process.env.NEXT_PUBLIC_IMAGE_SERVER+':5000/';
+const API_URL = process.env.NEXT_PUBLIC_IMAGE_SERVER;
 export default function TFView() {
   const [ image, setImage ] = useState(null);
   const [ result, setResult ] = useState(null);

@@ -9,15 +9,13 @@ export default function TFView() {
   const [ result, setResult ] = useState(null);
   const [ error, setError ] = useState(false);
   const predict = async (model, img) => {
-    console.log(API_URL);
-    console.log(process.env.NEXT_PUBLIC_IMAGE_SERVER);
     fetch(img)
       .then((res) => res.blob())
       .then(async (blob) => {
         const fd = new FormData();
         const file = new File([ blob ], 'filename.jpeg');
         fd.append('image', file);
-        fetch(API_URL+model, {method: 'POST', body: fd})
+        fetch(API_URL+'/generate/'+model, {method: 'POST', body: fd})
           .then(async (res) => {
             res.blob().then((blob) => {
               try {

@@ -60,7 +60,11 @@ export default function TFView() {
       <br/>
       <button onClick={() => predict('monet', image)} >Monet</button>
       <br/>
-      <button onClick={() => predict('gogh', image)} >Gogh</button>
+      <button onClick={() => predict('gogh', image)} >Van Gogh</button>
+      <br/>
+      <button onClick={() => predict('picasso', image)} >Picasso</button>
+      <br/>
+      <button onClick={() => predict('dali', image)} >Dali</button>
       <br/>
       <button onClick={() => predict('upscale', image)} >Upscale</button>
       <br/>

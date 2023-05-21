@@ -2,22 +2,21 @@
 import { useState } from 'react';
 import LocalImageLoader from './LocalImageLoader';
 import _Image from 'next/image';
-import StyleButton from './StyleButton'
+import StyleButton from './StyleButton';
 
 class Model {
   constructor(style, background_url, label) {
-    this.style = style
-    this.background_url = background_url
-    this.label = label
+    this.style = style;
+    this.background_url = background_url;
+    this.label = label;
   }
 }
 
-const monet = new Model("monet", "", "Monet")
-const gogh = new Model('gogh', '','Van Gogh')
-const picasso = new Model('picasso', "", 'Picasso')
-const dali = new Model("dali", '', 'Dali')
-const models = [monet, gogh, picasso, dali]
-
+const monet = new Model('monet', '', 'Monet');
+const gogh = new Model('gogh', '', 'Van Gogh');
+const picasso = new Model('picasso', '', 'Picasso');
+const dali = new Model('dali', '', 'Dali');
+const models = [ monet, gogh, picasso, dali ];
 const API_URL = process.env.NEXT_PUBLIC_IMAGE_SERVER;
 export default function TFView() {
   const [ image, setImage ] = useState(null);
@@ -70,13 +69,11 @@ export default function TFView() {
       {result ? <_Image src={result} width="256" height="256" alt="" /> : ''}
       <button onClick={fetchRandomImage} >Random</button>
       <br/>
-      {models.map((model)=>{
-        return <StyleButton key={model.style} style={model.style} label={model.label} predict={predict}/>
+      {models.map((model) => {
+        return <StyleButton key={model.style} style={model.style} label={model.label} predict={predict}/>;
       })}
       <button  onClick={resultToImage} >Result to Image</button>
       <br/>
-
-      
 
     </div>
   );

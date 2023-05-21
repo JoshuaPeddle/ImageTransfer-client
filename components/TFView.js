@@ -2,20 +2,35 @@
 import { useState } from 'react';
 import LocalImageLoader from './LocalImageLoader';
 import _Image from 'next/image';
+import StyleButton from './StyleButton'
+
+class Model {
+  constructor(style, background_url, label) {
+    this.style = style
+    this.background_url = background_url
+    this.label = label
+  }
+}
+
+const monet = new Model("monet", "", "Monet")
+const gogh = new Model('gogh', '','Van Gogh')
+const picasso = new Model('picasso', "", 'Picasso')
+const dali = new Model("dali", '', 'Dali')
+const models = [monet, gogh, picasso, dali]
 
 const API_URL = process.env.NEXT_PUBLIC_IMAGE_SERVER;
 export default function TFView() {
   const [ image, setImage ] = useState(null);
   const [ result, setResult ] = useState(null);
   const [ error, setError ] = useState(false);
-  const predict = async (model, img) => {
-    fetch(img)
+  const predict = async (model) => {
+    fetch(image)
       .then((res) => res.blob())
       .then(async (blob) => {
         const fd = new FormData();
         const file = new File([ blob ], 'filename.jpeg');
         fd.append('image', file);
-        fetch(API_URL+'/generate/'+model, {method: 'POST', body: fd})
+        fetch(API_URL+'generate/'+model, {method: 'POST', body: fd})
           .then(async (res) => {
             res.blob().then((blob) => {
               try {
@@ -27,8 +42,7 @@ export default function TFView() {
               } catch (e) {
                 setError(true);
               }
-            }
-            );
+            });
           }) 
           .then((res) => console.log(res))
           .catch((err) => console.error(err));
@@ -56,17 +70,13 @@ export default function TFView() {
       {result ? <_Image src={result} width="256" height="256" alt="" /> : ''}
       <button onClick={fetchRandomImage} >Random</button>
       <br/>
-      <button onClick={() => predict('monet', image)} >Monet</button>
+      {models.map((model)=>{
+        return <><StyleButton key={model.style} style={model.style} label={model.label} predict={predict}/> <br/></>
+      })}
+      <button  onClick={resultToImage} >Result to Image</button>
       <br/>
-      <button onClick={() => predict('gogh', image)} >Van Gogh</button>
-      <br/>
-      <button onClick={() => predict('picasso', image)} >Picasso</button>
-      <br/>
-      <button onClick={() => predict('dali', image)} >Dali</button>
-      <br/>
-      <button onClick={() => predict('upscale', image)} >Upscale</button>
-      <br/>
-      <button onClick={resultToImage} >Result to Image</button>
+
+      
 
     </div>
   );

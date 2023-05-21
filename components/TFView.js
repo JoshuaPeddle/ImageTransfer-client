@@ -3,20 +3,9 @@ import { useState } from 'react';
 import LocalImageLoader from './LocalImageLoader';
 import _Image from 'next/image';
 import StyleButton from './StyleButton';
+import {models} from '../lib/models.js';
+import _predict from '../lib/predict.js';
 
-class Model {
-  constructor(style, background_url, label) {
-    this.style = style;
-    this.background_url = background_url;
-    this.label = label;
-  }
-}
-
-const monet = new Model('monet', '', 'Monet');
-const gogh = new Model('gogh', '', 'Van Gogh');
-const picasso = new Model('picasso', '', 'Picasso');
-const dali = new Model('dali', '', 'Dali');
-const models = [ monet, gogh, picasso, dali ];
 const API_URL = process.env.NEXT_PUBLIC_IMAGE_SERVER;
 export default function TFView() {
   const [ image, setImage ] = useState(null);
@@ -26,25 +15,7 @@ export default function TFView() {
     fetch(image)
       .then((res) => res.blob())
       .then(async (blob) => {
-        const fd = new FormData();
-        const file = new File([ blob ], 'filename.jpeg');
-        fd.append('image', file);
-        fetch(API_URL+'generate/'+model, {method: 'POST', body: fd})
-          .then(async (res) => {
-            res.blob().then((blob) => {
-              try {
-                const reader = new FileReader() ;
-                reader.onload = function() {
-                  setResult(this.result);
-                } ;
-                reader.readAsDataURL(blob) ;
-              } catch (e) {
-                setError(true);
-              }
-            });
-          }) 
-          .then((res) => console.log(res))
-          .catch((err) => console.error(err));
+        _predict(model, blob, setResult, setError);
       });
   };
   const resultToImage = () => {
@@ -74,7 +45,7 @@ export default function TFView() {
       })}
       <button  onClick={resultToImage} >Result to Image</button>
       <br/>
-
+      {error ? <p>There was an error {error}</p>  : ''}
     </div>
   );
 }

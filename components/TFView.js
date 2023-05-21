@@ -71,7 +71,7 @@ export default function TFView() {
       <button onClick={fetchRandomImage} >Random</button>
       <br/>
       {models.map((model)=>{
-        return <><StyleButton key={model.style} style={model.style} label={model.label} predict={predict}/> <br/></>
+        return <StyleButton key={model.style} style={model.style} label={model.label} predict={predict}/>
       })}
       <button  onClick={resultToImage} >Result to Image</button>
       <br/>

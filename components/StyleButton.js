@@ -1,9 +1,11 @@
 // Desc: Let the user load a local image
 
-import { useCallback } from 'react';
+import { use, useCallback, useEffect } from 'react';
 
-export default function StyleButton({style, predict, label}) {
+import styles from './StyleButton.module.css';
+
+export default function StyleButton({style, predict, label, bg}) {
   return (
-    <><button onClick={() => predict(style)}> {label}</button><br/></>
+    <button style={{background:'url(' +bg+') no-repeat top left'}} className={styles.imageButton} onClick={() => predict(style)}> {label}</button>
   );
 }

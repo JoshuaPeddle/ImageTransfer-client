@@ -8,8 +8,8 @@ function resizeImage(imgToResize) {
   const context = canvas.getContext('2d');
   const originalWidth = imgToResize.width;
   const originalHeight = imgToResize.height;
-  const targetWidth = 256;
-  const targetHeight = 256;
+  const targetWidth = 512;
+  const targetHeight = 512;
   const resizingFactor = Math.min(
     targetWidth / originalWidth,
     targetHeight / originalHeight
@@ -43,6 +43,9 @@ export default function LocalImageLoader({setImage}) {
     reader.readAsDataURL(file);
   }, [ setImage ]);
   return (
-    <input type="file" accept="image/*" onChange={update} />
+    <>
+      <input type="file" id='files'  accept="image/*" onChange={update} class="hidden"/>
+      <label style={{cursor: 'pointer'}} for="files">Select file</label>
+    </>
   );
 }

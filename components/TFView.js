@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import LocalImageLoader from './LocalImageLoader';
 import _Image from 'next/image';
 import StyleButton from './StyleButton';
-import {models} from '../lib/models.js';
+import {getModels} from '../lib/models.js';
 import _predict from '../lib/predict.js';
 
 import styles from './TFView.module.css';
@@ -15,6 +15,7 @@ export default function TFView() {
   const [ image, setImage ] = useState(null);
   const [ result, setResult ] = useState(null);
   const [ error, setError ] = useState(false);
+  const [ models, setModels ] = useState([]);
   const predict = async (model) => {
     fetch(image)
       .then((res) => res.blob())
@@ -35,6 +36,7 @@ export default function TFView() {
   };
   useEffect(() => {
     fetchRandomImage();
+    setModels(getModels());
   }, []);
 
   return (

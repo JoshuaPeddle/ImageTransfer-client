@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import LocalImageLoader from './LocalImageLoader';
 import _Image from 'next/image';
 import StyleButton from './StyleButton';
@@ -7,6 +7,8 @@ import {models} from '../lib/models.js';
 import _predict from '../lib/predict.js';
 
 import styles from './TFView.module.css';
+
+import ImagePlaceholder from './ImagePlaceholder';
 
 const API_URL = process.env.NEXT_PUBLIC_IMAGE_SERVER;
 export default function TFView() {
@@ -31,6 +33,10 @@ export default function TFView() {
     console.log(data.url);
     setImage(data.url);
   };
+  useEffect(() => {
+    fetchRandomImage();
+  }, []);
+
   return (
     <>
 
@@ -40,8 +46,8 @@ export default function TFView() {
       <div className={styles.images}>
         {image ? <_Image src={image} width="256" height="256" alt="" loader={({ src }) => {
           return src; 
-        }} unoptimized /> : ''}
-        {result ? <_Image src={result} width="256" height="256" alt="" /> : ''}
+        }} unoptimized /> : <ImagePlaceholder/>}
+        {result ? <_Image src={result} width="256" height="256" alt="" /> : <ImagePlaceholder/>}
       </div>
       <br/>
       <div className={styles.modelButtonsContainer}>

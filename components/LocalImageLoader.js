@@ -44,8 +44,8 @@ export default function LocalImageLoader({setImage}) {
   }, [ setImage ]);
   return (
     <>
-      <input type="file" id='files'  accept="image/*" onChange={update} class="hidden"/>
-      <label style={{cursor: 'pointer'}} for="files">Select file</label>
+      <input type="file" id='files'  accept="image/*" onChange={update} className="hidden"/>
+      <label style={{cursor: 'pointer'}} htmlFor="files">Select file</label>
     </>
   );
 }

@@ -40,7 +40,9 @@ export default function LocalImageLoader({setImage}) {
         setImage(resizeImage(img));
       };
     };
-    reader.readAsDataURL(file);
+    if (file) {
+      reader.readAsDataURL(file); 
+    }
   }, [ setImage ]);
   return (
     <>

@@ -21,6 +21,7 @@ export default function TFView() {
   const [ loading, setLoading ] = useState(false);
   const predict = useCallback(async (model) => {
     if (!image) return;
+    if (loading) return;
     setLoading(true);
     fetch(image)
       .then((res) => res.blob())
@@ -30,7 +31,7 @@ export default function TFView() {
         const variant = models[model].nextVariant();
         _predict(model, blob, setResult, setError, setLoading, variant);
       });
-  }, [ image, models ]);
+  }, [ image, loading, models ]);
   const resultToImage = () => {
     if (!result) return;
     setImage(result);

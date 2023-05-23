@@ -1,10 +1,12 @@
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import LocalImageLoader from './LocalImageLoader';
 import _Image from 'next/image';
 import StyleButton from './StyleButton';
 import {getModels} from '../lib/models.js';
 import _predict from '../lib/predict.js';
+
+import {exportImages} from '../lib/ImageExporter.js';
 
 import styles from './TFView.module.css';
 
@@ -16,40 +18,51 @@ export default function TFView() {
   const [ result, setResult ] = useState(null);
   const [ error, setError ] = useState(false);
   const [ models, setModels ] = useState([]);
-  const predict = async (model) => {
+  const [ loading, setLoading ] = useState(false);
+  const predict = useCallback(async (model) => {
+    if (!image) return;
+    setLoading(true);
     fetch(image)
       .then((res) => res.blob())
       .then(async (blob) => {
-        _predict(model, blob, setResult, setError);
+        setResult(null);
+        _predict(model, blob, setResult, setError, setLoading);
       });
-  };
+  }, [ image ]);
   const resultToImage = () => {
     if (!result) return;
     setImage(result);
   };
   // This function sends send a GET request to the generator server to get a url for a random image
   const fetchRandomImage = async () => {
+    setImage(null);
     const res = await fetch(API_URL+'random', {method: 'GET'});
     const data = await res.json();
     console.log(data.url);
     setImage(data.url);
   };
   useEffect(() => {
-    fetchRandomImage();
-    setModels(getModels());
-  }, []);
+    getModels().then((models) => {
+      setModels(models);
+      fetchRandomImage();
+    });
+  }, [ ]);
 
+  const _export = () => {
+    exportImages(image, result);
+    // Download the image
+  };
   return (
     <>
 
       <LocalImageLoader setImage={setImage} />
-      <button onClick={fetchRandomImage} >Random image</button>
+      <button className={styles.button} onClick={fetchRandomImage} >Random image</button>
 
       <div className={styles.images}>
         {image ? <_Image src={image} width="256" height="256" alt="" loader={({ src }) => {
           return src; 
-        }} unoptimized /> : <ImagePlaceholder/>}
-        {result ? <_Image src={result} width="256" height="256" alt="" /> : <ImagePlaceholder/>}
+        }} unoptimized /> : <ImagePlaceholder loading='True'/>}
+        {result ? <_Image src={result} width="256" height="256" alt="" /> : <ImagePlaceholder loading={loading}/>}
       </div>
       <br/>
       <div className={styles.modelButtonsContainer}>
@@ -57,9 +70,11 @@ export default function TFView() {
           return <StyleButton key={model.style} style={model.style} label={model.label} bg={model.background_url} predict={predict}/>;
         })}
       </div>
-      <button  onClick={resultToImage} >Result to Image</button>
+      <button className={styles.button} onClick={resultToImage} >Result to Image</button>
+      <button className={styles.button}  onClick={_export} >Export</button>
       <br/>
       {error ? <p>There was an error {error}</p>  : ''}
+      {loading ? <p>Loading...</p> : ''}
     </>
   );
 }

@@ -1,5 +1,5 @@
 // Desc: Let the user load a local image
-
+import styles from './TFView.module.css';
 import { useCallback } from 'react';
 
 // https://img.ly/blog/how-to-resize-an-image-with-javascript/
@@ -45,7 +45,7 @@ export default function LocalImageLoader({setImage}) {
   return (
     <>
       <input type="file" id='files'  accept="image/*" onChange={update} className="hidden"/>
-      <label style={{cursor: 'pointer'}} htmlFor="files">Select file</label>
+      <label className={styles.button} style={{cursor: 'pointer'}} htmlFor="files">Select file</label>
     </>
   );
 }

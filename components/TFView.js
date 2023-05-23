@@ -26,20 +26,33 @@ export default function TFView() {
       .then((res) => res.blob())
       .then(async (blob) => {
         setResult(null);
-        _predict(model, blob, setResult, setError, setLoading);
+        // Determine variant
+        const variant = models[model].nextVariant();
+        _predict(model, blob, setResult, setError, setLoading, variant);
       });
-  }, [ image ]);
+  }, [ image, models ]);
   const resultToImage = () => {
     if (!result) return;
     setImage(result);
   };
   // This function sends send a GET request to the generator server to get a url for a random image
+  const prefetchImage = async (url) => {
+    console.log('Prefetching image', url);
+    const img = new Image();
+    img.src = url;
+  };
   const fetchRandomImage = async () => {
     setImage(null);
     const res = await fetch(API_URL+'random', {method: 'GET'});
     const data = await res.json();
-    console.log(data.url);
+    // Prefetch the image
+    prefetchImage(data.url);
+    
     setImage(data.url);
+  };
+  const _export = () => {
+    exportImages(image, result);
+    // Download the image
   };
   useEffect(() => {
     getModels().then((models) => {
@@ -47,11 +60,6 @@ export default function TFView() {
       fetchRandomImage();
     });
   }, [ ]);
-
-  const _export = () => {
-    exportImages(image, result);
-    // Download the image
-  };
   return (
     <>
 
@@ -66,7 +74,7 @@ export default function TFView() {
       </div>
       <br/>
       <div className={styles.modelButtonsContainer}>
-        {models.map((model) => {
+        {Object.values(models).map((model) => {
           return <StyleButton key={model.style} style={model.style} label={model.label} bg={model.background_url} predict={predict}/>;
         })}
       </div>
@@ -74,7 +82,6 @@ export default function TFView() {
       <button className={styles.button}  onClick={_export} >Export</button>
       <br/>
       {error ? <p>There was an error {error}</p>  : ''}
-      {loading ? <p>Loading...</p> : ''}
     </>
   );
 }

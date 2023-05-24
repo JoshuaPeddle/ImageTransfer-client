@@ -60,10 +60,10 @@ export default function TFView() {
       fetchRandomImage();
     });
   }, []);
-  const _setImage = (image) => {
-    setImage(image);
+  const _setImage = (img) => {
+    setImage(img);
     generateUUID();
-    compressImage(image, setCompressed);
+    compressImage(img, setCompressed);
   };
   return (
     <>

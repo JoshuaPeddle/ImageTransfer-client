@@ -23,6 +23,8 @@ export default function TFView() {
     if (!compressed) return;
     if (loading) return;
     setResult(null);
+    setLoading(true);
+    setError(false);
     // Determine variant
     const variant = models[model].nextVariant();
     _predict(model, compressed, setResult, setError, setLoading, variant, uuid);

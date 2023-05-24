@@ -8,8 +8,8 @@ function resizeImage(imgToResize) {
   const context = canvas.getContext('2d');
   const originalWidth = imgToResize.width;
   const originalHeight = imgToResize.height;
-  const targetWidth = 512;
-  const targetHeight = 512;
+  const targetWidth = 384;
+  const targetHeight = 384;
   const resizingFactor = Math.min(
     targetWidth / originalWidth,
     targetHeight / originalHeight

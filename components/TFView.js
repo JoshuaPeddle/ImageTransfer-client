@@ -5,12 +5,10 @@ import _Image from 'next/image';
 import StyleButton from './StyleButton';
 import {getModels} from '../lib/models.js';
 import _predict from '../lib/predict.js';
-
 import {exportImages} from '../lib/ImageExporter.js';
-
 import styles from './TFView.module.css';
-
 import ImagePlaceholder from './ImagePlaceholder';
+import {compressImage} from '../lib/compress';
 
 const API_URL = process.env.NEXT_PUBLIC_IMAGE_SERVER;
 export default function TFView() {
@@ -19,26 +17,22 @@ export default function TFView() {
   const [ error, setError ] = useState(false);
   const [ models, setModels ] = useState([]);
   const [ loading, setLoading ] = useState(false);
-  const predict = useCallback(async (model) => {
-    if (!image) return;
+  const [ uuid, setUuid ] = useState(null);
+  const [ compressed, setCompressed ] = useState(false);
+  const predict =async (model) => {
+    if (!compressed) return;
     if (loading) return;
-    setLoading(true);
-    fetch(image)
-      .then((res) => res.blob())
-      .then(async (blob) => {
-        setResult(null);
-        // Determine variant
-        const variant = models[model].nextVariant();
-        _predict(model, blob, setResult, setError, setLoading, variant);
-      });
-  }, [ image, loading, models ]);
+    setResult(null);
+    // Determine variant
+    const variant = models[model].nextVariant();
+    _predict(model, compressed, setResult, setError, setLoading, variant, uuid);
+  };
   const resultToImage = () => {
     if (!result) return;
     setImage(result);
   };
   // This function sends send a GET request to the generator server to get a url for a random image
   const prefetchImage = async (url) => {
-    console.log('Prefetching image', url);
     const img = new Image();
     img.src = url;
   };
@@ -48,23 +42,31 @@ export default function TFView() {
     const data = await res.json();
     // Prefetch the image
     prefetchImage(data.url);
-    
-    setImage(data.url);
+    _setImage(data.url);
   };
   const _export = () => {
     exportImages(image, result);
     // Download the image
+  };
+  const generateUUID = () => {
+    let uuid = self.crypto.randomUUID();
+    setUuid(uuid);
   };
   useEffect(() => {
     getModels().then((models) => {
       setModels(models);
       fetchRandomImage();
     });
-  }, [ ]);
+  }, []);
+  const _setImage = (image) => {
+    setImage(image);
+    generateUUID();
+    compressImage(image, setCompressed);
+  };
   return (
     <>
 
-      <LocalImageLoader setImage={setImage} />
+      <LocalImageLoader setImage={_setImage} />
       <button className={styles.button} onClick={fetchRandomImage} >Random image</button>
 
       <div className={styles.images}>

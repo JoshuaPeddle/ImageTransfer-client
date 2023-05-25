@@ -69,18 +69,18 @@ export default function TFView() {
     <>
 
       <LocalImageLoader setImage={_setImage} />
-      <button className={styles.button} onClick={fetchRandomImage} >Random image</button>
+      <button id='random_image_btn' className={styles.button} onClick={fetchRandomImage} >Random image</button>
 
       <div className={styles.images}>
-        {image ? <_Image src={image} width="256" height="256" alt="" loader={({ src }) => {
+        {image ? <_Image id='src_img' src={image} width="256" height="256" alt="" loader={({ src }) => {
           return src; 
         }} unoptimized /> : <ImagePlaceholder loading='True'/>}
-        {result ? <_Image src={result} width="256" height="256" alt="" /> : <ImagePlaceholder loading={loading}/>}
+        {result ? <_Image id='res_img' src={result} width="256" height="256" alt="" /> : <ImagePlaceholder loading={loading}/>}
       </div>
       <br/>
       <div className={styles.modelButtonsContainer}>
         {Object.values(models).map((model) => {
-          return <StyleButton key={model.style} style={model.style} label={model.label} bg={model.background_url} predict={predict}/>;
+          return <StyleButton  key={model.style} style={model.style} label={model.label} bg={model.background_url} predict={predict}/>;
         })}
       </div>
       <button className={styles.button} onClick={resultToImage} >Result to Image</button>

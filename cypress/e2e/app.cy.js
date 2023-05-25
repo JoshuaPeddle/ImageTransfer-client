@@ -2,8 +2,6 @@ describe('Simple test', () => {
   it('should navigate to the about page', () => {
     // Start from the index page
     cy.visit('http://localhost:3000/');
-
-    // 
   });
 
   it('should get random image', () => {
@@ -12,7 +10,7 @@ describe('Simple test', () => {
 
     // Should contain a button with id='random_image_btn'
     cy.get('#random_image_btn').click();
-    cy.wait(1000);
+    cy.wait(2000);
     // Should contain an image with id='src_img'
     cy.get('#src_img', {timeout: 20000}).should('be.visible');
     

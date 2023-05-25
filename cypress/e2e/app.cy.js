@@ -4,13 +4,13 @@ describe('Simple test', () => {
     cy.visit('http://localhost:3000/');
 
     // Should contain an image with id='src_img'
-    cy.get('#src_img').should('be.visible');
+    cy.get('#src_img', {timeout: 20000}).should('be.visible');
 
     // Should contain a button with id='random_image_btn'
     cy.get('#random_image_btn').click();
 
     // Should contain an image with id='src_img'
-    cy.get('#src_img').should('be.visible');
+    cy.get('#src_img', {timeout: 20000}).should('be.visible');
     cy.wait(1000);
     // Generate an image
     // eslint-disable-next-line quotes

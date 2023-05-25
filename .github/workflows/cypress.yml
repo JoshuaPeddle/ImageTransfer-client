@@ -9,10 +9,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         env:
-          CYPRESS_NEXT_PUBLIC_IMAGE_SERVER: https://server.cyclegan.site/  # The public image server address.
+          NEXT_PUBLIC_IMAGE_SERVER: https://server.cyclegan.site/  # The public image server address.
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
-          start: npm run dev
+          start: NEXT_PUBLIC_IMAGE_SERVER=NEXT_PUBLIC_IMAGE_SERVER npm run dev

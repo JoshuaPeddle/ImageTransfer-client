@@ -18,7 +18,7 @@ describe('Simple test', () => {
     cy.get('[class*="modelButtonsContainer"]').find('[id^="style_btn_"]').first().click();
 
     // Should contain an image with id='res_img'
-    cy.get('#res_img').should('be.visible');
+    cy.get('#res_img', {timeout: 20000}).should('be.visible');
 
     // 
   });

@@ -3,11 +3,31 @@ describe('Simple test', () => {
     // Start from the index page
     cy.visit('http://localhost:3000/');
 
-    // Should contain an image with id='src_img'
-    cy.get('#src_img', {timeout: 20000}).should('be.visible');
+    // 
+  });
+
+  it('should get random image', () => {
+    // Start from the index page
+    cy.visit('http://localhost:3000/');
 
     // Should contain a button with id='random_image_btn'
     cy.get('#random_image_btn').click();
+    cy.wait(1000);
+    // Should contain an image with id='src_img'
+    cy.get('#src_img', {timeout: 20000}).should('be.visible');
+    
+    // Get the div named 'modelButtonsContainer' and select the first button with id='style_btn_' in it
+    cy.get('[class*="modelButtonsContainer"]').find('[id^="style_btn_"]').first().click();
+
+    // Should contain an image with id='res_img'
+    cy.get('#res_img', {timeout: 20000}).should('be.visible');
+
+    // 
+  });
+
+  it('should generate image', () => {
+    // Start from the index page
+    cy.visit('http://localhost:3000/');
 
     // Should contain an image with id='src_img'
     cy.get('#src_img', {timeout: 20000}).should('be.visible');

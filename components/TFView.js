@@ -3,7 +3,7 @@ import { useEffect, useState, useCallback } from 'react';
 import LocalImageLoader from './LocalImageLoader';
 import _Image from 'next/image';
 import StyleButton from './StyleButton';
-import {getModels} from '../lib/models.js';
+import {nextVariant} from '../lib/models.js';
 import _predict from '../lib/predict.js';
 import {exportImages} from '../lib/ImageExporter.js';
 import styles from './TFView.module.css';
@@ -26,7 +26,7 @@ export default function TFView() {
     setLoading(true);
     setError(false);
     // Determine variant
-    const variant = models[model].nextVariant();
+    const variant = nextVariant(models[model]);
     _predict(model, compressed, setResult, setError, setLoading, variant, uuid);
   };
   const resultToImage = () => {
@@ -54,9 +54,14 @@ export default function TFView() {
     let uuid = self.crypto.randomUUID();
     setUuid(uuid);
   };
+  const fetchModels = useCallback(async () => {
+    // Make a call to /api/models to get the models
+    const res = await fetch('/api/models', {method: 'GET'});
+    const data = await res.json();
+    setModels(data);
+  }, []);
   useEffect(() => {
-    getModels().then((models) => {
-      setModels(models);
+    fetchModels().then(() => {
       fetchRandomImage();
     });
   }, []);
@@ -72,7 +77,7 @@ export default function TFView() {
       <button id='random_image_btn' className={styles.button} onClick={fetchRandomImage} >Random image</button>
 
       <div className={styles.images}>
-        {image ? <_Image id='src_img' src={image} width="256" height="256" alt="" loader={({ src }) => {
+        {image ? <_Image priority={true} id='src_img' src={image} width="256" height="256" alt="" loader={({ src }) => {
           return src; 
         }} unoptimized /> : <ImagePlaceholder loading='True'/>}
         {result ? <_Image id='res_img' src={result} width="256" height="256" alt="" /> : <ImagePlaceholder loading={loading}/>}

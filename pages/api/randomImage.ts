@@ -15,6 +15,5 @@ export default async function handler(
     return;
   }
   const image = await getRandomImage();
-  console.log(image);
   res.status(200).json({'url':image});
 }

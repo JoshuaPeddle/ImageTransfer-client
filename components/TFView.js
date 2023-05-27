@@ -5,7 +5,7 @@ import _Image from 'next/image';
 import StyleButton from './StyleButton';
 import {nextVariant} from '../lib/models.js';
 import _predict from '../lib/predict.js';
-import {exportImages} from '../lib/ImageExporter.js';
+import {exportImages, exportVideo} from '../lib/ImageExporter.js';
 import styles from './TFView.module.css';
 import ImagePlaceholder from './ImagePlaceholder';
 import {compressImage} from '../lib/compress';
@@ -51,7 +51,9 @@ export default function TFView() {
     _setImage(data.url);
   };
   const _export = () => {
-    exportImages(image, result);
+    //exportImages(image, result);
+    exportVideo(image, result);
+
     // Download the image
   };
   const generateUUID = () => {

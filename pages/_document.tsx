@@ -9,7 +9,7 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />
-        <Script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js" strategy='beforeInteractive'></Script>
+        <Script src="whammy.js" strategy='afterInteractive'></Script>
       </body>
     </Html>
   );

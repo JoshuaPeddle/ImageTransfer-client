@@ -9,6 +9,7 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />
+        <Script src="/js/gif.js"strategy='lazyOnload'  />
       </body>
     </Html>
   );

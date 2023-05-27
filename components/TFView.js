@@ -5,7 +5,7 @@ import _Image from 'next/image';
 import StyleButton from './StyleButton';
 import {nextVariant} from '../lib/models.js';
 import _predict from '../lib/predict.js';
-import {exportImages, exportVideo} from '../lib/ImageExporter.js';
+import {exportImages, exportVideo, exportGIF} from '../lib/ImageExporter.js';
 import styles from './TFView.module.css';
 import ImagePlaceholder from './ImagePlaceholder';
 import {compressImage} from '../lib/compress';
@@ -56,6 +56,10 @@ export default function TFView() {
     setLoading(true);
     exportVideo(image, result, setLoading, setError);
   };
+  const _export_GIF = () => {
+    setLoading(true);
+    exportGIF(image, result, setLoading, setError);
+  };
   const generateUUID = () => {
     let uuid = self.crypto.randomUUID();
     setUuid(uuid);
@@ -77,7 +81,6 @@ export default function TFView() {
   };
   return (
     <>
-
       <LocalImageLoader setImage={_setImage} />
       <button id='random_image_btn' className={styles.button} onClick={fetchRandomImage} >Random image</button>
 
@@ -95,7 +98,8 @@ export default function TFView() {
       </div>
       <button className={styles.button} onClick={resultToImage} >Result to Image</button>
       <button className={styles.button}  onClick={_export_image} >Export Images</button>
-      <button className={styles.button}  onClick={_export_video} >Export Video</button>
+      <button className={styles.button}  onClick={_export_video} >Export webp Video (smaller)</button>
+      <button className={styles.button}  onClick={_export_GIF} >Export GIF (better compatibility)</button>
       <br/>
       {error ? <p>There was an error {error}</p>  : ''}
       {loading ? <p>Loading...</p> : ''}

@@ -5,7 +5,7 @@ import _Image from 'next/image';
 import StyleButton from './StyleButton';
 import {nextVariant} from '../lib/models.js';
 import _predict from '../lib/predict.js';
-import {exportImages, exportVideo, exportGIF} from '../lib/ImageExporter.js';
+import {exportImages, exportVideo, exportGIF, exportMP4} from '../lib/ImageExporter.js';
 import styles from './TFView.module.css';
 import ImagePlaceholder from './ImagePlaceholder';
 import {compressImage} from '../lib/compress';
@@ -60,6 +60,10 @@ export default function TFView() {
     setLoading(true);
     exportGIF(image, result, setLoading, setError);
   };
+  const _export_MP4 = () => {
+    setLoading(true);
+    exportMP4(image, result, setLoading, setError);
+  };
   const generateUUID = () => {
     let uuid = self.crypto.randomUUID();
     setUuid(uuid);
@@ -100,6 +104,7 @@ export default function TFView() {
       <button className={styles.button}  onClick={_export_image} >Export Images</button>
       <button className={styles.button}  onClick={_export_video} >Export webp Video (smaller)</button>
       <button className={styles.button}  onClick={_export_GIF} >Export GIF (better compatibility)</button>
+      <button className={styles.button}  onClick={_export_MP4} >Export MP4 (Great compatibility)</button>
       <br/>
       {error ? <p>There was an error {error}</p>  : ''}
       {loading ? <p>Loading...</p> : ''}

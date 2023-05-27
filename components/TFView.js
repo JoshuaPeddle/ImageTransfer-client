@@ -47,14 +47,14 @@ export default function TFView() {
     const data = await res.json();
     // Prefetch the image
     prefetchImage(data.url);
-    
     _setImage(data.url);
   };
-  const _export = () => {
-    //exportImages(image, result);
-    exportVideo(image, result);
-
-    // Download the image
+  const _export_image = () => {
+    exportImages(image, result);
+  };
+  const _export_video = () => {
+    setLoading(true);
+    exportVideo(image, result, setLoading, setError);
   };
   const generateUUID = () => {
     let uuid = self.crypto.randomUUID();
@@ -94,9 +94,11 @@ export default function TFView() {
         })}
       </div>
       <button className={styles.button} onClick={resultToImage} >Result to Image</button>
-      <button className={styles.button}  onClick={_export} >Export</button>
+      <button className={styles.button}  onClick={_export_image} >Export Images</button>
+      <button className={styles.button}  onClick={_export_video} >Export Video</button>
       <br/>
       {error ? <p>There was an error {error}</p>  : ''}
+      {loading ? <p>Loading...</p> : ''}
     </>
   );
 }

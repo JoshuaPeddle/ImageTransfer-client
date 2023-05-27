@@ -5,7 +5,7 @@ import { useCallback } from 'react';
 // https://img.ly/blog/how-to-resize-an-image-with-javascript/
 function resizeImage(imgToResize) {
   const canvas = document.createElement('canvas');
-  const context = canvas.getContext('2d');
+  const context = canvas.getContext('2d', { willReadFrequently: true });
   const originalWidth = imgToResize.width;
   const originalHeight = imgToResize.height;
   const targetWidth = 512;

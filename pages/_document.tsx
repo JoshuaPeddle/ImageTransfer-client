@@ -9,7 +9,6 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />
-        <Script src="whammy.js" strategy='afterInteractive'></Script>
       </body>
     </Html>
   );

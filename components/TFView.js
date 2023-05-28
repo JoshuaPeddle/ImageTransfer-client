@@ -52,10 +52,6 @@ export default function TFView() {
   const _export_image = () => {
     exportImages(image, result);
   };
-  const _export_video = () => {
-    setLoading(true);
-    exportVideo(image, result, setLoading, setError);
-  };
   const _export_GIF = () => {
     setLoading(true);
     exportGIF(image, result, setLoading, setError);
@@ -102,7 +98,6 @@ export default function TFView() {
       </div>
       <button className={styles.button} onClick={resultToImage} >Result to Image</button>
       <button className={styles.button}  onClick={_export_image} >Export Images</button>
-      <button className={styles.button}  onClick={_export_video} >Export webp Video (smaller)</button>
       <button className={styles.button}  onClick={_export_GIF} >Export GIF (better compatibility)</button>
       <button className={styles.button}  onClick={_export_MP4} >Export MP4 (Great compatibility)</button>
       <br/>

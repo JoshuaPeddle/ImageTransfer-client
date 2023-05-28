@@ -92,12 +92,10 @@ export default function TFView() {
      
       </div>
       <div className={styles.modelButtonsContainer}>
-        <button className={styles.button} onClick={resultToImage} >Result to Image</button>
-        <button className={styles.button}  onClick={_open_export_popup} >Export Popup</button>
+        <button className={styles.button} onClick={resultToImage} >Result to Source</button>
+        <button className={styles.button}  onClick={_open_export_popup} >Export</button>
       </div>
-      {error ? <p>There was an error {error}</p>  : ''}
 
-      {message}
     </>
   );
 }

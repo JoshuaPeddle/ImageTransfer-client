@@ -84,18 +84,17 @@ export default function TFView() {
         <LocalImageLoader setImage={_setImage} />
         <button id='random_image_btn' className={styles.button} onClick={fetchRandomImage} >Random image</button>
         <ImageView image={image} result={result} loading={loading}/>
-        
-      </div>
-      <div className={styles.modelButtonsContainer}>
-        {Object.values(models).map((model) => {
-          return <StyleButton  key={model.style} style={model.style} label={model.label} bg={model.background_url} predict={predict}/>;
-        })}
+        <div className={styles.modelButtonsContainer}>
+          {Object.values(models).map((model) => {
+            return <StyleButton  key={model.style} style={model.style} label={model.label} bg={model.background_url} predict={predict}/>;
+          })}
+        </div>
+     
       </div>
       <div className={styles.modelButtonsContainer}>
         <button className={styles.button} onClick={resultToImage} >Result to Image</button>
         <button className={styles.button}  onClick={_open_export_popup} >Export Popup</button>
       </div>
-
       {error ? <p>There was an error {error}</p>  : ''}
 
       {message}

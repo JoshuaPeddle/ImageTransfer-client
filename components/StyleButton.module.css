@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 115px;
+    width: 113px;
     height: 55px;
     border: none;
     border-radius: 5px;
@@ -20,4 +20,16 @@
     background-color: #000000cc;
     border-radius: 15px;
     padding: 2px 5px;
+}
+
+@media screen and (min-width: 800px) {
+    .imageButton{
+        width: 150px;
+        height: 60px;
+        margin: 5px 5px;
+    }
+    .imageButtonLabel{
+        font-size: 1.2rem;
+        
+    }
 }

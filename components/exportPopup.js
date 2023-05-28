@@ -18,8 +18,16 @@ export default function ExportPopup({image, result, loading, exportPopup, setExp
     setExportLoading(true);
     exportMP4(image, result, setExportLoading, setExportError, setExportMessage);
   };
+  const alert = (message) => {
+    setExportMessage(message);
+    setExportLoading(false);
+    setExportError(true);
+  };
   const _export = () => {
-    console.log('here');
+    if (!image) return alert('No image to export');
+    if (!result) return alert('No result to export');
+    if (exportLoading) return alert('Export already in progress');
+    setExportError(false);
     if (exportType === 'image') {
       _export_image();
     } else if (exportType === 'gif') {
@@ -29,7 +37,6 @@ export default function ExportPopup({image, result, loading, exportPopup, setExp
     }
   };
   const _setExportType = (e) => {
-    console.log(e.target.value);
     setExportType(e.target.value);
   };
   return (

@@ -7,8 +7,9 @@ import {nextVariant} from '../lib/models.js';
 import _predict from '../lib/predict.js';
 import {exportImages, exportGIF, exportMP4} from '../lib/ImageExporter.js';
 import styles from './TFView.module.css';
-import ImagePlaceholder from './ImagePlaceholder';
+import ImageView from './imageView';
 import {compressImage} from '../lib/compress';
+import ExportPopup from './exportPopup';
 
 export default function TFView() {
   const [ image, setImage ] = useState(null);
@@ -19,7 +20,12 @@ export default function TFView() {
   const [ message, setMessage ] = useState(null);
   const [ uuid, setUuid ] = useState(null);
   const [ compressed, setCompressed ] = useState(false);
+  const [ exportPopup, setExportPopup ] = useState(false);
   useEffect(() => {
+    const generateUUID = () => {
+      let uuid = self.crypto.randomUUID();
+      setUuid(uuid);
+    };
     generateUUID();
     compressImage(image, setCompressed);
   }, [ image ]);
@@ -44,27 +50,15 @@ export default function TFView() {
     img.src = url;
   };
   const fetchRandomImage = async () => {
+    _setImage(null);
     const res = await fetch('/api/randomImage', {method: 'GET'});
-    setImage(null);
     const data = await res.json();
     // Prefetch the image
     prefetchImage(data.url);
     _setImage(data.url);
   };
-  const _export_image = () => {
-    exportImages(image, result);
-  };
-  const _export_GIF = () => {
-    setLoading(true);
-    exportGIF(image, result, setLoading, setError, setMessage);
-  };
-  const _export_MP4 = () => {
-    setLoading(true);
-    exportMP4(image, result, setLoading, setError, setMessage);
-  };
-  const generateUUID = () => {
-    let uuid = self.crypto.randomUUID();
-    setUuid(uuid);
+  const _open_export_popup = () => {
+    setExportPopup(true);
   };
   const fetchModels = useCallback(async () => {
     // Make a call to /api/models to get the models
@@ -81,21 +75,17 @@ export default function TFView() {
   const _setImage = (img) => {
     setImage(img);
     setResult(null);
+    setCompressed(null);
   };
   return (
     <>
+      {exportPopup ? <ExportPopup image={image} result={result} loading={loading} exportPopup={exportPopup} setExportPopup={setExportPopup}/> : null}
       <div className={styles.topButtonContainer}>    
         <LocalImageLoader setImage={_setImage} />
         <button id='random_image_btn' className={styles.button} onClick={fetchRandomImage} >Random image</button>
+        <ImageView image={image} result={result} loading={loading}/>
+        
       </div>
-  
-      <div className={styles.images}>
-        {image ? <_Image priority={true}  id='src_img' src={image} width="384" height="256" quality={95} alt="" loader={({ src }) => {
-          return src; 
-        }} unoptimized /> : <ImagePlaceholder loading={true}/>}
-        {result ? <_Image id='res_img' src={result} width="384" height="256" alt="" quality={95} /> : <ImagePlaceholder loading={loading}/>}
-      </div>
-
       <div className={styles.modelButtonsContainer}>
         {Object.values(models).map((model) => {
           return <StyleButton  key={model.style} style={model.style} label={model.label} bg={model.background_url} predict={predict}/>;
@@ -103,9 +93,7 @@ export default function TFView() {
       </div>
       <div className={styles.modelButtonsContainer}>
         <button className={styles.button} onClick={resultToImage} >Result to Image</button>
-        <button className={styles.button}  onClick={_export_image} >Export Images</button>
-        <button className={styles.button}  onClick={_export_GIF} >Export GIF (better compatibility)</button>
-        <button className={styles.button}  onClick={_export_MP4} >Export MP4 (Great compatibility)</button>
+        <button className={styles.button}  onClick={_open_export_popup} >Export Popup</button>
       </div>
 
       {error ? <p>There was an error {error}</p>  : ''}

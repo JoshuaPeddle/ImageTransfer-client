@@ -5,7 +5,7 @@ import _Image from 'next/image';
 import StyleButton from './StyleButton';
 import {nextVariant} from '../lib/models.js';
 import _predict from '../lib/predict.js';
-import {exportImages, exportVideo, exportGIF, exportMP4} from '../lib/ImageExporter.js';
+import {exportImages, exportGIF, exportMP4} from '../lib/ImageExporter.js';
 import styles from './TFView.module.css';
 import ImagePlaceholder from './ImagePlaceholder';
 import {compressImage} from '../lib/compress';
@@ -88,10 +88,10 @@ export default function TFView() {
       </div>
   
       <div className={styles.images}>
-        {image ? <_Image priority={true}  id='src_img' src={image} width="384" height="384" alt="" loader={({ src }) => {
+        {image ? <_Image priority={true}  id='src_img' src={image} width="384" height="256" quality={95} alt="" loader={({ src }) => {
           return src; 
-        }} unoptimized /> : <ImagePlaceholder loading='True'/>}
-        {result ? <_Image id='res_img' src={result} width="384" height="384" alt="" /> : <ImagePlaceholder loading={loading}/>}
+        }} unoptimized /> : <ImagePlaceholder loading={true}/>}
+        {result ? <_Image id='res_img' src={result} width="384" height="256" alt="" quality={95} /> : <ImagePlaceholder loading={loading}/>}
       </div>
       <br/>
       <div className={styles.modelButtonsContainer}>
@@ -107,7 +107,7 @@ export default function TFView() {
       </div>
       <br/>
       {error ? <p>There was an error {error}</p>  : ''}
-      {loading ? <p>Loading...</p> : ''}
+
       {message}
     </>
   );

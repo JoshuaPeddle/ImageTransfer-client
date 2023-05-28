@@ -2,7 +2,7 @@
 .placeholder{
     display:flex;
     height:256px;
-    width:256px;
+    width:384px;
     justify-content:center;
     align-items: center;
 }
@@ -10,7 +10,7 @@
 .placeholderLoading {
     display:flex;
     height:256px;
-    width:256px;
+    width:384px;
     justify-content:center;
     align-items: center;
 }

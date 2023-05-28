@@ -82,14 +82,16 @@ export default function TFView() {
   };
   return (
     <>
-      <LocalImageLoader setImage={_setImage} />
-      <button id='random_image_btn' className={styles.button} onClick={fetchRandomImage} >Random image</button>
-
+      <div className={styles.topButtonContainer}>    
+        <LocalImageLoader setImage={_setImage} />
+        <button id='random_image_btn' className={styles.button} onClick={fetchRandomImage} >Random image</button>
+      </div>
+  
       <div className={styles.images}>
-        {image ? <_Image priority={true}  id='src_img' src={image} width="256" height="256" alt="" loader={({ src }) => {
+        {image ? <_Image priority={true}  id='src_img' src={image} width="384" height="384" alt="" loader={({ src }) => {
           return src; 
         }} unoptimized /> : <ImagePlaceholder loading='True'/>}
-        {result ? <_Image id='res_img' src={result} width="256" height="256" alt="" /> : <ImagePlaceholder loading={loading}/>}
+        {result ? <_Image id='res_img' src={result} width="384" height="384" alt="" /> : <ImagePlaceholder loading={loading}/>}
       </div>
       <br/>
       <div className={styles.modelButtonsContainer}>
@@ -97,10 +99,12 @@ export default function TFView() {
           return <StyleButton  key={model.style} style={model.style} label={model.label} bg={model.background_url} predict={predict}/>;
         })}
       </div>
-      <button className={styles.button} onClick={resultToImage} >Result to Image</button>
-      <button className={styles.button}  onClick={_export_image} >Export Images</button>
-      <button className={styles.button}  onClick={_export_GIF} >Export GIF (better compatibility)</button>
-      <button className={styles.button}  onClick={_export_MP4} >Export MP4 (Great compatibility)</button>
+      <div className={styles.modelButtonsContainer}>
+        <button className={styles.button} onClick={resultToImage} >Result to Image</button>
+        <button className={styles.button}  onClick={_export_image} >Export Images</button>
+        <button className={styles.button}  onClick={_export_GIF} >Export GIF (better compatibility)</button>
+        <button className={styles.button}  onClick={_export_MP4} >Export MP4 (Great compatibility)</button>
+      </div>
       <br/>
       {error ? <p>There was an error {error}</p>  : ''}
       {loading ? <p>Loading...</p> : ''}

@@ -8,17 +8,14 @@
 }
 
 .modelButtonsContainer {
-
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-
 }
+
 .button{
-
-
       background-color: rgb(255, 252, 252);
       border-radius: 8px;
       border-width: 0;
@@ -39,4 +36,20 @@
       user-select: none;
       -webkit-user-select: none;
       touch-action: manipulation;
+}
+
+.topButtonContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.modelButtonsContainer{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }

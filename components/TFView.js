@@ -35,7 +35,8 @@ export default function TFView() {
   };
   const resultToImage = () => {
     if (!result) return;
-    setImage(result);
+    _setImage(result);
+    setResult(null);
   };
   // This function sends send a GET request to the generator server to get a url for a random image
   const prefetchImage = async (url) => {
@@ -79,6 +80,7 @@ export default function TFView() {
   }, []);
   const _setImage = (img) => {
     setImage(img);
+    setResult(null);
   };
   return (
     <>
@@ -93,7 +95,7 @@ export default function TFView() {
         }} unoptimized /> : <ImagePlaceholder loading={true}/>}
         {result ? <_Image id='res_img' src={result} width="384" height="256" alt="" quality={95} /> : <ImagePlaceholder loading={loading}/>}
       </div>
-      <br/>
+
       <div className={styles.modelButtonsContainer}>
         {Object.values(models).map((model) => {
           return <StyleButton  key={model.style} style={model.style} label={model.label} bg={model.background_url} predict={predict}/>;
@@ -105,7 +107,7 @@ export default function TFView() {
         <button className={styles.button}  onClick={_export_GIF} >Export GIF (better compatibility)</button>
         <button className={styles.button}  onClick={_export_MP4} >Export MP4 (Great compatibility)</button>
       </div>
-      <br/>
+
       {error ? <p>There was an error {error}</p>  : ''}
 
       {message}

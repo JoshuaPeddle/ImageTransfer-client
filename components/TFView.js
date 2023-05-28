@@ -16,6 +16,7 @@ export default function TFView() {
   const [ error, setError ] = useState(false);
   const [ models, setModels ] = useState([]);
   const [ loading, setLoading ] = useState(false);
+  const [ message, setMessage ] = useState(null);
   const [ uuid, setUuid ] = useState(null);
   const [ compressed, setCompressed ] = useState(false);
   useEffect(() => {
@@ -54,11 +55,11 @@ export default function TFView() {
   };
   const _export_GIF = () => {
     setLoading(true);
-    exportGIF(image, result, setLoading, setError);
+    exportGIF(image, result, setLoading, setError, setMessage);
   };
   const _export_MP4 = () => {
     setLoading(true);
-    exportMP4(image, result, setLoading, setError);
+    exportMP4(image, result, setLoading, setError, setMessage);
   };
   const generateUUID = () => {
     let uuid = self.crypto.randomUUID();
@@ -103,6 +104,7 @@ export default function TFView() {
       <br/>
       {error ? <p>There was an error {error}</p>  : ''}
       {loading ? <p>Loading...</p> : ''}
+      {message}
     </>
   );
 }

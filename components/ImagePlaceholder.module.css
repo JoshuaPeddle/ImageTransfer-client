@@ -6,6 +6,9 @@
     justify-content:center;
     align-items: center;
     background-color: #222222cc;
+    padding: 0px 0px;
+    margin: 0px 0px;
+    
 }
 
 .placeholderLoading {
@@ -15,6 +18,8 @@
     justify-content:center;
     align-items: center;
     background-color: #222222cc;
+    padding: 0px 0px;
+    margin: 0px 0px;
 }
 .placeholderLoading:after {
     content: " ";

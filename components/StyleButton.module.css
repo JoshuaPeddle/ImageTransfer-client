@@ -6,7 +6,8 @@
     height: 55px;
     border: none;
     border-radius: 5px;
-    margin: 3px 3px;
+    margin: 2px 2px;
+    padding: 0px 0px;
     cursor: pointer;
 }
 .imageButtonLabel{
@@ -22,7 +23,7 @@
     padding: 2px 5px;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 766px) {
     .imageButton{
         width: 150px;
         height: 60px;

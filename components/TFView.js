@@ -5,7 +5,6 @@ import _Image from 'next/image';
 import StyleButton from './StyleButton';
 import {nextVariant} from '../lib/models.js';
 import _predict from '../lib/predict.js';
-import {exportImages, exportGIF, exportMP4} from '../lib/ImageExporter.js';
 import styles from './TFView.module.css';
 import ImageView from './imageView';
 import {compressImage} from '../lib/compress';
@@ -81,19 +80,21 @@ export default function TFView() {
     <>
       {exportPopup ? <ExportPopup image={image} result={result} loading={loading} exportPopup={exportPopup} setExportPopup={setExportPopup}/> : null}
       <div className={styles.topButtonContainer}>    
-        <LocalImageLoader setImage={_setImage} />
-        <button id='random_image_btn' className={styles.button} onClick={fetchRandomImage} >Random image</button>
+        <div>
+          <LocalImageLoader setImage={_setImage} />
+          <button id='random_image_btn' className={styles.button} onClick={fetchRandomImage} >Random image</button>
+        </div>
         <ImageView image={image} result={result} loading={loading}/>
         <div className={styles.modelButtonsContainer}>
           {Object.values(models).map((model) => {
             return <StyleButton  key={model.style} style={model.style} label={model.label} bg={model.background_url} predict={predict}/>;
           })}
         </div>
-     
-      </div>
-      <div className={styles.modelButtonsContainer}>
-        <button className={styles.button} onClick={resultToImage} >Result to Source</button>
-        <button className={styles.button}  onClick={_open_export_popup} >Export</button>
+        <div className={styles.modelButtonsContainer}>
+          <button className={styles.button} onClick={resultToImage} >Result to Source</button>
+          <button className={styles.button}  onClick={_open_export_popup} >Export</button>
+        </div>
+ 
       </div>
 
     </>

@@ -4,6 +4,5 @@ const nextConfig = {
   images: {
     domains: [ '127.0.0.1',  '*cyclegan.site', '*styleswap.art', 'github.com' ],
   },
-  output: 'standalone',
 };
 module.exports = nextConfig;

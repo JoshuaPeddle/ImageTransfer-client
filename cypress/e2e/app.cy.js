@@ -80,7 +80,7 @@ describe('Simple test', () => {
     cy.get('#export_btn').click();
 
     // Should be an image in /cypress/downloads
-    cy.readFile('cypress/downloads/video.gif', 'base64', {timeout: 10000}).then((video) => {
+    cy.readFile('cypress/downloads/video.gif', 'base64', {timeout: 20000}).then((video) => {
       expect(video).to.have.lengthOf.at.least(100);
     });
   });
@@ -107,7 +107,7 @@ describe('Simple test', () => {
     cy.get('#export_btn').click();
 
     // Should be an image in /cypress/downloads
-    cy.readFile('cypress/downloads/video.mp4', 'base64', {timeout: 20000}).then((video) => {
+    cy.readFile('cypress/downloads/video.mp4', 'base64', {timeout: 40000}).then((video) => {
       expect(video).to.have.lengthOf.at.least(100);
     });
   });

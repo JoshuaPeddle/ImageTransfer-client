@@ -7,9 +7,6 @@ export default function footer() {
       <div className={styles.footer}> 
 
         <div className={styles.footer_inner}>
-          <div className={styles.footer_logo}>
-            <img src="/logo.png" width="100" height="100" alt="Logo" />
-          </div>
 
           <div className={styles.footer_title}>
             <h1>styleswap.art</h1>

@@ -5,12 +5,12 @@ import Footer from '@/components/Footer';
 const inter = Inter({ subsets: [ 'latin' ] });
 export default function Home() {
   return (
-    <main
-      className={`flex min-h-screen min-w-screen flex-col items-center justify-center  ${inter.className}`}
-    >
-      <TopBar />
-      <TFView />
-
-    </main>
+    <><TopBar />
+      <main
+        className={`flex min-h-screen min-w-screen flex-col items-center justify-center  ${inter.className}`}
+      >
+        <TFView />
+      </main>
+      <Footer/></>
   );
 }

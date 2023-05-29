@@ -92,7 +92,7 @@ export default function TFView() {
         </div>
         <div className={styles.modelButtonsContainer}>
           <button className={styles.button} onClick={resultToImage} >Result to Source</button>
-          <button className={styles.button}  onClick={_open_export_popup} >Export</button>
+          <button id="export_popup_btn" className={styles.button}  onClick={_open_export_popup} >Export</button>
         </div>
  
       </div>

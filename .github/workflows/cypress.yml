@@ -16,3 +16,10 @@ jobs:
           NEXT_PUBLIC_IMAGE_SERVER: https://server.cyclegan.site/  # The public image server address.
         with:
           start: npm run dev
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: cypress-downloads
+          path: |
+            cypress/downloads
+           

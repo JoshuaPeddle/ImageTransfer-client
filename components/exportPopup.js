@@ -50,14 +50,14 @@ export default function ExportPopup({image, result, loading, exportPopup, setExp
           <div className={styles.popup_body}>
             <div className={styles.export_type}>
               <h2>Export Type</h2>
-              <select className={styles.select} value={exportType} onChange={_setExportType}>
+              <select id='export_select' className={styles.select} value={exportType} onChange={_setExportType}>
                 <option className={styles.option} value="image">Image</option>
                 <option className={styles.option} value="gif">GIF</option>
                 <option className={styles.option} value="mp4">MP4</option>
               </select>
             </div>
             <div className={styles.export_button}>
-              <button onClick={_export}>Export</button>
+              <button id='export_btn' onClick={_export}>Export</button>
             </div>
             <div className={styles.export_loading}>
               {exportLoading ? <p>{exportMessage}</p> : null}

@@ -4,8 +4,8 @@ export default function ImagePlaceholder({loading}) {
   return (
     <>
 
-      {loading ?  <div><Image  id='src_img' src='/loader-dark.gif' width="384" height="256" alt="" quality={95} /> </div> :
-        <Image id='res_img' src='/blank-dark.png' width="384" height="256" alt="" quality={95}/> }
+      {loading ?  <div><Image  id='src_img_laceholder' src='/loader-dark.gif' width="384" height="256" alt="" quality={95} /> </div> :
+        <Image id='res_img_placeholder' src='/blank-dark.png' width="384" height="256" alt="" quality={95}/> }
     </>
   );
 }

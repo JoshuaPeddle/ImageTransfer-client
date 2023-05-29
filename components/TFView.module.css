@@ -7,7 +7,6 @@
     align-items: center;
     max-width: 384px;
     margin: 0 auto;
-    
 }
 @media screen and (min-width: 766px) {
     .modelButtonsContainer {
@@ -42,12 +41,11 @@
 
 .topButtonContainer {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     padding-top: 64px;
-    padding-bottom: 40px;
 }
 
 @media (prefers-color-scheme: dark) {

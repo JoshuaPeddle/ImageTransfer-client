@@ -46,7 +46,8 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    padding-top: 67px;
+    padding-top: 64px;
+    padding-bottom: 40px;
 }
 
 @media (prefers-color-scheme: dark) {

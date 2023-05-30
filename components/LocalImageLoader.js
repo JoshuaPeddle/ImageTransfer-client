@@ -2,6 +2,53 @@
 import styles from './TFView.module.css';
 import { useCallback } from 'react';
 
+function cropImage(img, cropX, cropY, cropWidth, cropHeight) {
+  const canvas = document.createElement('canvas');
+  const context = canvas.getContext('2d', { willReadFrequently: true });
+  canvas.width = cropWidth;
+  canvas.height = cropHeight;
+  context.drawImage(
+    img,
+    cropX,
+    cropY,
+    cropWidth,
+    cropHeight,
+    0,
+    0,
+    cropWidth,
+    cropHeight
+  );
+  console.log('Cropped image', canvas.width, canvas.height);
+  return canvas;
+}
+
+function centerCropByAspectRatio(img, aspectRatio=1.5) {
+  // If the image is wider than it is tall or taller than it is wide by more than aspectRatio, crop the image
+  const imgAspectRatio = img.width / img.height;
+  const upperBound = aspectRatio;
+  const lowerBound = 1 / aspectRatio;
+  if (imgAspectRatio > upperBound) {
+    // Crop the image horizontally
+    console.log('Cropping horizontally');
+    const cropWidth = img.height * aspectRatio;
+    const cropX = (img.width - cropWidth) / 2;
+    const cropY = 0;
+    const cropHeight = img.height;
+    return cropImage(img, cropX, cropY, cropWidth, cropHeight);
+  } else if (imgAspectRatio < lowerBound) {
+    // Crop the image vertically
+    console.log('Cropping vertically');
+    // Should drop the image height to 1.5 times the width
+    const cropHeight = img.width * aspectRatio;
+    const cropY = (img.height - cropHeight) / 2;
+    const cropX = 0;
+    const cropWidth = img.width;
+    return cropImage(img, cropX, cropY, cropWidth, cropHeight);
+  } else {
+    return img;
+  }
+}
+
 // https://img.ly/blog/how-to-resize-an-image-with-javascript/
 function resizeImage(imgToResize) {
   const canvas = document.createElement('canvas');
@@ -18,6 +65,7 @@ function resizeImage(imgToResize) {
   const canvasHeight = originalHeight * resizingFactor;
   canvas.width = canvasWidth;
   canvas.height = canvasHeight;
+  
   context.drawImage(
     imgToResize,
     0,
@@ -25,7 +73,7 @@ function resizeImage(imgToResize) {
     canvasWidth,
     canvas.height
   );
-
+  console.log('Final Size', canvas.width, canvas.height);
   return canvas.toDataURL();
 }
 
@@ -37,7 +85,7 @@ export default function LocalImageLoader({setImage}) {
       const img = new Image();
       img.src = e.target.result;
       img.onload = () => {
-        setImage(resizeImage(img));
+        setImage(resizeImage(centerCropByAspectRatio(img)));
       };
     };
     if (file) {

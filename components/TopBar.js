@@ -12,12 +12,9 @@ export default function TopBar() {
           </div>
 
           <div className={styles.topbar_title}>
-            <h1>styleswap.art</h1>
+            styleswap.art
           </div>
-          <div className={styles.topbar_links}>
-            <Link href="/">Home</Link>
-            <Link href="/about">About</Link>
-          </div>
+
         </div>
       </div>
     </>

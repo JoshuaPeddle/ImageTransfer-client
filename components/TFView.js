@@ -82,7 +82,7 @@ export default function TFView() {
       <div className={styles.topButtonContainer}>    
         <div>
           <LocalImageLoader setImage={_setImage} />
-          <button id='random_image_btn' className={styles.button} onClick={fetchRandomImage} >Random image</button>
+          <button id='random_image_btn' className={styles.button} onClick={fetchRandomImage} >Random Image</button>
         </div>
         <ImageView image={image} result={result} loading={loading}/>
         <div className={styles.modelButtonsContainer}>

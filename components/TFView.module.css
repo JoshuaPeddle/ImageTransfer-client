@@ -15,9 +15,10 @@
 }
 
 .button{
-      background-color: #457B9D;
+      background-color: #457b9d91;
       border-radius: 8px;
-      border-width: 0;
+      border-width: 3px;
+      border-color: #457b9d90;
       color: #F1FAEE;
       cursor: pointer;
       display: inline-block;
@@ -25,7 +26,7 @@
       font-weight: 600;
       line-height: 20px;
       list-style: none;
-      margin: 2px;
+      margin: 2px 0px;
       padding: 7px 12px;
       text-align: center;
       vertical-align: baseline;

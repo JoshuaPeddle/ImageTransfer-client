@@ -22,7 +22,7 @@ function cropImage(img, cropX, cropY, cropWidth, cropHeight) {
   return canvas;
 }
 
-function centerCropByAspectRatio(img, aspectRatio=1.5) {
+function centerCropByAspectRatio(img, aspectRatio=1.4) {
   // If the image is wider than it is tall or taller than it is wide by more than aspectRatio, crop the image
   const imgAspectRatio = img.width / img.height;
   const upperBound = aspectRatio;
@@ -50,7 +50,7 @@ function centerCropByAspectRatio(img, aspectRatio=1.5) {
 }
 
 // https://img.ly/blog/how-to-resize-an-image-with-javascript/
-function resizeImage(imgToResize) {
+function resizeImage(imgToResize, setSize) {
   const canvas = document.createElement('canvas');
   const context = canvas.getContext('2d', { willReadFrequently: true });
   const originalWidth = imgToResize.width;
@@ -73,11 +73,12 @@ function resizeImage(imgToResize) {
     canvasWidth,
     canvas.height
   );
+  setSize([ canvasWidth, canvasHeight ]);
   console.log('Final Size', canvas.width, canvas.height);
   return canvas.toDataURL();
 }
 
-export default function LocalImageLoader({setImage}) {
+export default function LocalImageLoader({setImage, setSize}) {
   const update = useCallback((e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
@@ -85,13 +86,14 @@ export default function LocalImageLoader({setImage}) {
       const img = new Image();
       img.src = e.target.result;
       img.onload = () => {
-        setImage(resizeImage(centerCropByAspectRatio(img)));
+        const result_img = resizeImage(centerCropByAspectRatio(img), setSize);
+        setImage(result_img);
       };
     };
     if (file) {
       reader.readAsDataURL(file); 
     }
-  }, [ setImage ]);
+  }, [ setImage, setSize ]);
   return (
     <>
       <input type="file" id='files'  accept="image/*" onChange={update} className="hidden"/>

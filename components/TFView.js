@@ -20,6 +20,7 @@ export default function TFView() {
   const [ uuid, setUuid ] = useState(null);
   const [ compressed, setCompressed ] = useState(false);
   const [ exportPopup, setExportPopup ] = useState(false);
+  const [ sourceImageSize, setSourceImageSize ] = useState([ 384, 256 ]);
   useEffect(() => {
     const generateUUID = () => {
       let uuid = self.crypto.randomUUID();
@@ -81,10 +82,10 @@ export default function TFView() {
       {exportPopup ? <ExportPopup image={image} result={result} loading={loading} exportPopup={exportPopup} setExportPopup={setExportPopup}/> : null}
       <div className={styles.topButtonContainer}>    
         <div>
-          <LocalImageLoader setImage={_setImage} />
+          <LocalImageLoader setImage={_setImage} setSize={setSourceImageSize}/>
           <button id='random_image_btn' className={styles.button} onClick={fetchRandomImage} >Random Image</button>
         </div>
-        <ImageView image={image} result={result} loading={loading}/>
+        <ImageView image={image} result={result} loading={loading} size={sourceImageSize}/>
         <div className={styles.modelButtonsContainer}>
           {Object.values(models).map((model) => {
             return <StyleButton  key={model.style} style={model.style} label={model.label} bg={model.background_url} predict={predict}/>;

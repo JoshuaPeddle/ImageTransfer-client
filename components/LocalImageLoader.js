@@ -2,7 +2,7 @@
 import styles from './TFView.module.css';
 import { useCallback } from 'react';
 
-function cropImage(img, cropX, cropY, cropWidth, cropHeight, targetWidth, targetHeight) {
+function cropImage(img, cropX, cropY, cropWidth, cropHeight, targetWidth, targetHeight, setSize) {
   const canvas = document.createElement('canvas');
   const context = canvas.getContext('2d', { willReadFrequently: true });
   canvas.width = targetWidth;
@@ -19,6 +19,7 @@ function cropImage(img, cropX, cropY, cropWidth, cropHeight, targetWidth, target
     targetHeight
   );
   //console.log('Final Size', canvas.width, canvas.height);
+  setSize([ targetWidth, targetHeight ]);
   return canvas.toDataURL();
 }
 
@@ -46,7 +47,7 @@ function centerCropByAspectRatio(img, aspectRatio=1.4, setSize) {
     const canvasWidth = cropWidth * resizingFactor;
     const canvasHeight = cropHeight * resizingFactor;
     //console.log(cropX, cropY, cropWidth, cropHeight, canvasWidth, canvasHeight);
-    return cropImage(img, cropX, cropY, cropWidth, cropHeight, canvasWidth, canvasHeight);
+    return cropImage(img, cropX, cropY, cropWidth, cropHeight, canvasWidth, canvasHeight, setSize);
   } else if (imgAspectRatio < lowerBound) {
     // Crop the image vertically
     //console.log('Cropping vertically');
@@ -62,7 +63,7 @@ function centerCropByAspectRatio(img, aspectRatio=1.4, setSize) {
     const canvasWidth = cropWidth * resizingFactor;
     const canvasHeight = cropHeight * resizingFactor;
     //console.log(cropX, cropY, cropWidth, cropHeight, canvasWidth, canvasHeight);
-    return cropImage(img, cropX, cropY, cropWidth, cropHeight, canvasWidth, canvasHeight);
+    return cropImage(img, cropX, cropY, cropWidth, cropHeight, canvasWidth, canvasHeight, setSize);
   } else {
     if (img.width > targetWidth || img.height > targetHeight) {
       //console.log('Resizing');

@@ -18,3 +18,11 @@
     justify-content: center;
     align-items: center;
 }
+
+#src_img {
+    height:auto;
+}
+
+#res_img {
+    height:auto;
+}

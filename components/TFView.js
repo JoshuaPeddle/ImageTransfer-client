@@ -55,6 +55,7 @@ export default function TFView() {
     const data = await res.json();
     // Prefetch the image
     prefetchImage(data.url);
+    setSourceImageSize([ 384, 256 ]);
     _setImage(data.url);
   };
   const _open_export_popup = () => {

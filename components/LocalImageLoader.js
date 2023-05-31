@@ -2,11 +2,11 @@
 import styles from './TFView.module.css';
 import { useCallback } from 'react';
 
-function cropImage(img, cropX, cropY, cropWidth, cropHeight) {
+function cropImage(img, cropX, cropY, cropWidth, cropHeight, targetWidth, targetHeight) {
   const canvas = document.createElement('canvas');
   const context = canvas.getContext('2d', { willReadFrequently: true });
-  canvas.width = cropWidth;
-  canvas.height = cropHeight;
+  canvas.width = targetWidth;
+  canvas.height = targetHeight;
   context.drawImage(
     img,
     cropX,
@@ -15,37 +15,61 @@ function cropImage(img, cropX, cropY, cropWidth, cropHeight) {
     cropHeight,
     0,
     0,
-    cropWidth,
-    cropHeight
+    targetWidth,
+    targetHeight
   );
-  console.log('Cropped image', canvas.width, canvas.height);
-  return canvas;
+  //console.log('Final Size', canvas.width, canvas.height);
+  return canvas.toDataURL();
 }
 
-function centerCropByAspectRatio(img, aspectRatio=1.4) {
+function centerCropByAspectRatio(img, aspectRatio=1.4, setSize) {
   // If the image is wider than it is tall or taller than it is wide by more than aspectRatio, crop the image
   const imgAspectRatio = img.width / img.height;
   const upperBound = aspectRatio;
   const lowerBound = 1 / aspectRatio;
+  const originalWidth = img.width;
+  const originalHeight = img.height;
+  const targetWidth = 384;
+  const targetHeight = 384;
+  //console.log('here', imgAspectRatio, upperBound, lowerBound);
   if (imgAspectRatio > upperBound) {
     // Crop the image horizontally
-    console.log('Cropping horizontally');
+    //console.log('Cropping horizontally');
     const cropWidth = img.height * aspectRatio;
     const cropX = (img.width - cropWidth) / 2;
     const cropY = 0;
     const cropHeight = img.height;
-    return cropImage(img, cropX, cropY, cropWidth, cropHeight);
+    const resizingFactor = Math.min(
+      targetWidth / cropWidth,
+      targetHeight / cropHeight
+    );
+    const canvasWidth = cropWidth * resizingFactor;
+    const canvasHeight = cropHeight * resizingFactor;
+    //console.log(cropX, cropY, cropWidth, cropHeight, canvasWidth, canvasHeight);
+    return cropImage(img, cropX, cropY, cropWidth, cropHeight, canvasWidth, canvasHeight);
   } else if (imgAspectRatio < lowerBound) {
     // Crop the image vertically
-    console.log('Cropping vertically');
+    //console.log('Cropping vertically');
     // Should drop the image height to 1.5 times the width
     const cropHeight = img.width * aspectRatio;
     const cropY = (img.height - cropHeight) / 2;
     const cropX = 0;
     const cropWidth = img.width;
-    return cropImage(img, cropX, cropY, cropWidth, cropHeight);
+    const resizingFactor = Math.min(
+      targetWidth / cropWidth,
+      targetHeight / cropHeight
+    );
+    const canvasWidth = cropWidth * resizingFactor;
+    const canvasHeight = cropHeight * resizingFactor;
+    //console.log(cropX, cropY, cropWidth, cropHeight, canvasWidth, canvasHeight);
+    return cropImage(img, cropX, cropY, cropWidth, cropHeight, canvasWidth, canvasHeight);
   } else {
-    return img;
+    if (img.width > targetWidth || img.height > targetHeight) {
+      //console.log('Resizing');
+      return resizeImage(img, setSize);
+    }
+    //console.log('No cropping or resizing');
+    return img.src;
   }
 }
 
@@ -74,7 +98,7 @@ function resizeImage(imgToResize, setSize) {
     canvas.height
   );
   setSize([ canvasWidth, canvasHeight ]);
-  console.log('Final Size', canvas.width, canvas.height);
+  //console.log('Final Size', canvas.width, canvas.height);
   return canvas.toDataURL();
 }
 
@@ -86,7 +110,8 @@ export default function LocalImageLoader({setImage, setSize}) {
       const img = new Image();
       img.src = e.target.result;
       img.onload = () => {
-        const result_img = resizeImage(centerCropByAspectRatio(img), setSize);
+        const result_img = centerCropByAspectRatio(img, 1.5, setSize);
+        //console.log('result_img', result_img);
         setImage(result_img);
       };
     };

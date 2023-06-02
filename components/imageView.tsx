@@ -10,7 +10,7 @@ export default function ImageView({ image, result, loading, size }: { image: str
           return src;
         }} unoptimized /> : <Image placeholder="blur" blurDataURL={'/blank-dark.png'} id='res_img' src={'/loader-dark.gif'} width={size[0]} height={size[1]} alt="" quality={85} />}
         {result ? <Image placeholder="blur" blurDataURL={'/blank-dark.png'} id='res_img' src={result} width={size[0]} height={size[1]} alt="" quality={85} /> :
-          <Image placeholder="blur" blurDataURL={'/blank-dark.png'} id='res_img' src={'/loader-dark.gif'} width={size[0]} height={size[1]} alt="" quality={85} />}
+          <Image placeholder="blur" blurDataURL={'/blank-dark.png'} id='res_img' src={loading? '/loader-dark.gif' : '/blank-dark.png'} width={size[0]} height={size[1]} alt="" quality={85} />}
       </div>
     </div>
   );

@@ -3,8 +3,8 @@ import { useEffect, useState, useCallback } from 'react';
 import LocalImageLoader from './LocalImageLoader';
 import _Image from 'next/image';
 import StyleButton from './StyleButton';
-import {nextVariant} from '../lib/models.js';
-import _predict from '../lib/predict.js';
+import {nextVariant, Model} from '../lib/models';
+import _predict from '../lib/predict';
 import styles from './TFView.module.css';
 import ImageView from './imageView';
 import {compressImage} from '../lib/compress';
@@ -14,7 +14,7 @@ export default function TFView() {
   const [ image, setImage ] = useState(null as null| string);
   const [ result, setResult ] = useState(null);
   const [ error, setError ] = useState(false);
-  const [ models, setModels ] = useState([]);
+  const [ models, setModels ] = useState({} as {[key: string]: Model});
   const [ loading, setLoading ] = useState(false);
   const [ message, setMessage ] = useState(null);
   const [ uuid, setUuid ] = useState(null as null| string);
@@ -27,6 +27,7 @@ export default function TFView() {
       setUuid(uuid);
     };
     generateUUID();
+    if (!image) return;
     compressImage(image, setCompressed);
   }, [ image ]);
   const predict =async (model: string) => {
@@ -36,7 +37,7 @@ export default function TFView() {
     setLoading(true);
     setError(false);
     // Determine variant
-    const variant = nextVariant(models[model as keyof typeof models]);
+    const variant = nextVariant(models[model]);
     _predict(model, compressed, setResult, setError, setLoading, variant, uuid);
   };
   const resultToImage = () => {

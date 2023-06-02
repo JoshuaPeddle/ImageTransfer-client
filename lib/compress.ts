@@ -1,5 +1,5 @@
 import Compressor from 'compressorjs';
-export function compressImage(image, setImage, p=0.9,) {
+export function compressImage(image: string, setImage: Function, p=0.9,) {
   if (!image) return;
   fetch(image)
     .then((res) => res.blob())
@@ -8,7 +8,7 @@ export function compressImage(image, setImage, p=0.9,) {
         quality: p,
         convert_type: [ 'image/png', 'image/webp' ],
         convertSize: 5000,
-        success(result) {
+        success(result: Blob) {
           setImage(result);
         }
       };

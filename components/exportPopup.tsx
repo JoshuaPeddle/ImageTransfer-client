@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import styles from './exportPopup.module.css';
-import tfViewStyle from './TFView.module.css';
 import {exportImages, exportGIF, exportMP4} from '../lib/ImageExporter.js';
-export default function ExportPopup({image, result, loading, exportPopup, setExportPopup}) {
+export default function ExportPopup({image, result, setExportPopup}: {image: string, result: string, setExportPopup: Function}) {
   const [ exportType, setExportType ] = useState('image');
   const [ exportLoading, setExportLoading ] = useState(false);
-  const [ exportMessage, setExportMessage ] = useState(null);
+  const [ exportMessage, setExportMessage ] = useState('');
   const [ exportError, setExportError ] = useState(false);
   const _export_image = () => {
     exportImages(image, result);
@@ -18,7 +17,7 @@ export default function ExportPopup({image, result, loading, exportPopup, setExp
     setExportLoading(true);
     exportMP4(image, result, setExportLoading, setExportError, setExportMessage);
   };
-  const alert = (message) => {
+  const alert = (message: string) => {
     setExportMessage(message);
     setExportLoading(false);
     setExportError(true);
@@ -36,7 +35,7 @@ export default function ExportPopup({image, result, loading, exportPopup, setExp
       _export_MP4();
     }
   };
-  const _setExportType = (e) => {
+  const _setExportType = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setExportType(e.target.value);
   };
   return (

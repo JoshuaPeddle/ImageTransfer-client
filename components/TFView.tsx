@@ -11,16 +11,16 @@ import {compressImage} from '../lib/compress';
 import ExportPopup from './exportPopup';
 
 export default function TFView() {
-  const [ image, setImage ] = useState(null);
+  const [ image, setImage ] = useState(null as null| string);
   const [ result, setResult ] = useState(null);
   const [ error, setError ] = useState(false);
   const [ models, setModels ] = useState([]);
   const [ loading, setLoading ] = useState(false);
   const [ message, setMessage ] = useState(null);
-  const [ uuid, setUuid ] = useState(null);
-  const [ compressed, setCompressed ] = useState(false);
+  const [ uuid, setUuid ] = useState(null as null| string);
+  const [ compressed, setCompressed ] = useState(null as null| string);
   const [ exportPopup, setExportPopup ] = useState(false);
-  const [ sourceImageSize, setSourceImageSize ] = useState([ 384, 256 ]);
+  const [ sourceImageSize, setSourceImageSize ] = useState([ 384, 256 ] as [number, number]);
   useEffect(() => {
     const generateUUID = () => {
       let uuid = self.crypto.randomUUID();
@@ -29,14 +29,14 @@ export default function TFView() {
     generateUUID();
     compressImage(image, setCompressed);
   }, [ image ]);
-  const predict =async (model) => {
+  const predict =async (model: string) => {
     if (!compressed) return;
     if (loading) return;
     setResult(null);
     setLoading(true);
     setError(false);
     // Determine variant
-    const variant = nextVariant(models[model]);
+    const variant = nextVariant(models[model as keyof typeof models]);
     _predict(model, compressed, setResult, setError, setLoading, variant, uuid);
   };
   const resultToImage = () => {
@@ -45,7 +45,7 @@ export default function TFView() {
     setResult(null);
   };
   // This function sends send a GET request to the generator server to get a url for a random image
-  const prefetchImage = async (url) => {
+  const prefetchImage = async (url: string) => {
     const img = new Image();
     img.src = url;
   };
@@ -73,14 +73,14 @@ export default function TFView() {
     });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const _setImage = (img) => {
+  const _setImage = (img: string | null) => {
     setImage(img);
     setResult(null);
     setCompressed(null);
   };
   return (
     <>
-      {exportPopup ? <ExportPopup image={image} result={result} loading={loading} exportPopup={exportPopup} setExportPopup={setExportPopup}/> : null}
+      { image && result &&exportPopup ? <ExportPopup image={image} result={result} setExportPopup={setExportPopup}/> : null}
       <div className={styles.topButtonContainer}>    
         <div>
           <LocalImageLoader setImage={_setImage} setSize={setSourceImageSize}/>
@@ -88,7 +88,7 @@ export default function TFView() {
         </div>
         <ImageView image={image} result={result} loading={loading} size={sourceImageSize}/>
         <div className={styles.modelButtonsContainer}>
-          {Object.values(models).map((model) => {
+          {Object.values(models).map((model : {style: string, label: string, background_url: string}) => {
             return <StyleButton  key={model.style} style={model.style} label={model.label} bg={model.background_url} predict={predict}/>;
           })}
         </div>

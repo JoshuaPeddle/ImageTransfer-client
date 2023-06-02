@@ -2,7 +2,7 @@ import Image from 'next/image';
 import ImagePlaceholder from './ImagePlaceholder';
 import styles from './imageView.module.css';
 
-export default function ImageView({image, result, loading, size} : {image: string, result: string, loading: boolean, size: [number, number]}) {
+export default function ImageView({image, result, loading, size} : {image: string | null, result: string | null, loading: boolean, size: [number, number]}) {
   return (
     <div className={styles.imageContainer}>
       <div className={styles.images}>

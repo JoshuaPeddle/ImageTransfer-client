@@ -1,0 +1,17 @@
+{
+  "theme_color": "#3579f6",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/",
+  "name": "StyleSwap.art",
+  "short_name": "StyleSwap",
+  "description": "A style transfer app",
+  "icons": [
+    {
+        "src": "/logo.png",
+        "sizes": "384x384",
+        "type": "image/png"
+    }
+  ]
+  }

@@ -32,12 +32,13 @@ const getModels = async () => {
 };
 // Increment the variant and return the new variant
 const nextVariant = (model: Model) => {
+  const to_return = model.current_variant;
   if (model.current_variant === model.num_variants-1) {
     model.current_variant = 0;
   } else {
     model.current_variant++;
   }
-  return model.current_variant;
+  return to_return;
 };
 export { Model, getModels, nextVariant };
 

@@ -38,7 +38,7 @@ export default function TFView() {
     setError(false);
     // Determine variant
     const variant = nextVariant(models[model]);
-    if (!variant || !uuid) return;
+    if (!uuid) return setLoading(false);
     _predict(model, compressed, setResult, setError, setLoading, variant, uuid);
   };
   const resultToImage = () => {

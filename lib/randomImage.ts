@@ -2,7 +2,7 @@
 
 const N = 25;
 const API_URL = process.env.NEXT_PUBLIC_IMAGE_SERVER;
-const cachedImages = [];
+const cachedImages: string[] = [];
 export  async function getRandomImage( ) {
   if (cachedImages.length < N*0.2) {
     prefetchRandomImages();

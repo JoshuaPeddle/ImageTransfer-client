@@ -1,6 +1,11 @@
 
 class Model {
-  constructor(style, background_url, label, num_variants=1) {
+  style: string;
+  background_url: string;
+  label: string;
+  num_variants: number;
+  current_variant: number;
+  constructor(style: string, background_url: string, label: string, num_variants=1) {
     this.style = style;
     this.background_url = background_url;
     this.label = label;
@@ -8,12 +13,12 @@ class Model {
     this.current_variant = 0;
   }
 }
-let cachedModels = null; // Models are cached for 5 minutes
-let lastFetch = null; // Last time models were fetched
+let cachedModels: {[key: string]: Model} = {}; // Models are cached for 5 minutes
+let lastFetch : Date= new Date(); // Last time models were fetched
 const getModels = async () => {
   let currentTime = new Date();
-  if (cachedModels != null && (currentTime - lastFetch) < 300000) return cachedModels;
-  const models = {};
+  if (Object.keys(cachedModels).length > 1 &&(currentTime.valueOf() - lastFetch.valueOf()) < 300000) return cachedModels;
+  let models: {[key: string]: Model} = {};
   await fetch(process.env.NEXT_PUBLIC_IMAGE_SERVER+'styles')
     .then((res) => res.json())
     .then((data) => {
@@ -26,7 +31,7 @@ const getModels = async () => {
   return models;
 };
 // Increment the variant and return the new variant
-const nextVariant = (model) => {
+const nextVariant = (model: Model) => {
   if (model.current_variant === model.num_variants-1) {
     model.current_variant = 0;
   } else {

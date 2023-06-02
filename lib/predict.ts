@@ -1,5 +1,5 @@
 const API_URL = process.env.NEXT_PUBLIC_IMAGE_SERVER;
-export default async  function predict(model, blob, setResult, setError, setLoading, variant, uuid ) {
+export default async  function predict(model: string, blob: Blob, setResult: Function, setError: Function, setLoading: Function, variant: number, uuid: string ) {
   const fd = new FormData();
   const file = new File([ blob ], uuid + '.jpg', { type: 'image/jpeg' });
   fd.append('image', file);

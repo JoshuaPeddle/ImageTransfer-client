@@ -2,11 +2,12 @@
 import styles from './TFView.module.css';
 import { useCallback } from 'react';
 
-function cropImage(img, cropX, cropY, cropWidth, cropHeight, targetWidth, targetHeight, setSize) {
+function cropImage(img:  HTMLImageElement, cropX: number, cropY: number, cropWidth: number, cropHeight: number, targetWidth: number, targetHeight: number, setSize: Function) {
   const canvas = document.createElement('canvas');
   const context = canvas.getContext('2d', { willReadFrequently: true });
   canvas.width = targetWidth;
   canvas.height = targetHeight;
+  if (!context) return;
   context.drawImage(
     img,
     cropX,
@@ -23,7 +24,7 @@ function cropImage(img, cropX, cropY, cropWidth, cropHeight, targetWidth, target
   return canvas.toDataURL();
 }
 
-function centerCropByAspectRatio(img, aspectRatio=1.4, setSize) {
+function centerCropByAspectRatio(img: HTMLImageElement, aspectRatio=1.4, setSize: Function) {
   // If the image is wider than it is tall or taller than it is wide by more than aspectRatio, crop the image
   const imgAspectRatio = img.width / img.height;
   const upperBound = aspectRatio;
@@ -75,7 +76,7 @@ function centerCropByAspectRatio(img, aspectRatio=1.4, setSize) {
 }
 
 // https://img.ly/blog/how-to-resize-an-image-with-javascript/
-function resizeImage(imgToResize, setSize) {
+function resizeImage(imgToResize: HTMLImageElement, setSize: Function) {
   const canvas = document.createElement('canvas');
   const context = canvas.getContext('2d', { willReadFrequently: true });
   const originalWidth = imgToResize.width;
@@ -90,7 +91,7 @@ function resizeImage(imgToResize, setSize) {
   const canvasHeight = originalHeight * resizingFactor;
   canvas.width = canvasWidth;
   canvas.height = canvasHeight;
-  
+  if (!context) return;
   context.drawImage(
     imgToResize,
     0,
@@ -103,16 +104,17 @@ function resizeImage(imgToResize, setSize) {
   return canvas.toDataURL();
 }
 
-export default function LocalImageLoader({setImage, setSize}) {
-  const update = useCallback((e) => {
+export default function LocalImageLoader({ setImage, setSize } : { setImage: Function, setSize: Function }) {
+  const update = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
     const file = e.target.files[0];
     const reader = new FileReader();
     reader.onload = (e) => {
+      if (!e.target?.result) return;
       const img = new Image();
-      img.src = e.target.result;
+      img.src = e.target.result as string;
       img.onload = () => {
         const result_img = centerCropByAspectRatio(img, 1.5, setSize);
-        //console.log('result_img', result_img);
         setImage(result_img);
       };
     };

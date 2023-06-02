@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styles from './exportPopup.module.css';
-import {exportImages, exportGIF, exportMP4} from '../lib/ImageExporter.js';
+import {exportImages, exportGIF, exportMP4} from '../lib/ImageExporter';
 export default function ExportPopup({image, result, setExportPopup}: {image: string, result: string, setExportPopup: Function}) {
   const [ exportType, setExportType ] = useState('image');
   const [ exportLoading, setExportLoading ] = useState(false);

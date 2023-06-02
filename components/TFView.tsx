@@ -18,7 +18,7 @@ export default function TFView() {
   const [ loading, setLoading ] = useState(false);
   const [ message, setMessage ] = useState(null);
   const [ uuid, setUuid ] = useState(null as null| string);
-  const [ compressed, setCompressed ] = useState(null as null| string);
+  const [ compressed, setCompressed ] = useState(null as null| Blob);
   const [ exportPopup, setExportPopup ] = useState(false);
   const [ sourceImageSize, setSourceImageSize ] = useState([ 384, 256 ] as [number, number]);
   useEffect(() => {
@@ -38,6 +38,7 @@ export default function TFView() {
     setError(false);
     // Determine variant
     const variant = nextVariant(models[model]);
+    if (!variant || !uuid) return;
     _predict(model, compressed, setResult, setError, setLoading, variant, uuid);
   };
   const resultToImage = () => {

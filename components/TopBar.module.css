@@ -23,7 +23,7 @@
 
 .topbar_inner {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
     max-width: 1200px;
@@ -84,5 +84,10 @@
     font-style: italic;
     text-shadow: 0px 0px 10px #0000006d;
     font-size: 1.8rem;
-
 }
+@media screen and (max-width: 768px) {
+    .topbar_title {
+        font-size: 1.5rem;
+    }
+}
+    

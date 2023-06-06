@@ -1,0 +1,5 @@
+NEXT_PUBLIC_IMAGE_SERVER="http://localhost:3000" # 'NEXT_' prefix allows use in client
+DATABASE_URL="postgresql://user:pass@host:port/db?schema=public"
+NEXTAUTH_SECRET="randomSecret"
+GITHUB_ID="getFromGithub"  # https://github.com/settings/developers
+GITHUB_SECRET="getFromGithub" 

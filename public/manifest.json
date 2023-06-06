@@ -9,14 +9,14 @@
   "description": "A style transfer app",
   "icons": [
     {
-        "src": "/logo.png",
+        "src": "/logo.webp",
         "sizes": "384x384",
-        "type": "image/png"
+        "type": "image/webp"
     },
     {
-        "src": "/logo-large.png",
+        "src": "/logo-large.jpg",
         "sizes": "768x768",
-        "type": "image/png"
+        "type": "image/jpg"
     }
   ]
   }

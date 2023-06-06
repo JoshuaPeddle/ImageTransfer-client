@@ -1,26 +1,28 @@
 
 import { useEffect, useState, useCallback } from 'react';
+import { useSession, getSession } from 'next-auth/react';
 import LocalImageLoader from './LocalImageLoader';
 import _Image from 'next/image';
 import StyleButton from './StyleButton';
-import {nextVariant, Model} from '../lib/models';
+import { nextVariant, Model } from '../lib/models';
 import _predict from '../lib/predict';
 import styles from './TFView.module.css';
 import ImageView from './imageView';
-import {compressImage} from '../lib/compress';
+import { compressImage } from '../lib/compress';
 import ExportPopup from './exportPopup';
 
 export default function TFView() {
-  const [ image, setImage ] = useState(null as null| string);
+  const [ image, setImage ] = useState(null as null | string);
   const [ result, setResult ] = useState(null);
   const [ error, setError ] = useState(false);
-  const [ models, setModels ] = useState({} as {[key: string]: Model});
+  const [ models, setModels ] = useState({} as { [key: string]: Model });
   const [ loading, setLoading ] = useState(false);
   const [ message, setMessage ] = useState(null);
-  const [ uuid, setUuid ] = useState(null as null| string);
-  const [ compressed, setCompressed ] = useState(null as null| Blob);
+  const [ uuid, setUuid ] = useState(null as null | string);
+  const [ compressed, setCompressed ] = useState(null as null | Blob);
   const [ exportPopup, setExportPopup ] = useState(false);
   const [ sourceImageSize, setSourceImageSize ] = useState([ 384, 256 ] as [number, number]);
+  const { data: session, status, update } = useSession();
   useEffect(() => {
     const generateUUID = () => {
       let uuid = self.crypto.randomUUID();
@@ -30,7 +32,7 @@ export default function TFView() {
     if (!image) return;
     compressImage(image, setCompressed);
   }, [ image ]);
-  const predict =async (model: string) => {
+  const predict = async (model: string) => {
     if (!compressed) return;
     if (loading) return;
     setResult(null);
@@ -39,7 +41,13 @@ export default function TFView() {
     // Determine variant
     const variant = nextVariant(models[model]);
     if (!uuid) return setLoading(false);
-    _predict(model, compressed, setResult, setError, setLoading, variant, uuid);
+    const pred = _predict(model, compressed, setResult, setError, setLoading, variant, uuid);
+    if (!session) return;
+    const res = await fetch(`/api/charge/${session.user.uuid}`, { method: 'POST' });
+    const data = await res.json();
+    await update({num_tokens: data.num_tokens});
+    await pred;
+    setLoading(false);
   };
   const resultToImage = () => {
     if (!result) return;
@@ -53,7 +61,7 @@ export default function TFView() {
   };
   const fetchRandomImage = async () => {
     _setImage(null);
-    const res = await fetch('/api/randomImage', {method: 'GET'});
+    const res = await fetch('/api/randomImage', { method: 'GET' });
     const data = await res.json();
     // Prefetch the image
     prefetchImage(data.url);
@@ -65,7 +73,7 @@ export default function TFView() {
   };
   const fetchModels = useCallback(async () => {
     // Make a call to /api/models to get the models
-    const res = await fetch('/api/models', {method: 'GET'});
+    const res = await fetch('/api/models', { method: 'GET' });
     const data = await res.json();
     setModels(data);
   }, []);
@@ -73,7 +81,7 @@ export default function TFView() {
     fetchModels().then(() => {
       fetchRandomImage();
     });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const _setImage = (img: string | null) => {
     setImage(img);
@@ -82,23 +90,23 @@ export default function TFView() {
   };
   return (
     <>
-      { image && result &&exportPopup ? <ExportPopup image={image} result={result} setExportPopup={setExportPopup}/> : null}
-      <div className={styles.topButtonContainer}>    
+      {image && result && exportPopup ? <ExportPopup image={image} result={result} setExportPopup={setExportPopup} /> : null}
+      <div className={styles.topButtonContainer}>
         <div>
-          <LocalImageLoader setImage={_setImage} setSize={setSourceImageSize}/>
+          <LocalImageLoader setImage={_setImage} setSize={setSourceImageSize} />
           <button id='random_image_btn' className={styles.button} onClick={fetchRandomImage} >Random Image</button>
         </div>
-        <ImageView image={image} result={result} loading={loading} size={sourceImageSize}/>
+        <ImageView image={image} result={result} loading={loading} size={sourceImageSize} />
         <div className={styles.modelButtonsContainer}>
-          {Object.values(models).map((model : {style: string, label: string, background_url: string}) => {
-            return <StyleButton  key={model.style} style={model.style} label={model.label} bg={model.background_url} predict={predict}/>;
+          {Object.values(models).map((model: { style: string, label: string, background_url: string }) => {
+            return <StyleButton key={model.style} style={model.style} label={model.label} bg={model.background_url} predict={predict} />;
           })}
         </div>
         <div className={styles.modelButtonsContainer}>
           <button className={styles.button} onClick={resultToImage} >Result to Source</button>
-          <button id="export_popup_btn" className={styles.button}  onClick={_open_export_popup} >Export</button>
+          <button id="export_popup_btn" className={styles.button} onClick={_open_export_popup} >Export</button>
         </div>
- 
+
       </div>
 
     </>

@@ -12,9 +12,9 @@ export default function UserDisplay({ loggedIn, name, num_tokens }: { loggedIn: 
     );
   }
   return (
-    <>
+    <div>
       
-      <button onClick={() => signIn()}>Log in</button>
-    </>
+      <button className='underline pl-3' onClick={() => signIn()}>Log in</button>
+    </div>
   );
 }

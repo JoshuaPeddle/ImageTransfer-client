@@ -14,7 +14,7 @@ export default function Home() {
       <Head>
         <title>Style Transfer</title>
         <meta name="description" content="Style Transfer" />
-        <link rel="icon" href="/logo.png" />
+        <link rel="icon" href="/logo.jpg" type="image/jpg" />
       </Head>
       <TopBar />
       <main className='flex flex-col min-h-screen '>

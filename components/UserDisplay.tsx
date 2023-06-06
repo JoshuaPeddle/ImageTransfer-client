@@ -1,5 +1,4 @@
 
-import { User } from '../lib/User';
 import type { Session } from 'next-auth';
 import { signIn, signOut } from 'next-auth/react';
 export default function UserDisplay({ loggedIn, name, num_tokens }: { loggedIn: Session | null, name: string | null | undefined, num_tokens: number | undefined }) {

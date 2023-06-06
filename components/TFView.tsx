@@ -41,12 +41,12 @@ export default function TFView() {
     // Determine variant
     const variant = nextVariant(models[model]);
     if (!uuid) return setLoading(false);
-    _predict(model, compressed, setResult, setError, setLoading, variant, uuid);
+    const pred = _predict(model, compressed, setResult, setError, setLoading, variant, uuid);
     if (!session) return;
     const res = await fetch(`/api/charge/${session.user.uuid}`, { method: 'POST' });
     const data = await res.json();
     await update({num_tokens: data.num_tokens});
-    if (!result) return;
+    await pred;
     setLoading(false);
   };
   const resultToImage = () => {

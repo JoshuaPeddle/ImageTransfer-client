@@ -12,7 +12,6 @@ export default async function predict(model: string, blob: Blob, setResult: Func
           const reader = new FileReader() ;
           reader.onload = function() {
             setResult(this.result);
-            setLoading(false);
           } ;
           reader.readAsDataURL(blob) ;
         } catch (e) {

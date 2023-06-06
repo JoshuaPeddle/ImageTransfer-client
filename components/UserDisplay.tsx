@@ -1,7 +1,7 @@
 
 import { User } from '../lib/User';
 import { useSession, signIn, signOut } from 'next-auth/react';
-export default function UserDisplay({user} : {user: User | null}) {
+export default function UserDisplay() {
   const { data: session } = useSession();
   if (session) {
     return (

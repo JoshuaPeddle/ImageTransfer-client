@@ -1,5 +1,6 @@
+
 const API_URL = process.env.NEXT_PUBLIC_IMAGE_SERVER;
-export default async  function predict(model: string, blob: Blob, setResult: Function, setError: Function, setLoading: Function, variant: number, uuid: string ) {
+export default async function predict(model: string, blob: Blob, setResult: Function, setError: Function, setLoading: Function, variant: number, uuid: string ) {
   const fd = new FormData();
   const file = new File([ blob ], uuid + '.webp', { type: 'image/webp' });
   fd.append('image', file);
@@ -11,7 +12,6 @@ export default async  function predict(model: string, blob: Blob, setResult: Fun
           const reader = new FileReader() ;
           reader.onload = function() {
             setResult(this.result);
-            setLoading(false);
           } ;
           reader.readAsDataURL(blob) ;
         } catch (e) {

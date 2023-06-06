@@ -3,12 +3,12 @@ import TFView from '@/components/TFView';
 import TopBar from '@/components/TopBar';
 import Footer from '@/components/Footer';
 import Head from 'next/head';
-import { useState } from 'react';
+import { useSession } from 'next-auth/react';
 import UserDisplay from '@/components/UserDisplay';
-import { User } from '../lib/User';
 
 const inter = Inter({ subsets: [ 'latin' ] });
 export default function Home() {
+  const { data: session } = useSession();
   return (
     <>
       <Head>
@@ -16,19 +16,14 @@ export default function Home() {
         <meta name="description" content="Style Transfer" />
         <link rel="icon" href="/logo.png" />
       </Head>
-      
       <TopBar />
-      
       <main className='flex flex-col min-h-screen '>
-        
         <div className={`flex flex-1 min-w-screen flex-col items-center justify-center  ${inter.className}`}>
-          <UserDisplay/>
+          <UserDisplay loggedIn={session} name={session?.user.name} num_tokens={session?.user.num_tokens}/>
           <TFView />
-          
         </div>
         <Footer />
       </main>
-     
     </>
   );
 }

@@ -4,11 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "cypress": "cypress open",
-    "cy-run": "cypress run"
+    "cy-run": "cypress run",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^4.15.0",

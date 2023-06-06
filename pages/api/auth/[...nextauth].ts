@@ -6,7 +6,6 @@ export const authOptions = {
   callbacks: {
     async jwt({ token, account, profile  }:any) {
       // Initial sign in
-      console.log('Token: ', token, 'Account: ', account, 'Profile: ', profile);
       const user = await getUser(token.email);
       if (user) {
         token.num_tokens = user.num_tokens;

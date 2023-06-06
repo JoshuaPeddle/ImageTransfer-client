@@ -7,7 +7,7 @@ export default function UserDisplay() {
     return (
       <>
         <h1>{session.user?.name}</h1>
-        <h1>{session.user?.email}</h1>  
+        <h1>{session.user?.num_tokens}</h1>
         <button onClick={() => signOut()}>Sign Out</button>
       </>
     );

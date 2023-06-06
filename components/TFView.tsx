@@ -46,6 +46,7 @@ export default function TFView() {
     const res = await fetch(`/api/charge/${session.user.uuid}`, { method: 'POST' });
     const data = await res.json();
     await update({num_tokens: data.num_tokens});
+    if (!result) return;
     setLoading(false);
   };
   const resultToImage = () => {

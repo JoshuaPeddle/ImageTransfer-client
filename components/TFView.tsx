@@ -105,17 +105,17 @@ export default function TFView({ updateLocalTokens }: { updateLocalTokens: () =>
     <>
       {image && result && exportPopup ? <ExportPopup image={image} result={result} setExportPopup={setExportPopup} /> : null}
       <div className={styles.topButtonContainer}>
-        <div>
+        <div className='flex'>
           <LocalImageLoader setImage={_setImage} setSize={setSourceImageSize} />
           <button id='random_image_btn' className={styles.button} onClick={fetchRandomImage} >Random Image</button>
         </div>
         <ImageView image={image} result={result} loading={loading} size={sourceImageSize} />
         <div className={styles.modelButtonsContainer}>
           {models && Object.values(models).map((model: { style: string, label: string, background_url: string }) => {
-            return <StyleButton key={model.style} style={model.style} label={model.label} bg={model.background_url} predict={predict} />;
+            return <StyleButton key={model.style} style={model.style} label={model.label} bg={model.background_url} predict={predict} loading={loading} />;
           })}
         </div>
-        <div className={styles.modelButtonsContainer}>
+        <div className='flex flex-wrap'>
           <button className={styles.button} onClick={resultToImage} >Result to Source</button>
           <button id="export_popup_btn" className={styles.button} onClick={_open_export_popup} >Export</button>
         </div>

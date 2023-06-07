@@ -1,42 +1,56 @@
-
 .modelButtonsContainer {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    max-width: 384px;
+    max-width: 800px;
     margin: 0 auto;
 }
-@media screen and (min-width: 766px) {
+
+
+.button {
+    background: #457b9d91;
+    border-radius: 8px;
+    border-width: 3px;
+    border-color: #457b9d90;
+    color: #F1FAEE;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+    list-style: none;
+    margin: 2px 0px;
+    padding: 7px 12px;
+    text-align: center;
+    vertical-align: baseline;
+    white-space: nowrap;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    transition: background 0.2s ease;
+    width: 180px;
+    /* adjust as necessary */
+    margin: 10px 10px;
+    /* adjust as necessary, adds horizontal space between buttons */
+}
+
+@media screen and (max-width: 766px) {
     .modelButtonsContainer {
-        max-width: 800px;
+        max-width: 384px;
+        
+    }
+    .button {
+        width: 130px;
+        /* adjust as necessary */
+        margin: 10 10px;
+        font-size: 14px;
+        /* adjust as necessary, adds horizontal space between buttons */
     }
 }
 
-.button{
-      background: #457b9d91;
-      border-radius: 8px;
-      border-width: 3px;
-      border-color: #457b9d90;
-      color: #F1FAEE;
-      cursor: pointer;
-      display: inline-block;
-      font-size: 16px;
-      font-weight: 600;
-      line-height: 20px;
-      list-style: none;
-      margin: 2px 0px;
-      padding: 7px 12px;
-      text-align: center;
-      vertical-align: baseline;
-      white-space: nowrap;
-      user-select: none;
-      -webkit-user-select: none;
-      touch-action: manipulation;
-      transition: background 0.2s ease;
-}
-.button:hover{
+.button:hover {
     background: #1D3557;
 }
 
@@ -49,6 +63,4 @@
     padding-top: 64px;
 }
 
-@media (prefers-color-scheme: dark) {
-    
-}
+@media (prefers-color-scheme: dark) {}

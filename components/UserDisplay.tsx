@@ -13,7 +13,7 @@ export default function UserDisplay({num_tokens}: {num_tokens: string | null}) {
     );
   }
   return (
-    <div>
+    <div className='flex flex-row flex-wrap justify-end pl-3'>
       <h1>{num_tokens} Tokens </h1>
       <button className='underline pl-3' onClick={() => signIn()}>Log in</button>
     </div>

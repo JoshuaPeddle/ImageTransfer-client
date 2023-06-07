@@ -9,7 +9,6 @@ export default function footer() {
             <h1>styleswap.art</h1>
           </div>
           <div className={styles.footer_links}>
-
           </div>
         </div>
       </div>

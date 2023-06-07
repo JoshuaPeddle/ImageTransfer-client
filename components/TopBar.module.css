@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 15px;
+    padding: 10px 14px;
     background-color: #ffffff81;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     width: 100%;
@@ -87,7 +87,7 @@
 }
 @media screen and (max-width: 768px) {
     .topbar_title {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
     }
 }
     

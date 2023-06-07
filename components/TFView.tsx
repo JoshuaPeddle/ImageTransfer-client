@@ -4,10 +4,11 @@ import { useSession } from 'next-auth/react';
 import { nextVariant, Model } from '../lib/models';
 import _predict from '../lib/predict';
 import styles from './TFView.module.css';
+import styleButtonStyle from './StyleButton.module.css';
 import { compressImage } from '../lib/compress';
 const LocalImageLoader = dynamic(() => import('./LocalImageLoader'));
 const ImageView = dynamic(() => import('./imageView'));
-const StyleButton = dynamic(() => import('./StyleButton'));
+const StyleButton = dynamic(() => import('./StyleButton'), { loading: () => <div className={styleButtonStyle.imageButton} >yeet</div> });
 const ExportPopup = dynamic(() => import('./exportPopup'));
 export default function TFView({ updateLocalTokens }: { updateLocalTokens: () => void}) {
   const [ image, setImage ] = useState(null as null | string);
@@ -90,9 +91,8 @@ export default function TFView({ updateLocalTokens }: { updateLocalTokens: () =>
     setModels(data);
   }, []);
   useEffect(() => {
-    fetchModels().then(() => {
-      fetchRandomImage();
-    });
+    fetchModels();
+    fetchRandomImage();
   }, [ fetchModels, fetchRandomImage ]);
   const _setImage = (img: string | null) => {
     setImage(img);
@@ -109,7 +109,7 @@ export default function TFView({ updateLocalTokens }: { updateLocalTokens: () =>
         </div>
         <ImageView image={image} result={result} loading={loading} size={sourceImageSize} />
         <div className={styles.modelButtonsContainer}>
-          {Object.values(models).map((model: { style: string, label: string, background_url: string }) => {
+          {models && Object.values(models).map((model: { style: string, label: string, background_url: string }) => {
             return <StyleButton key={model.style} style={model.style} label={model.label} bg={model.background_url} predict={predict} />;
           })}
         </div>

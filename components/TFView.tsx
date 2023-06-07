@@ -11,7 +11,7 @@ import ImageView from './imageView';
 import { compressImage } from '../lib/compress';
 import ExportPopup from './exportPopup';
 
-export default function TFView() {
+export default function TFView({ updateLocalTokens }: { updateLocalTokens: () => void}) {
   const [ image, setImage ] = useState(null as null | string);
   const [ result, setResult ] = useState(null);
   const [ error, setError ] = useState(false);
@@ -33,6 +33,10 @@ export default function TFView() {
     compressImage(image, setCompressed);
   }, [ image ]);
   const predict = async (model: string) => {
+    if ((session && session?.user.num_tokens <= 0) || (!session && window.localStorage.getItem('num_tokens') === '0') ) {
+      alert('You have no tokens left! Please purchase more.');
+      return;
+    }
     if (!compressed) return;
     if (loading) return;
     setResult(null);
@@ -42,17 +46,28 @@ export default function TFView() {
     const variant = nextVariant(models[model]);
     if (!uuid) return setLoading(false);
     const pred = _predict(model, compressed, setResult, setError, setLoading, variant, uuid);
-    if (!session) return;
+    if (!session) {
+      chargeLocalstorage();  // Charge localstorage
+      await pred;
+      updateLocalTokens();
+      return setLoading(false);
+    }
     const res = await fetch(`/api/charge/${session.user.uuid}`, { method: 'POST' });
     const data = await res.json();
-    await update({num_tokens: data.num_tokens});
     await pred;
+    await update({num_tokens: data.num_tokens});
     setLoading(false);
   };
   const resultToImage = () => {
     if (!result) return;
     _setImage(result);
     setResult(null);
+  };
+  const chargeLocalstorage = async () => {
+    if (session) return;
+    const num_tokens = window.localStorage.getItem('num_tokens');
+    if (!num_tokens) return;
+    window.localStorage.setItem('num_tokens', (parseInt(num_tokens) - 1).toString());
   };
   // This function sends send a GET request to the generator server to get a url for a random image
   const prefetchImage = async (url: string) => {

@@ -1,9 +1,7 @@
 import Image from 'next/image';
 import styles from './TopBar.module.css';
 import UserDisplay from '@/components/UserDisplay';
-import { useSession } from 'next-auth/react';
-export default function TopBar() {
-  const { data: session } = useSession();
+export default function TopBar({num_tokens}: {num_tokens: string | null}) {
   return (
     <>
       <div className={styles.topbar}>
@@ -14,7 +12,7 @@ export default function TopBar() {
           <div className={styles.topbar_title}>
             styleswap.art
           </div>
-          <UserDisplay loggedIn={session} name={session?.user.name} num_tokens={session?.user.num_tokens}/>
+          <UserDisplay num_tokens={num_tokens}/>
         </div>
 
       </div>

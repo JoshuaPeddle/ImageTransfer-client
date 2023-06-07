@@ -5,7 +5,7 @@ export default async function predict(model: string, blob: Blob, setResult: Func
   const file = new File([ blob ], uuid + '.webp', { type: 'image/webp' });
   fd.append('image', file);
 
-  fetch(API_URL+'generate/'+model+'/'+variant, {method: 'POST', body: fd})
+  await fetch(API_URL+'generate/'+model+'/'+variant, {method: 'POST', body: fd})
     .then(async (res) => {
       res.blob().then((blob) => {
         try {

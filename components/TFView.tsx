@@ -35,7 +35,7 @@ export default function TFView({ updateLocalTokens }: { updateLocalTokens: () =>
       if (session) {
         return alert('Out of tokens? Don\'t worry! Registered users receive 300 free tokens daily, up to a 1000-token cap. Check back in 24 hours!');
       }
-      return alert(`Your token balance caps at ${process.env.NEXT_PUBLIC_FREE_USER_TOKENS || '25'}, replenishing daily. Want more? Consider creating a free account!`);
+      return alert(`Your token balance caps at ${parseInt(process.env.NEXT_PUBLIC_FREE_USER_TOKENS || '25')}, replenishing daily. Want more? Consider creating a free account!`);
     }
     if (!compressed) return;
     if (loading) return;

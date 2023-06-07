@@ -11,6 +11,7 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    padding: 0 10px;
     margin: 0 auto;
 }
 .footer_logo {
@@ -29,6 +30,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    text-decoration: underline;
 }
 .footer_links a {
     display: flex;
@@ -38,13 +40,29 @@
     font-weight: 500;
     color: #000;
     text-decoration: none;
-    margin-left: 20px;
+    margin-left: 30px;
+    
 }
 .footer_links a:hover {
     color: #000;
 }
+.footer_links a:first-child {
+    margin-left: 0;
+}
 .footer_links a:last-child {
     margin-right: 0;
+}
+.footer_info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #000;
+    text-decoration: none;
+}
+.footer_info  p {
+    padding-right: 30px;
 }
 .footer_title {
     display: flex;
@@ -54,4 +72,43 @@
     font-weight: 500;
     color: #000;
     text-decoration: none;
+}
+
+.footer_quote {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #000;
+    text-decoration: none;
+
+}
+
+.footer_year {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #000;
+    text-decoration: none;
+}
+@media (max-width: 680px) {
+    .footer_title {
+        font-size: 1rem;
+    }
+    .footer_quote {
+        font-size: 0.6rem;
+    }
+    .footer_year {
+        font-size: 0.6rem;
+    }
+    .footer_links a {
+        font-size: 0.6rem;
+        margin-left: 5px;
+    }
+    .footer_info  p {
+        padding-right: 10px;
+    }
 }

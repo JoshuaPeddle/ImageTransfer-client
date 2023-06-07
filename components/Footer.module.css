@@ -64,21 +64,13 @@
 .footer_info  p {
     padding-right: 30px;
 }
-.footer_title {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.5rem;
-    font-weight: 500;
-    color: #000;
-    text-decoration: none;
-}
+
 
 .footer_quote {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.2rem;
+    font-size: 1.0rem;
     font-weight: 500;
     color: #000;
     text-decoration: none;
@@ -89,26 +81,24 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.2rem;
+    font-size: 1.0rem;
     font-weight: 500;
     color: #000;
     text-decoration: none;
 }
-@media (max-width: 680px) {
-    .footer_title {
-        font-size: 1rem;
-    }
+@media (max-width: 500px) {
+
     .footer_quote {
-        font-size: 0.6rem;
+        font-size: 0.8rem;
     }
     .footer_year {
-        font-size: 0.6rem;
+        font-size: 0.8rem;
     }
     .footer_links a {
-        font-size: 0.6rem;
+        font-size: 0.8rem;
         margin-left: 5px;
     }
     .footer_info  p {
-        padding-right: 10px;
+        padding-right: 20px;
     }
 }

@@ -21,7 +21,7 @@ export default function Home() {
       const last_request = window.localStorage.getItem('last_request');
       const num_tokens = window.localStorage.getItem('num_tokens');
       if (!last_request) {
-        window.localStorage.setItem('num_tokens', '25');
+        window.localStorage.setItem('num_tokens', process.env.NEXT_PUBLIC_FREE_USER_TOKENS || '25');
         return window.localStorage.setItem('last_request', new Date().toString());
       }
       if (last_request && num_tokens) {                 // Refresh num_tokens if last request was more than 24 hours ago
@@ -29,8 +29,8 @@ export default function Home() {
         const last = new Date(last_request);
         const diff = now.getTime() - last.getTime();
         const diff_hours = diff / (1000 * 60 * 60);
-        if (diff_hours < 24) return;
-        window.localStorage.setItem('num_tokens', '25');
+        if (diff_hours < parseFloat(process.env.NEXT_PUBLIC_FREE_USER_RESET_INTERVAL || '24')) return;
+        window.localStorage.setItem('num_tokens',  process.env.NEXT_PUBLIC_FREE_USER_TOKENS || '25');
         return window.localStorage.setItem('last_request', now.toString());
       }
     };

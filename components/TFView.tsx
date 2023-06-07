@@ -74,7 +74,7 @@ export default function TFView({ updateLocalTokens }: { updateLocalTokens: () =>
     const img = new Image();
     img.src = url;
   };
-  const fetchRandomImage = async () => {
+  const fetchRandomImage = useCallback(async () => {
     _setImage(null);
     const res = await fetch('/api/randomImage', { method: 'GET' });
     const data = await res.json();
@@ -82,7 +82,7 @@ export default function TFView({ updateLocalTokens }: { updateLocalTokens: () =>
     prefetchImage(data.url);
     setSourceImageSize([ 384, 256 ]);
     _setImage(data.url);
-  };
+  }, []);
   const _open_export_popup = () => {
     setExportPopup(true);
   };
@@ -96,8 +96,7 @@ export default function TFView({ updateLocalTokens }: { updateLocalTokens: () =>
     fetchModels().then(() => {
       fetchRandomImage();
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [ fetchModels, fetchRandomImage ]);
   const _setImage = (img: string | null) => {
     setImage(img);
     setResult(null);

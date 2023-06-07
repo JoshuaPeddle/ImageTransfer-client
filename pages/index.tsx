@@ -14,7 +14,6 @@ export default function Home() {
     if (session) return;
     const num_tokens = window.localStorage.getItem('num_tokens');
     if (!num_tokens) return;
-    console.log('setting', num_tokens);
     setLocalTokens(num_tokens);
   }, [ session ]);
   useEffect(() => {
@@ -33,8 +32,7 @@ export default function Home() {
       if (!num_tokens && !last_request) window.localStorage.setItem('num_tokens', '10');
     };
     if (session) return;
-    init_num_tokens();
-    console.log(window.localStorage.getItem('num_tokens'));
+    init_num_tokens();   
     updateLocalTokens();
   }, [ session, updateLocalTokens ]);
 

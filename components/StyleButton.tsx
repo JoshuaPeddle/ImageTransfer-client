@@ -1,7 +1,5 @@
 // Desc: Let the user load a local image
 
-import { use, useCallback, useEffect } from 'react';
-
 import styles from './StyleButton.module.css';
 
 export default function StyleButton({style, predict, label, bg}: {style: string, predict: Function, label: string, bg: string}) {

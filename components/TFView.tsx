@@ -1,28 +1,25 @@
-
+import dynamic from 'next/dynamic';
 import { useEffect, useState, useCallback } from 'react';
-import { useSession, getSession } from 'next-auth/react';
-import LocalImageLoader from './LocalImageLoader';
-import _Image from 'next/image';
-import StyleButton from './StyleButton';
+import { useSession } from 'next-auth/react';
 import { nextVariant, Model } from '../lib/models';
 import _predict from '../lib/predict';
 import styles from './TFView.module.css';
-import ImageView from './imageView';
 import { compressImage } from '../lib/compress';
-import ExportPopup from './exportPopup';
-
+const LocalImageLoader = dynamic(() => import('./LocalImageLoader'));
+const ImageView = dynamic(() => import('./imageView'));
+const StyleButton = dynamic(() => import('./StyleButton'));
+const ExportPopup = dynamic(() => import('./exportPopup'));
 export default function TFView({ updateLocalTokens }: { updateLocalTokens: () => void}) {
   const [ image, setImage ] = useState(null as null | string);
   const [ result, setResult ] = useState(null);
   const [ error, setError ] = useState(false);
   const [ models, setModels ] = useState({} as { [key: string]: Model });
   const [ loading, setLoading ] = useState(false);
-  const [ message, setMessage ] = useState(null);
   const [ uuid, setUuid ] = useState(null as null | string);
   const [ compressed, setCompressed ] = useState(null as null | Blob);
   const [ exportPopup, setExportPopup ] = useState(false);
   const [ sourceImageSize, setSourceImageSize ] = useState([ 384, 256 ] as [number, number]);
-  const { data: session, status, update } = useSession();
+  const { data: session, update } = useSession();
   useEffect(() => {
     const generateUUID = () => {
       let uuid = self.crypto.randomUUID();

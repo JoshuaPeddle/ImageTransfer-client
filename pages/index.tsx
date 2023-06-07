@@ -1,11 +1,11 @@
+import dynamic from 'next/dynamic';
 import { Inter } from 'next/font/google';
-import TFView from '@/components/TFView';
-import TopBar from '@/components/TopBar';
-import Footer from '@/components/Footer';
 import Head from 'next/head';
 import { useSession } from 'next-auth/react';
 import { useCallback, useEffect, useState } from 'react';
-
+const TFView = dynamic(() => import('@/components/TFView'));
+const TopBar = dynamic(() => import('@/components/TopBar'));
+const Footer = dynamic(() => import('@/components/Footer'));
 const inter = Inter({ subsets: [ 'latin' ] });
 export default function Home() {
   const { data: session } = useSession();

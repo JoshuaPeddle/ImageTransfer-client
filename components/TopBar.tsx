@@ -1,6 +1,7 @@
-import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import styles from './TopBar.module.css';
-import UserDisplay from '@/components/UserDisplay';
+const UserDisplay = dynamic(() => import('./UserDisplay'));
+const Image = dynamic(() => import('next/image'));
 export default function TopBar({num_tokens}: {num_tokens: string | null}) {
   return (
     <>

@@ -1,7 +1,6 @@
-import Image from 'next/image';
-import ImagePlaceholder from './ImagePlaceholder';
+import dynamic from 'next/dynamic';
 import styles from './imageView.module.css';
-
+const Image = dynamic(() => import('next/image'));
 export default function ImageView({ image, result, loading, size }: { image: string | null, result: string | null, loading: boolean, size: [number, number] }) {
   return (
     <div className={styles.imageContainer}>

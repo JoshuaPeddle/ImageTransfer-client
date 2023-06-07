@@ -1,0 +1,39 @@
+.policyContainer {
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: aliceblue;
+    box-sizing: border-box;
+    min-height: 100svh;
+}
+
+.policyHeader {
+    color: #333;
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 2.5rem;
+}
+
+.policySection {
+    color: #444;
+    margin: 20px 0 10px;
+}
+
+.policyText {
+    color: #666;
+    line-height: 1.6;
+    text-align: justify;
+}
+
+.policyList {
+    list-style: lower-roman;
+    padding-left: 40px;
+}
+
+@media (max-width: 600px) {
+  .policyContainer {
+    font-size: 0.8rem;
+  }
+}

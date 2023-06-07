@@ -15,7 +15,7 @@
 }
 
 .button{
-      background-color: #457b9d91;
+      background: #457b9d91;
       border-radius: 8px;
       border-width: 3px;
       border-color: #457b9d90;
@@ -34,10 +34,10 @@
       user-select: none;
       -webkit-user-select: none;
       touch-action: manipulation;
-      transition: background-color 0.2s ease;
+      transition: background 0.2s ease;
 }
 .button:hover{
-    background-color: #1D3557;
+    background: #1D3557;
 }
 
 .topButtonContainer {

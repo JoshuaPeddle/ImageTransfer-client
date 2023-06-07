@@ -7,7 +7,7 @@ export default function TopBar({num_tokens}: {num_tokens: string | null}) {
       <div className={styles.topbar}>
         <div className={styles.topbar_inner}>
           <div className={styles.topbar_logo}>
-            <Image src="/logo.webp" width={100} height={100} placeholder='empty' quality={10} alt="Logo" />
+            <Image src="/logo.webp" width={40} height={40} placeholder='empty' quality={10} alt="Logo" />
           </div>
           <div className={styles.topbar_title}>
             styleswap.art

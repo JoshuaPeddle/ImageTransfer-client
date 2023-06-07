@@ -20,6 +20,7 @@ export default function Home() {
     const init_num_tokens = () => {
       const last_request = window.localStorage.getItem('last_request');
       const num_tokens = window.localStorage.getItem('num_tokens');
+      if (!last_request) return window.localStorage.setItem('num_tokens', '10');
       if (last_request && num_tokens) {                 // Refresh num_tokens if last request was more than 24 hours ago
         const now = new Date();
         const last = new Date(last_request);
@@ -29,7 +30,6 @@ export default function Home() {
         window.localStorage.setItem('num_tokens', '10');
         return window.localStorage.setItem('last_request', now.toString());
       }
-      if (!num_tokens && !last_request) window.localStorage.setItem('num_tokens', '10');
     };
     if (session) return;
     init_num_tokens();   

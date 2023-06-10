@@ -70,7 +70,12 @@ function centerCropByAspectRatio(img: HTMLImageElement, aspectRatio=1.4, setSize
       //console.log('Resizing');
       return resizeImage(img, setSize);
     }
+    if (img.width < targetWidth || img.height < targetHeight) {
+      //console.log('Upscaling');
+      return resizeImage(img, setSize);
+    }
     //console.log('No cropping or resizing');
+    setSize([ img.width, img.height ]);
     return img.src;
   }
 }

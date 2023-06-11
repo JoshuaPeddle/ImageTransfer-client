@@ -90,3 +90,12 @@
     }
 }
     
+@media screen and (max-width: 370px) {
+    .topbar_image {
+        display: none;
+    }
+    .topbar_title {
+        font-size: 1rem;
+    }
+   
+}

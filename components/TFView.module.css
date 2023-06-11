@@ -21,7 +21,7 @@
     -webkit-user-select: none;
     touch-action: manipulation;
     transition: background 0.2s ease;
-    width: 180px;
+    width: 185px;
     /* adjust as necessary */
     margin: 0px 5px  10px 5px;
     /* adjust as necessary, adds horizontal space between buttons */
@@ -33,10 +33,10 @@
     justify-content: center;
     align-items: center;
     max-width: 480px;
-    margin: 7px 0 0 0;
-    background-color: #457b9d39;
+    margin: 0px 0 0 0;
+    /* background-color: #457b9d39; */
     border-radius: 10px;
-    
+    padding: 5px 0px 5px 0px;
 }
 
 @media screen and (max-width: 768px) {
@@ -61,10 +61,11 @@
 .topContainer {
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: center;
+
+    justify-content: space-between;
     align-items: center;
     padding-top: 64px;
+    min-height: 90vh;
 }
 
 @media (prefers-color-scheme: dark) {}

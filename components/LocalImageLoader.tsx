@@ -130,7 +130,7 @@ export default function LocalImageLoader({ setImage, setSize } : { setImage: Fun
   return (
     <>
       <input type="file" id='files'  accept="image/*" onChange={update} className="hidden"/>
-      <label className={styles.button} style={{cursor: 'pointer'}} htmlFor="files">Select Image</label>
+      <label className={styles.button} style={{cursor: 'pointer'}} htmlFor="files">Upload Image</label>
     </>
   );
 }

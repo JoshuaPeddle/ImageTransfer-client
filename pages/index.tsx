@@ -47,8 +47,8 @@ export default function Home() {
         <link rel="icon" href="/logo.jpg" type="image/jpg" />
       </Head>
       <TopBar num_tokens={local_tokens }/>
-      <main className='flex flex-col min-h-screen '>
-        <div className={`flex flex-1 min-w-screen flex-col items-center justify-center  ${inter.className}`}>
+      <main className='flex flex-col min-h-screen items-center'>
+        <div className={`flex flex-1 max-w-[1000px] flex-col items-center justify-center   ${inter.className}`}>
           <TFView updateLocalTokens={updateLocalTokens}/>
         </div>
         <Footer />

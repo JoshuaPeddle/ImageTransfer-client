@@ -10,7 +10,7 @@ export default function ImageView({ image, result, loading, size }: { image: str
     'padding': '0 0px 0 0px',
   };
   const src_ref = useRef<HTMLDivElement>(null);
-  const [ height, setHeight ] = useState(384);
+  const [ height, setHeight ] = useState(256);
   const calcHeight = useCallback( () => {
     const img = src_ref.current;
     if (!img) return;

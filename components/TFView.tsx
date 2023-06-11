@@ -4,11 +4,16 @@ import { useSession } from 'next-auth/react';
 import { nextVariant, Model } from '../lib/models';
 import _predict from '../lib/predict';
 import styles from './TFView.module.css';
+import modelButtonStyle from './StyleButton.module.css';
 import { compressImage } from '../lib/compress';
 const LocalImageLoader = dynamic(() => import('./LocalImageLoader'));
 const ImageView = dynamic(() => import('./imageView'));
 const ExportPopup = dynamic(() => import('./exportPopup'));
-const StyleSelector = dynamic(() => import('./StyleSelector'));
+const StyleSelector = dynamic(() => import('./StyleSelector'), { loading: () =>
+  <div className={modelButtonStyle.modelButtonsContainer}>
+    Loading...
+  </div> }
+);
 export default function TFView({ updateLocalTokens }: { updateLocalTokens: () => void}) {
   const [ image, setImage ] = useState(null as null | string);
   const [ result, setResult ] = useState(null);

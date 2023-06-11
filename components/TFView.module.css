@@ -1,12 +1,3 @@
-.modelButtonsContainer {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    max-width: 800px;
-    margin: 0 auto;
-}
 
 
 .button {
@@ -32,29 +23,39 @@
     transition: background 0.2s ease;
     width: 180px;
     /* adjust as necessary */
-    margin: 10px 10px;
+    margin: 0px 5px  10px 5px;
     /* adjust as necessary, adds horizontal space between buttons */
 }
-
-@media screen and (max-width: 766px) {
-    .modelButtonsContainer {
-        max-width: 384px;
-        
-    }
-    .button {
-        width: 130px;
-        /* adjust as necessary */
-        margin: 10 10px;
-        font-size: 14px;
-        /* adjust as necessary, adds horizontal space between buttons */
-    }
+.modelButtonsContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    max-width: 480px;
+    margin: 7px 0 0 0;
+    /* background-color: #457b9d39; */
+    border-radius: 10px;
+    
 }
 
+@media screen and (max-width: 768px) {
+    .modelButtonsContainer {
+        max-width: 355px;
+    }
+
+}
+
+@media screen and (max-width: 300px) {
+    .button {
+        width: 90vw;
+    }
+}
 .button:hover {
     background: #1D3557;
 }
 
-.topButtonContainer {
+.topContainer {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;

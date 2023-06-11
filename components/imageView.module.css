@@ -1,5 +1,5 @@
 .images {
-    max-width: 384px;
+    max-width: min(384px, 100vw);
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -12,6 +12,3 @@
     }
 }
 
-.imageContainer {
-
-}

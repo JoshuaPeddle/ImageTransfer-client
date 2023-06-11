@@ -34,21 +34,24 @@
     align-items: center;
     max-width: 480px;
     margin: 7px 0 0 0;
-    /* background-color: #457b9d39; */
+    background-color: #457b9d39;
     border-radius: 10px;
     
 }
 
 @media screen and (max-width: 768px) {
     .modelButtonsContainer {
-        max-width: 355px;
+        max-width: 384px;
     }
 
 }
 
-@media screen and (max-width: 300px) {
+@media screen and (max-width: 400px) {
     .button {
-        width: 90vw;
+        width: 97vw;
+    }
+    .modelButtonsContainer {
+        max-width: 97vw;
     }
 }
 .button:hover {

@@ -6,7 +6,8 @@ export default function ImageView({ image, result, loading, size }: { image: str
   const imageStyle = {
     height:'auto',
     flexGrow: '2', 
-    minWidth:'min(384px,100vw)'
+    minWidth:'min(384px,100vw)',
+    'padding': '0 1.5vw 0 1.5vw',
   };
   const src_ref = useRef<HTMLDivElement>(null);
   const [ height, setHeight ] = useState(384);

@@ -2,35 +2,34 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 113px;
-    height: 55px;
     border: none;
     border-radius: 5px;
-    margin: 2px 2px;
     padding: 0px 0px;
     cursor: pointer;
+    width: 150px;
+    height: 60px;
+    margin: 5px 5px;
 }
 .imageButtonLabel{
     width: fit-content;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 0.95rem;
     font-weight: 500;
     color: #fff;
     background-color: #000000cc;
     border-radius: 15px;
     padding: 2px 5px;
+    font-size: 1.2rem;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (max-width: 768px) {
     .imageButton{
-        width: 150px;
-        height: 60px;
-        margin: 5px 5px;
+        width: 113px;
+        height: 55px;
+        margin: 0.5vh auto;
     }
     .imageButtonLabel{
-        font-size: 1.2rem;
-        
+        font-size: 0.95rem;
     }
 }

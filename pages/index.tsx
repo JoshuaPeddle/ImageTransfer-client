@@ -3,7 +3,8 @@ import { Inter } from 'next/font/google';
 import Head from 'next/head';
 import { useSession } from 'next-auth/react';
 import { useCallback, useEffect, useState } from 'react';
-import TFView from '@/components/TFView';
+
+const TFView = dynamic(() => import('@/components/TFView'));
 const TopBar = dynamic(() => import('@/components/TopBar'));
 const Footer = dynamic(() => import('@/components/Footer'));
 const inter = Inter({ subsets: [ 'latin' ] });

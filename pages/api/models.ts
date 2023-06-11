@@ -14,6 +14,10 @@ export default async function handler(
     res.status(405).json({ message: 'Method not allowed' });
     return;
   }
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=120, stale-while-revalidate=3600'
+  );
   const styles = await  getModels();
   res.status(200).json(styles);
 }

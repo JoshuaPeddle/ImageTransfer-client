@@ -8,7 +8,6 @@ export interface User {
 }
 
 export async function doesUserExist(email: string): Promise<boolean> {
-  console.log('doesUserExist', email);
   const userRec = await prisma.user.findUnique({
     where: {
       email: email

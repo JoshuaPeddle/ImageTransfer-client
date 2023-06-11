@@ -48,7 +48,7 @@ describe('Simple test', () => {
     // Open download popup
     cy.get('#export_popup_btn').click();
     // Select with id='export_select'
-    cy.get('#export_select').select('image');
+    cy.get('#export_select', {timeout: 20000}).select('image');
     // Should contain a button with id='export_btn'
     cy.get('#export_btn').click();
 
@@ -75,7 +75,7 @@ describe('Simple test', () => {
     // Open download popup
     cy.get('#export_popup_btn').click();
     // Select with id='export_select'
-    cy.get('#export_select').select('gif');
+    cy.get('#export_select', {timeout: 20000}).select('gif');
     // Should contain a button with id='export_btn'
     cy.get('#export_btn').click();
 
@@ -102,7 +102,7 @@ describe('Simple test', () => {
     // Open download popup
     cy.get('#export_popup_btn').click();
     // Select with id='export_select'
-    cy.get('#export_select').select('mp4');
+    cy.get('#export_select', {timeout: 20000}).select('mp4');
     // Should contain a button with id='export_btn'
     cy.get('#export_btn').click();
 

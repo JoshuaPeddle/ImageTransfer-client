@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic';
 import styles from './imageView.module.css';
-import { useEffect, useRef, useState} from 'react';
+import { useCallback, useEffect, useRef, useState} from 'react';
 const Image = dynamic(() => import('next/image'));
 export default function ImageView({ image, result, loading, size }: { image: string | null, result: string | null, loading: boolean, size: [number, number] }) {
   const imageStyle = {
@@ -8,19 +8,24 @@ export default function ImageView({ image, result, loading, size }: { image: str
     flexGrow: '2', 
     minWidth:'min(384px,100vw)'
   };
-  const src_ref = useRef(null);
+  const src_ref = useRef<HTMLDivElement>(null);
   const [ height, setHeight ] = useState(384);
+  const calcHeight = useCallback( () => {
+    const img = src_ref.current;
+    if (!img) return;
+    setHeight( img.clientHeight);
+  }, []);
   useEffect(() => {
-    const aspectRatio = size[0] / size[1];
-    setHeight(384*(1.0/aspectRatio));
-    // Crop the image horizontally
-  }, [ size ]);
-  
+    window.addEventListener('resize', calcHeight);
+    return () => {
+      window.removeEventListener('resize', calcHeight);
+    };
+  }, [ calcHeight ]);
   return (
     <div className={styles.imageContainer}>
       <div className={styles.images}>
-        <div style={{display:'flex', minWidth:'min(384px,100vw)', maxWidth:'min(384px,100vw)'}}> 
-          <Image style={imageStyle} placeholder="blur" ref={src_ref} blurDataURL={'/blank-dark.png'} priority={true} id='src_img' src={image? image :'/loader-dark.gif'}    width={size[0]} height={size[1]}  quality={85} alt="" loader={({ src }) => {
+        <div ref={src_ref} style={{display:'flex', minWidth:'min(384px,100vw)', maxWidth:'min(384px,100vw)'}}> 
+          <Image onLoadingComplete={calcHeight} style={imageStyle} placeholder="blur"  blurDataURL={'/blank-dark.png'} priority={true} id='src_img' src={image? image :'/loader-dark.gif'}    width={size[0]} height={size[1]}  quality={85} alt="" loader={({ src }) => {
             return src;
           }} unoptimized />
         </div>

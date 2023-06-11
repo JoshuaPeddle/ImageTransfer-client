@@ -27,19 +27,9 @@
     /* adjust as necessary, adds horizontal space between buttons */
 }
 
-@media screen and (max-width: 768px) {
-    .modelButtonsContainer {
-        max-width: 384px;
-    }
-
-}
-
 @media screen and (max-width: 400px) {
     .button {
         width: 97vw;
-    }
-    .modelButtonsContainer {
-        max-width: 97vw;
     }
 }
 .button:hover {

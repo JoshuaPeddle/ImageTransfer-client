@@ -15,7 +15,6 @@ export async function getRandomImage() {
 export async function prefetchRandomImages() {
   prefetching = true;
   try {
-    console.log('prefetching ', N);
     const res = await fetch(API_URL + 'random/' + N, { method: 'GET' });
     if (!res.ok) throw new Error(`An error occurred: ${res.statusText}`);
     const data = await res.json();

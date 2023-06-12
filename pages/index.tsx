@@ -13,14 +13,14 @@ export default function Home() {
         <title>Style Transfer</title>
         <meta name="description" content="Style Transfer" />
         <link rel="icon" href="/logo.jpg" type="image/jpg" />
-
+        <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
       </Head>
-      <TopBar />
-      <main className='flex flex-col min-h-screen items-center'>
+      
+      <main >
+        <TopBar />
+      
+        <TFView />
         
-        <div className={`flex flex-1 max-w-[1000px] flex-col items-center justify-center   ${inter.className}`}>
-          <TFView />
-        </div>
         <Footer />
       </main>
     </>

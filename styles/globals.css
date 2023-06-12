@@ -6,13 +6,13 @@
   --background-end-rgb: 168, 218, 220;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 13, 24, 39;
     --background-end-rgb: 0, 0, 0;
   }
-}
+} */
 
 
 

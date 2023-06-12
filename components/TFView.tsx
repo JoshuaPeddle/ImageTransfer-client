@@ -6,6 +6,7 @@ import _predict from '../lib/predict';
 import styles from './TFView.module.css';
 import modelButtonStyle from './StyleButton.module.css';
 import { compressImage } from '../lib/compress';
+import { generateUUID } from '@/lib/uuid';
 const LocalImageLoader = dynamic(() => import('./LocalImageLoader'));
 const ImageView = dynamic(() => import('./imageView'));
 const ExportPopup = dynamic(() => import('./exportPopup'));
@@ -26,12 +27,8 @@ export default function TFView({ updateLocalTokens }: { updateLocalTokens: () =>
   const [ sourceImageSize, setSourceImageSize ] = useState([ 384, 256 ] as [number, number]);
   const { data: session, update } = useSession();
   useEffect(() => {
-    const generateUUID = () => {
-      let uuid = self.crypto.randomUUID();
-      setUuid(uuid);
-    };
-    generateUUID();
     if (!image) return;
+    generateUUID().then(setUuid);
     compressImage(image, setCompressed);
   }, [ image ]);
   const predict = async (model: string) => {
@@ -73,12 +70,12 @@ export default function TFView({ updateLocalTokens }: { updateLocalTokens: () =>
     if (!num_tokens) return;
     window.localStorage.setItem('num_tokens', (parseInt(num_tokens) - 1).toString());
   };
-  // This function sends send a GET request to the generator server to get a url for a random image
-  const prefetchImage = async (url: string) => {
-    const img = new Image();
-    img.src = url;
-  };
   const fetchRandomImage = useCallback(async () => {
+    // This function sends send a GET request to the generator server to get a url for a random image
+    const prefetchImage = async (url: string) => {
+      const img = new Image();
+      img.src = url;
+    };
     _setImage(null);
     const res = await fetch('/api/randomImage', { method: 'GET' });
     const data = await res.json();

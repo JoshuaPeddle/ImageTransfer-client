@@ -2,7 +2,7 @@
 import { signIn, signOut } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
 
-export default function UserDisplay({num_tokens}: {num_tokens: string | null}) {
+export default function UserDisplay() {
   const { data: session } = useSession();
   if (session) {
     return (
@@ -14,7 +14,7 @@ export default function UserDisplay({num_tokens}: {num_tokens: string | null}) {
   }
   return (
     <div className='flex flex-row flex-wrap justify-end pl-3'>
-      {num_tokens && <h1>{parseInt(num_tokens)} Tokens </h1>}
+
       <button className='underline pl-3' onClick={() => signIn()}>Log in</button>
     </div>
   );

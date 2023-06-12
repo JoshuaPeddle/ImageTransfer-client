@@ -15,7 +15,7 @@ const StyleSelector = dynamic(() => import('./StyleSelector'), { loading: () =>
     Loading...
   </div> }
 );
-export default function TFView({ updateLocalTokens }: { updateLocalTokens: () => void}) {
+export default function TFView() {
   const [ image, setImage ] = useState(null as null | string);
   const [ result, setResult ] = useState(null);
   const [ error, setError ] = useState(false);
@@ -32,11 +32,8 @@ export default function TFView({ updateLocalTokens }: { updateLocalTokens: () =>
     compressImage(image, setCompressed);
   }, [ image ]);
   const predict = async (model: string) => {
-    if ((session && session?.user.num_tokens <= 0) || (!session && window.localStorage.getItem('num_tokens') === '0') ) {
-      if (session) {
-        return alert('Out of tokens? Don\'t worry! Registered users receive 300 free tokens daily, up to a 1000-token cap. Check back in 24 hours!');
-      }
-      return alert(`Your token balance caps at ${parseInt(process.env.NEXT_PUBLIC_FREE_USER_TOKENS || '25')}, replenishing daily. Want more? Consider creating a free account!`);
+    if ((session && session?.user.num_tokens <= 0)  ) {
+      return alert('Out of tokens? Don\'t worry! Registered users receive 300 free tokens daily, up to a 1000-token cap. Check back in 24 hours!');
     }
     if (!compressed) return;
     if (loading) return;
@@ -48,9 +45,7 @@ export default function TFView({ updateLocalTokens }: { updateLocalTokens: () =>
     if (!uuid) return setLoading(false);
     const pred = _predict(model, compressed, setResult, setError, setLoading, variant, uuid);
     if (!session) {
-      chargeLocalstorage();  // Charge localstorage
       await pred;
-      updateLocalTokens();
       return setLoading(false);
     }
     const res = await fetch(`/api/charge/${session.user.uuid}`, { method: 'POST' });
@@ -63,12 +58,6 @@ export default function TFView({ updateLocalTokens }: { updateLocalTokens: () =>
     if (!result) return;
     _setImage(result);
     setResult(null);
-  };
-  const chargeLocalstorage = async () => {
-    if (session) return;
-    const num_tokens = window.localStorage.getItem('num_tokens');
-    if (!num_tokens) return;
-    window.localStorage.setItem('num_tokens', (parseInt(num_tokens) - 1).toString());
   };
   const fetchRandomImage = useCallback(async () => {
     // This function sends send a GET request to the generator server to get a url for a random image
@@ -87,16 +76,16 @@ export default function TFView({ updateLocalTokens }: { updateLocalTokens: () =>
   const _open_export_popup = () => {
     setExportPopup(true);
   };
-  const fetchModels = useCallback(async () => {
-    // Make a call to /api/models to get the models
-    const res = await fetch('/api/models', { method: 'GET' });
-    const data = await res.json();
-    setModels(data);
-  }, []);
   useEffect(() => {
+    const fetchModels = async () => {
+      // Make a call to /api/models to get the models
+      const res = await fetch('/api/models', { method: 'GET' });
+      const data = await res.json();
+      setModels(data);
+    }; 
     fetchModels();
     fetchRandomImage();
-  }, [ fetchModels, fetchRandomImage ]);
+  }, [  fetchRandomImage ]);
   const _setImage = (img: string | null) => {
     setImage(img);
     setResult(null);

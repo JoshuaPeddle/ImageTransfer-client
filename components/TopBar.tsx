@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic';
 import styles from './TopBar.module.css';
 const UserDisplay = dynamic(() => import('./UserDisplay'));
 const Image = dynamic(() => import('next/image'));
-export default function TopBar({num_tokens}: {num_tokens: string | null}) {
+export default function TopBar() {
   return (
     <>
       <div className={styles.topbar}>
@@ -13,7 +13,7 @@ export default function TopBar({num_tokens}: {num_tokens: string | null}) {
             styleswap.art
             </div>
           </div>
-          <UserDisplay num_tokens={num_tokens}/>
+          <UserDisplay/>
         </div>
 
       </div>

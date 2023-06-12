@@ -76,16 +76,16 @@ export default function TFView() {
   const _open_export_popup = () => {
     setExportPopup(true);
   };
-  const fetchModels = useCallback(async () => {
-    // Make a call to /api/models to get the models
-    const res = await fetch('/api/models', { method: 'GET' });
-    const data = await res.json();
-    setModels(data);
-  }, []);
   useEffect(() => {
+    const fetchModels = async () => {
+      // Make a call to /api/models to get the models
+      const res = await fetch('/api/models', { method: 'GET' });
+      const data = await res.json();
+      setModels(data);
+    }; 
     fetchModels();
     fetchRandomImage();
-  }, [ fetchModels, fetchRandomImage ]);
+  }, [  fetchRandomImage ]);
   const _setImage = (img: string | null) => {
     setImage(img);
     setResult(null);

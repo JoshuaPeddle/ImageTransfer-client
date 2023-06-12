@@ -22,6 +22,17 @@ export default function ImageView({ image, result, loading, size }: { image: str
       window.removeEventListener('resize', calcHeight);
     };
   }, [ calcHeight ]);
+  if (result && !loading) {
+    return (
+      <div className={styles.imageContainer}>
+        <div className={styles.images}>
+          {<div style={{ display:'flex',  minWidth:'min(384px,100vw)', maxWidth:'min(384px,100vw)', height:height}}>
+            <Image style={imageStyle} placeholder="blur" blurDataURL={'/blank-dark.png'} id='res_img' src={loading? '/loader-dark.gif' : result? result :'/blank-dark.png'} width={size[0]} height={size[1]} alt="" quality={85} />
+          </div> }
+        </div>
+      </div>
+    );
+  }
   return (
     <div className={styles.imageContainer}>
       <div className={styles.images}>
@@ -30,9 +41,7 @@ export default function ImageView({ image, result, loading, size }: { image: str
             return src;
           }} unoptimized />
         </div>
-        {<div style={{ display:'flex',  minWidth:'min(384px,100vw)', maxWidth:'min(384px,100vw)', height:height}}>
-          <Image style={imageStyle} placeholder="blur" blurDataURL={'/blank-dark.png'} id='res_img' src={loading? '/loader-dark.gif' : result? result :'/blank-dark.png'} width={size[0]} height={size[1]} alt="" quality={85} />
-        </div> }
+
       </div>
     </div>
   );

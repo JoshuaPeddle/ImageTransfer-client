@@ -7,6 +7,8 @@ import styles from './TFView.module.css';
 import modelButtonStyle from './StyleButton.module.css';
 import { compressImage } from '../lib/compress';
 import { generateUUID } from '@/lib/uuid';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
 const LocalImageLoader = dynamic(() => import('./LocalImageLoader'));
 const ImageView = dynamic(() => import('./imageView'));
 const ExportPopup = dynamic(() => import('./exportPopup'));
@@ -15,6 +17,8 @@ const StyleSelector = dynamic(() => import('./StyleSelector'), { loading: () =>
     Loading...
   </div> }
 );
+import { Accordion, AccordionSummary, AppBar, Button, ButtonGroup, Card, CardContent, Grid, Typography } from '@mui/material';
+
 export default function TFView() {
   const [ image, setImage ] = useState(null as null | string);
   const [ result, setResult ] = useState(null);
@@ -94,29 +98,42 @@ export default function TFView() {
   return (
     <>
       {image && result && exportPopup ? <ExportPopup image={image} result={result} setExportPopup={setExportPopup} /> : null}
+
       <div className={styles.topContainer}>
-        <div className='font-extrabold text-lg'>
-            Instructions: 
-          <ol className='list-decimal list-inside pb-2 font-semibold'>
-            <li>Upload an image</li>
-            <li>Choose a style from the Style Selector</li>
-            <li>Export as a GIF or MP4</li>
-          </ol>
-        </div>
+        <AppBar position="sticky" sx={{ display: 'sticky', flexDirection:'row', justifyContent: 'center',  maxWidth: 'fit-content', mx: 'auto'}} color='transparent'>
+          <ButtonGroup color="secondary" variant="contained" aria-label="outlined primary button group">
+            <LocalImageLoader  setImage={_setImage} setSize={setSourceImageSize} loading={loading} />
+            <Button disabled={loading? true :false} id='random_image_btn' className='' onClick={fetchRandomImage} >Random Image</Button>
+            <Button disabled={result && !loading? false :true} className='' onClick={resultToImage} >Result to Source</Button>
+            <Button disabled={result && !loading? false :true} id="export_popup_btn" className='' onClick={_open_export_popup} >Export</Button>
+          </ButtonGroup>
+        </AppBar >
         <div className='flex flex-row flex-wrap justify-center'>
-          <div className='flex flex-wrap justify-center' >
-            <LocalImageLoader setImage={_setImage} setSize={setSourceImageSize} />
-            <button id='random_image_btn' className={styles.button} onClick={fetchRandomImage} >Random Image</button>
-          </div>
-          <div className='flex flex-wrap justify-center' >
-            <button className={styles.button} onClick={resultToImage} >Result to Source</button>
-            <button id="export_popup_btn" className={styles.button} onClick={_open_export_popup} >Export</button>
-          </div>
+
           <ImageView image={image} result={result} loading={loading} size={sourceImageSize} />
         </div>
         <StyleSelector models={models} predict={predict} loading={loading} />
       </div>
-
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography>Instructions: </Typography>
+        </AccordionSummary>
+        <Card variant="outlined">
+          <CardContent>
+            <div >
+              <ol >
+                <li>Upload an image</li>
+                <li>Choose a style from the Style Selector</li>
+                <li>Export as a GIF or MP4</li>
+              </ol>
+            </div>
+          </CardContent>
+        </Card>
+      </Accordion>
     </>
   );
 }

@@ -109,28 +109,46 @@ function resizeImage(imgToResize: HTMLImageElement, setSize: Function) {
   return canvas.toDataURL();
 }
 
-export default function LocalImageLoader({ setImage, setSize } : { setImage: Function, setSize: Function }) {
-  const update = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return;
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      if (!e.target?.result) return;
-      const img = new Image();
-      img.src = e.target.result as string;
-      img.onload = () => {
-        const result_img = centerCropByAspectRatio(img, 1.5, setSize);
-        setImage(result_img);
+import { Button } from '@mui/material';
+import { useRef } from 'react';
+
+export default function LocalImageLoader({ setImage, setSize, loading }: { setImage: Function; setSize: Function, loading: boolean }) {
+  const update = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (!e.target.files) return;
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        if (!e.target?.result) return;
+        const img = new Image();
+        img.src = e.target.result as string;
+        img.onload = () => {
+          const result_img = centerCropByAspectRatio(img, 1.5, setSize);
+          setImage(result_img);
+        };
       };
-    };
-    if (file) {
-      reader.readAsDataURL(file); 
-    }
-  }, [ setImage, setSize ]);
+      if (file) {
+        reader.readAsDataURL(file);
+      }
+    },
+    [ setImage, setSize ]
+  );
+  const inputFile = useRef<HTMLInputElement>(null);
+  const onButtonClick = () => {
+    // `current` points to the mounted file input element
+
+    inputFile?.current?.click();
+  };
   return (
     <>
-      <input type="file" id='files'  accept="image/*" onChange={update} className="hidden"/>
-      <label className={styles.button} style={{cursor: 'pointer'}} htmlFor="files">Upload Image</label>
+      <Button disabled={loading? true :false} onClick={onButtonClick}>Upload Image</Button>
+      <input
+        ref={inputFile}
+        accept="image/*"
+        style={{ display: 'none' }}
+        type="file"
+        onChange={update}
+      />
     </>
   );
 }

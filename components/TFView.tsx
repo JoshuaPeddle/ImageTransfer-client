@@ -8,6 +8,7 @@ import modelButtonStyle from './StyleButton.module.css';
 import { compressImage } from '../lib/compress';
 import { generateUUID } from '@/lib/uuid';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import StyleCarousel from './StyleCarousel';
 
 const LocalImageLoader = dynamic(() => import('./LocalImageLoader'));
 const ImageView = dynamic(() => import('./imageView'));
@@ -98,22 +99,6 @@ export default function TFView() {
   return (
     <>
       {image && result && exportPopup ? <ExportPopup image={image} result={result} setExportPopup={setExportPopup} /> : null}
-
-      <div className={styles.topContainer}>
-        <AppBar position="sticky" sx={{ display: 'sticky', flexDirection:'row', justifyContent: 'center',  maxWidth: 'fit-content', mx: 'auto'}} color='transparent'>
-          <ButtonGroup color="secondary" variant="contained" aria-label="outlined primary button group">
-            <LocalImageLoader  setImage={_setImage} setSize={setSourceImageSize} loading={loading} />
-            <Button disabled={loading? true :false} id='random_image_btn' className='' onClick={fetchRandomImage} >Random Image</Button>
-            <Button disabled={result && !loading? false :true} className='' onClick={resultToImage} >Result to Source</Button>
-            <Button disabled={result && !loading? false :true} id="export_popup_btn" className='' onClick={_open_export_popup} >Export</Button>
-          </ButtonGroup>
-        </AppBar >
-        <div className='flex flex-row flex-wrap justify-center'>
-
-          <ImageView image={image} result={result} loading={loading} size={sourceImageSize} />
-        </div>
-        <StyleSelector models={models} predict={predict} loading={loading} />
-      </div>
       <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -134,6 +119,30 @@ export default function TFView() {
           </CardContent>
         </Card>
       </Accordion>
+      <div className={styles.topContainer}>
+
+        <br />
+        
+        <div className='flex flex-row flex-wrap justify-center'>
+          <AppBar position="relative" sx={{  flexDirection:'row', justifyContent: 'center',  maxWidth: 'fit-content', mx: 'auto'}} color='transparent'>
+            <ButtonGroup color="secondary" variant="contained" aria-label="outlined primary button group">
+              <LocalImageLoader  setImage={_setImage} setSize={setSourceImageSize} loading={loading} />
+              <Button disabled={loading? true :false} id='random_image_btn' className='' onClick={fetchRandomImage} >Random Image</Button>
+              <Button disabled={result && !loading? false :true} className='' onClick={resultToImage} >Result to Source</Button>
+              <Button disabled={result && !loading? false :true} id="export_popup_btn" className='' onClick={_open_export_popup} >Export</Button>
+            </ButtonGroup>
+          </AppBar >
+          <ImageView image={image} result={result} loading={loading} size={sourceImageSize} />
+          
+        </div>
+        <StyleCarousel models={models} predict={predict} loading={loading}/>
+        {/* <StyleSelector models={models} predict={predict} loading={loading} /> */}
+        
+      </div>
+      
+      <br/>
+      <br/>
+      
     </>
   );
 }

@@ -10,6 +10,8 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />
+        <link rel="stylesheet" type="text/css" charSet="UTF-8" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" /> 
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
         <Script src="/js/gif.js" strategy='lazyOnload'  />
         <Script src="//cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js" strategy='lazyOnload'  />
       </body>

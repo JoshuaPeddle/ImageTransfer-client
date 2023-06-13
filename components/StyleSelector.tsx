@@ -14,7 +14,6 @@ export default function StyleSelector( { models, predict, loading }: { models: {
   if (Object.values(models).length < 1) return (
     <div>
       <div className='flex flex-col items-center  bg-slate-600 m-2 mt-2 pt-0 rounded'>     
-        <div className='bg-[#457b9dc3] rounded text-lg pr-1 pl-1 w-full p-2 mb-0 '><p className='ml-2 font font-bold '>Style Selector</p></div> 
         <div className={styles.modelButtonsContainer}>
           { Object.values(Array(expected_num_styles).fill(0)).map((_, i) => {
             return <StyleButton key={i} style={''} label={'Loading...'} bg={'/blank-dark.png'} predict={predict} loading={true} />;
@@ -26,7 +25,6 @@ export default function StyleSelector( { models, predict, loading }: { models: {
   return (
     <div>
       <div className='flex flex-col items-center  bg-slate-600 m-2 mt-2 pt-0 rounded'>     
-        <div className='bg-[#457b9dc3] rounded text-lg pr-1 pl-1 w-full p-2 mb-0 '><p className='ml-2 font font-bold '>Style Selector</p></div> 
         <div className={styles.modelButtonsContainer}>
           {Object.values(models).map((model: { style: string, label: string, background_url: string }) => {
             return <StyleButton key={model.style} style={model.style} label={model.label} bg={model.background_url} predict={predict} loading={loading} />;

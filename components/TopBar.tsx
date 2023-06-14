@@ -1,6 +1,4 @@
 import dynamic from 'next/dynamic';
-import styles from './TopBar.module.css';
-const UserDisplay = dynamic(() => import('./UserDisplay'));
 const Image = dynamic(() => import('next/image'));
 import AppBar  from '@mui/material/AppBar';
 import { Box, IconButton, Typography } from '@mui/material';

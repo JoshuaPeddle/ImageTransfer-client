@@ -1,4 +1,3 @@
-import styles from './Footer.module.css';
 import Link from 'next/link';
 import { AppBar, Box, Button, Grid } from '@mui/material';
 export default function footer() {

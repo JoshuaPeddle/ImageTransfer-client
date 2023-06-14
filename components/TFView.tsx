@@ -3,11 +3,10 @@ import { useEffect, useState, useCallback } from 'react';
 import { useSession } from 'next-auth/react';
 import { nextVariant, Model } from '../lib/models';
 import _predict from '../lib/predict';
-
 import { compressImage } from '../lib/compress';
 import { generateUUID } from '@/lib/uuid';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Accordion, AccordionSummary, AppBar, Box, Button, ButtonGroup, Card, CardContent, Typography } from '@mui/material';
+import { Accordion, AccordionSummary, Box, Button, ButtonGroup, Card, CardContent, Typography } from '@mui/material';
 const StyleCarousel = dynamic(() => import('./StyleCarousel'), { ssr: false });
 const LocalImageLoader = dynamic(() => import('./LocalImageLoader'));
 const ImageView = dynamic(() => import('./imageView'));
@@ -117,13 +116,16 @@ export default function TFView() {
         </Box>
 
         <Box sx={{ display: 'flex', flexGrow: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', maxWidth: 'fit-content', mx: 'auto' }} color='transparent'>
-          <ButtonGroup color="secondary" variant="contained" aria-label="outlined primary button group">
-            <LocalImageLoader setImage={_setImage} setSize={setSourceImageSize} loading={loading} />
-            <Button disabled={loading ? true : false} id='random_image_btn' className='' onClick={fetchRandomImage} >Random Image</Button>
-            <Button disabled={result && !loading ? false : true} className='' onClick={resultToImage} >Result to Source</Button>
-            <Button disabled={result && !loading ? false : true} id="export_popup_btn" className='' onClick={_open_export_popup} >Export</Button>
-          </ButtonGroup>
-
+          <Box justifyContent="center" alignItems={'center'} sx={{width:'100%', display:'flex', flexWrap:'wrap'}} >
+            <ButtonGroup variant="contained" aria-label="outlined primary button group">
+              <LocalImageLoader setImage={_setImage} setSize={setSourceImageSize} loading={loading} />
+              <Button sx={{width:'140px'}} disabled={loading ? true : false} id='random_image_btn' className='' onClick={fetchRandomImage} >Random</Button>
+            </ButtonGroup>
+            <ButtonGroup color="secondary" variant="contained" aria-label="outlined primary button group">
+              <Button sx={{width:'140px'}} disabled={result && !loading ? false : true} className='' onClick={resultToImage} >Source</Button>
+              <Button sx={{width:'140px'}} disabled={result && !loading ? false : true} id="export_popup_btn" className='' onClick={_open_export_popup} >Export</Button>
+            </ButtonGroup>
+          </Box>
           <ImageView image={image} result={result} loading={loading} size={sourceImageSize} />
         </Box >
         {/* <StyleSelector models={models} predict={predict} loading={loading} /> */}

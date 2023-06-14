@@ -1,5 +1,4 @@
-// Desc: Let the user load a local image
-import styles from './TFView.module.css';
+
 import { useCallback } from 'react';
 
 function cropImage(img:  HTMLImageElement, cropX: number, cropY: number, cropWidth: number, cropHeight: number, targetWidth: number, targetHeight: number, setSize: Function) {
@@ -141,7 +140,7 @@ export default function LocalImageLoader({ setImage, setSize, loading }: { setIm
   };
   return (
     <>
-      <Button disabled={loading? true :false} onClick={onButtonClick}>Upload Image</Button>
+      <Button sx={{width:'140px'}} disabled={loading? true :false} onClick={onButtonClick}>Upload</Button>
       <input
         ref={inputFile}
         accept="image/*"

@@ -8,7 +8,7 @@ import { compressImage } from '../lib/compress';
 import { generateUUID } from '@/lib/uuid';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Accordion, AccordionSummary, AppBar, Box, Button, ButtonGroup, Card, CardContent, Typography } from '@mui/material';
-const StyleCarousel = dynamic(() => import('./StyleCarousel'), {ssr: false});
+const StyleCarousel = dynamic(() => import('./StyleCarousel'), { ssr: false });
 const LocalImageLoader = dynamic(() => import('./LocalImageLoader'));
 const ImageView = dynamic(() => import('./imageView'));
 const ExportPopup = dynamic(() => import('./exportPopup'));
@@ -29,7 +29,7 @@ export default function TFView() {
     compressImage(image, setCompressed);
   }, [ image ]);
   const predict = async (model: string) => {
-    if ((session && session?.user.num_tokens <= 0)  ) {
+    if ((session && session?.user.num_tokens <= 0)) {
       return alert('Out of tokens? Don\'t worry! Registered users receive 300 free tokens daily, up to a 1000-token cap. Check back in 24 hours!');
     }
     if (!compressed) return;
@@ -48,7 +48,7 @@ export default function TFView() {
     const res = await fetch(`/api/charge/${session.user.uuid}`, { method: 'POST' });
     const data = await res.json();
     await pred;
-    await update({num_tokens: data.num_tokens});
+    await update({ num_tokens: data.num_tokens });
     setLoading(false);
   };
   const resultToImage = () => {
@@ -79,10 +79,10 @@ export default function TFView() {
       const res = await fetch('/api/models', { method: 'GET' });
       const data = await res.json();
       setModels(data);
-    }; 
+    };
     fetchModels();
     fetchRandomImage();
-  }, [  fetchRandomImage ]);
+  }, [ fetchRandomImage ]);
   const _setImage = (img: string | null) => {
     setImage(img);
     setResult(null);
@@ -92,8 +92,8 @@ export default function TFView() {
     <>
       {image && result && exportPopup ? <ExportPopup image={image} result={result} setExportPopup={setExportPopup} /> : null}
 
-      <Box sx={{display:'flex', flexGrow:1, justifyContent:'center', alignItems:'center', flexDirection:'column'}} >
-        <Box sx={{flexGrow:1, display:'flex', justifyContent:'center', alignItems:'center'}}>
+      <Box sx={{ display: 'flex', flexGrow: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }} >
+        <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <Accordion>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
@@ -115,23 +115,23 @@ export default function TFView() {
             </Card>
           </Accordion>
         </Box>
-        
-        <Box sx={{ display:'flex', flexGrow:2, flexDirection:'column', justifyContent: 'center', alignItems:'center', maxWidth: 'fit-content', mx: 'auto'}} color='transparent'>
+
+        <Box sx={{ display: 'flex', flexGrow: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', maxWidth: 'fit-content', mx: 'auto' }} color='transparent'>
           <ButtonGroup color="secondary" variant="contained" aria-label="outlined primary button group">
-            <LocalImageLoader  setImage={_setImage} setSize={setSourceImageSize} loading={loading} />
-            <Button disabled={loading? true :false} id='random_image_btn' className='' onClick={fetchRandomImage} >Random Image</Button>
-            <Button disabled={result && !loading? false :true} className='' onClick={resultToImage} >Result to Source</Button>
-            <Button disabled={result && !loading? false :true} id="export_popup_btn" className='' onClick={_open_export_popup} >Export</Button>
+            <LocalImageLoader setImage={_setImage} setSize={setSourceImageSize} loading={loading} />
+            <Button disabled={loading ? true : false} id='random_image_btn' className='' onClick={fetchRandomImage} >Random Image</Button>
+            <Button disabled={result && !loading ? false : true} className='' onClick={resultToImage} >Result to Source</Button>
+            <Button disabled={result && !loading ? false : true} id="export_popup_btn" className='' onClick={_open_export_popup} >Export</Button>
           </ButtonGroup>
-        
+
           <ImageView image={image} result={result} loading={loading} size={sourceImageSize} />
         </Box >
         {/* <StyleSelector models={models} predict={predict} loading={loading} /> */}
-        <Box sx={{      width:'min(86%, 1200px)', maxWidth:'1200px', flexGrow:1, display:'flex', justifyContent:'center', alignItems:'center'}}>
-          <StyleCarousel models={models} predict={predict} loading={loading}/>
+        <Box sx={{ width: 'min(86%, 1200px)', maxWidth: '1200px', flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <StyleCarousel models={models} predict={predict} loading={loading} />
         </Box>
       </Box>
-      
+
     </>
   );
 }

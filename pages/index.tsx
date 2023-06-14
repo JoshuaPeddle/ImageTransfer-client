@@ -17,7 +17,7 @@ export default function Home() {
       </Head>
       
       <main >
-        <Box sx={{minHeight:'100svh', display:'flex', flexDirection:'column'}}>
+        <Box sx={{minHeight:'100svh', display:'flex', flexDirection:'column', backgroundImage:'url("/BG2.jpg")', backgroundSize:'100% 100%'}}>
           <TopBar />
       
           <TFView />

@@ -3,18 +3,14 @@ import { useEffect, useState, useCallback } from 'react';
 import { useSession } from 'next-auth/react';
 import { nextVariant, Model } from '../lib/models';
 import _predict from '../lib/predict';
-import styles from './TFView.module.css';
-import modelButtonStyle from './StyleButton.module.css';
 import { compressImage } from '../lib/compress';
 import { generateUUID } from '@/lib/uuid';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Accordion, AccordionSummary, Box, Button, ButtonGroup, Card, CardContent, Typography } from '@mui/material';
+const StyleCarousel = dynamic(() => import('./StyleCarousel'), { ssr: false });
 const LocalImageLoader = dynamic(() => import('./LocalImageLoader'));
 const ImageView = dynamic(() => import('./imageView'));
 const ExportPopup = dynamic(() => import('./exportPopup'));
-const StyleSelector = dynamic(() => import('./StyleSelector'), { loading: () =>
-  <div className={modelButtonStyle.modelButtonsContainer}>
-    Loading...
-  </div> }
-);
 export default function TFView() {
   const [ image, setImage ] = useState(null as null | string);
   const [ result, setResult ] = useState(null);
@@ -32,7 +28,7 @@ export default function TFView() {
     compressImage(image, setCompressed);
   }, [ image ]);
   const predict = async (model: string) => {
-    if ((session && session?.user.num_tokens <= 0)  ) {
+    if ((session && session?.user.num_tokens <= 0)) {
       return alert('Out of tokens? Don\'t worry! Registered users receive 300 free tokens daily, up to a 1000-token cap. Check back in 24 hours!');
     }
     if (!compressed) return;
@@ -51,7 +47,7 @@ export default function TFView() {
     const res = await fetch(`/api/charge/${session.user.uuid}`, { method: 'POST' });
     const data = await res.json();
     await pred;
-    await update({num_tokens: data.num_tokens});
+    await update({ num_tokens: data.num_tokens });
     setLoading(false);
   };
   const resultToImage = () => {
@@ -82,10 +78,10 @@ export default function TFView() {
       const res = await fetch('/api/models', { method: 'GET' });
       const data = await res.json();
       setModels(data);
-    }; 
+    };
     fetchModels();
     fetchRandomImage();
-  }, [  fetchRandomImage ]);
+  }, [ fetchRandomImage ]);
   const _setImage = (img: string | null) => {
     setImage(img);
     setResult(null);
@@ -94,28 +90,49 @@ export default function TFView() {
   return (
     <>
       {image && result && exportPopup ? <ExportPopup image={image} result={result} setExportPopup={setExportPopup} /> : null}
-      <div className={styles.topContainer}>
-        <div className='font-extrabold text-lg'>
-            Instructions: 
-          <ol className='list-decimal list-inside pb-2 font-semibold'>
-            <li>Upload an image</li>
-            <li>Choose a style from the Style Selector</li>
-            <li>Export as a GIF or MP4</li>
-          </ol>
-        </div>
-        <div className='flex flex-row flex-wrap justify-center'>
-          <div className='flex flex-wrap justify-center' >
-            <LocalImageLoader setImage={_setImage} setSize={setSourceImageSize} />
-            <button id='random_image_btn' className={styles.button} onClick={fetchRandomImage} >Random Image</button>
-          </div>
-          <div className='flex flex-wrap justify-center' >
-            <button className={styles.button} onClick={resultToImage} >Result to Source</button>
-            <button id="export_popup_btn" className={styles.button} onClick={_open_export_popup} >Export</button>
-          </div>
+
+      <Box sx={{ display: 'flex', flexGrow: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }} >
+        <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography>Instructions: </Typography>
+            </AccordionSummary>
+            <Card variant="outlined">
+              <CardContent>
+                <div >
+                  <ol >
+                    <li>Upload an image</li>
+                    <li>Choose a style from the Style Selector</li>
+                    <li>Export as a GIF or MP4</li>
+                  </ol>
+                </div>
+              </CardContent>
+            </Card>
+          </Accordion>
+        </Box>
+
+        <Box sx={{ display: 'flex', flexGrow: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', maxWidth: 'fit-content', mx: 'auto' }} color='transparent'>
+          <Box justifyContent="center" alignItems={'center'} sx={{width:'100%', display:'flex', flexWrap:'wrap'}} >
+            <ButtonGroup variant="contained" aria-label="outlined primary button group">
+              <LocalImageLoader setImage={_setImage} setSize={setSourceImageSize} loading={loading} />
+              <Button sx={{width:'140px'}} disabled={loading ? true : false} id='random_image_btn' className='' onClick={fetchRandomImage} >Random</Button>
+            </ButtonGroup>
+            <ButtonGroup color="secondary" variant="contained" aria-label="outlined primary button group">
+              <Button sx={{width:'140px'}} disabled={result && !loading ? false : true} className='' onClick={resultToImage} >Source</Button>
+              <Button sx={{width:'140px'}} disabled={result && !loading ? false : true} id="export_popup_btn" className='' onClick={_open_export_popup} >Export</Button>
+            </ButtonGroup>
+          </Box>
           <ImageView image={image} result={result} loading={loading} size={sourceImageSize} />
-        </div>
-        <StyleSelector models={models} predict={predict} loading={loading} />
-      </div>
+        </Box >
+        {/* <StyleSelector models={models} predict={predict} loading={loading} /> */}
+        <Box sx={{ width: 'min(86%, 1200px)', maxWidth: '1200px', flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <StyleCarousel models={models} predict={predict} loading={loading} />
+        </Box>
+      </Box>
 
     </>
   );

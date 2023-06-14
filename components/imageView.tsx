@@ -26,7 +26,7 @@ export default function ImageView({ image, result, loading, size }: { image: str
 
   return (
 
-    <Box sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'row', flexWrap: 'wrap' }}>
+    <Box sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'row', flexWrap: 'wrap', boxShadow: '0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)',}}>
 
       <Box ref={src_ref} sx={{ display: 'flex', minWidth: 'min(384px,100vw)', maxWidth: 'min(384px,100vw)' }}>
         <Image onLoadingComplete={calcHeight} style={imageStyle} placeholder="blur" blurDataURL={'/blank-dark.png'} priority={true} id='src_img' src={image ? image : '/loader-dark.gif'} width={size[0]} height={size[1]} quality={85} alt="" loader={({ src }) => {

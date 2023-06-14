@@ -15,7 +15,6 @@ const SimpleSlider: React.FC<Props> = ({ items }) => {
     slidesToShow: 6,
     slidesToScroll: 6,
     initialSlide: 0,
-
     responsive: [
       {
         breakpoint: 1200,
@@ -46,7 +45,16 @@ const SimpleSlider: React.FC<Props> = ({ items }) => {
   };
   return (
     
-    <Box sx= {{maxWidth:'1200px', backgroundColor: 'rgb(255,255,255,0.2)', backdropFilter:'blur(5px)', width:'min(86%, 1200px)', pt:'10px', pb:'30px', px:'30px', borderRadius:'10px' }}>
+    <Box sx= {{
+      maxWidth:'1200px', 
+      backgroundColor: 'rgb(255,255,255,0.2)', 
+
+      width:'min(86%, 1200px)', 
+      pt:'30px', 
+      pb:'30px', 
+      px:'30px', 
+      borderRadius:'10px',
+      height:'fit-content'}}>
       <Slider   {...settings}>
         {items.map((item, index) => (
           <Box key={index}>{item}</Box>

@@ -4,7 +4,7 @@ import { AppBar, Box, Button, Grid } from '@mui/material';
 export default function footer() {
   return (
   
-    <AppBar sx={{  flexDirection:'row', justifyContent:'flex-end', alignItems: 'center'}} color='transparent' position='relative' >
+    <AppBar sx={{  flexDirection:'row', flexGrow:0, justifyContent:'flex-end', alignItems: 'center'}} color='transparent' position='relative' >
       <Box sx={{p:'2px'}}>
         <Link href="/privacy">
           <Button variant="text" color="primary">

@@ -92,48 +92,45 @@ export default function TFView() {
     <>
       {image && result && exportPopup ? <ExportPopup image={image} result={result} setExportPopup={setExportPopup} /> : null}
 
-      <Box sx={{display:'flex', flexGrow:2, justifyContent:'center', alignItems:'center', flexDirection:'column'}} >
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
-            <Typography>Instructions: </Typography>
-          </AccordionSummary>
-          <Card variant="outlined">
-            <CardContent>
-              <div >
-                <ol >
-                  <li>Upload an image</li>
-                  <li>Choose a style from the Style Selector</li>
-                  <li>Export as a GIF or MP4</li>
-                </ol>
-              </div>
-            </CardContent>
-          </Card>
-        </Accordion>
-        <br />
+      <Box sx={{display:'flex', flexGrow:1, justifyContent:'center', alignItems:'center', flexDirection:'column'}} >
+        <Box sx={{flexGrow:1, display:'flex', justifyContent:'center', alignItems:'center'}}>
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography>Instructions: </Typography>
+            </AccordionSummary>
+            <Card variant="outlined">
+              <CardContent>
+                <div >
+                  <ol >
+                    <li>Upload an image</li>
+                    <li>Choose a style from the Style Selector</li>
+                    <li>Export as a GIF or MP4</li>
+                  </ol>
+                </div>
+              </CardContent>
+            </Card>
+          </Accordion>
+        </Box>
         
-        <div className='flex flex-row flex-wrap justify-center'>
-          <AppBar position="relative" sx={{  flexDirection:'row', justifyContent: 'center',  maxWidth: 'fit-content', mx: 'auto'}} color='transparent'>
-            <ButtonGroup color="secondary" variant="contained" aria-label="outlined primary button group">
-              <LocalImageLoader  setImage={_setImage} setSize={setSourceImageSize} loading={loading} />
-              <Button disabled={loading? true :false} id='random_image_btn' className='' onClick={fetchRandomImage} >Random Image</Button>
-              <Button disabled={result && !loading? false :true} className='' onClick={resultToImage} >Result to Source</Button>
-              <Button disabled={result && !loading? false :true} id="export_popup_btn" className='' onClick={_open_export_popup} >Export</Button>
-            </ButtonGroup>
-          </AppBar >
+        <Box sx={{ display:'flex', flexGrow:2, flexDirection:'column', justifyContent: 'center', alignItems:'center', maxWidth: 'fit-content', mx: 'auto'}} color='transparent'>
+          <ButtonGroup color="secondary" variant="contained" aria-label="outlined primary button group">
+            <LocalImageLoader  setImage={_setImage} setSize={setSourceImageSize} loading={loading} />
+            <Button disabled={loading? true :false} id='random_image_btn' className='' onClick={fetchRandomImage} >Random Image</Button>
+            <Button disabled={result && !loading? false :true} className='' onClick={resultToImage} >Result to Source</Button>
+            <Button disabled={result && !loading? false :true} id="export_popup_btn" className='' onClick={_open_export_popup} >Export</Button>
+          </ButtonGroup>
+        
           <ImageView image={image} result={result} loading={loading} size={sourceImageSize} />
-          
-        </div>
-        
+        </Box >
         {/* <StyleSelector models={models} predict={predict} loading={loading} /> */}
-        <StyleCarousel models={models} predict={predict} loading={loading}/>
+        <Box sx={{      width:'min(86%, 1200px)', maxWidth:'1200px', flexGrow:1, display:'flex', justifyContent:'center', alignItems:'center'}}>
+          <StyleCarousel models={models} predict={predict} loading={loading}/>
+        </Box>
       </Box>
-    
-      <br/>
-      <br/>
       
     </>
   );

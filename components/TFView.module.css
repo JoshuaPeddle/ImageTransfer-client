@@ -28,9 +28,7 @@
 }
 
 @media screen and (max-width: 400px) {
-    .button {
-        width: 97vw;
-    }
+
 }
 .button:hover {
     background: #1D3557;

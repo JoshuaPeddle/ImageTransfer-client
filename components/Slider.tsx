@@ -1,39 +1,44 @@
-
 import { Box } from '@mui/material';
-import Slider from 'react-slick';
+//import Slider from 'react-slick';
+import dynamic from 'next/dynamic';
 
+const Slider = dynamic(import('react-slick'), {ssr: false} );
 interface Props {
   items: JSX.Element[];
 }
 
 const SimpleSlider: React.FC<Props> = ({ items }) => {
   const settings = {
-    dots: true,
     infinite: false,
+    dots:true,
     speed: 500,
     slidesToShow: 6,
     slidesToScroll: 6,
+    initialSlide: 0,
+
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1200,
         settings: {
           slidesToShow: 4,
           slidesToScroll: 4,
-
+          initialSlide: 0,
+        }
+      },
+      {
+        breakpoint: 900,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          initialSlide: 0,
         }
       },
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-        }
-      },
-      {
-        breakpoint: 480,
-        settings: {
           slidesToShow: 2,
-          slidesToScroll: 2
+          slidesToScroll: 2,
+          initialSlide: 0,
         }
       }
     ]
@@ -41,11 +46,10 @@ const SimpleSlider: React.FC<Props> = ({ items }) => {
   };
   return (
     
-    <Box sx={{maxWidth:'90vw', minWidth:'90vw' }}>
-
-      <Slider {...settings}>
+    <Box sx= {{maxWidth:'1200px', backgroundColor: 'rgb(255,255,255,0.2)', backdropFilter:'blur(5px)', width:'min(86%, 1200px)', pt:'10px', pb:'30px', px:'30px', borderRadius:'10px' }}>
+      <Slider   {...settings}>
         {items.map((item, index) => (
-          <div key={index}>{item}</div>
+          <Box key={index}>{item}</Box>
         ))}
       </Slider>
     </Box>

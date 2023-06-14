@@ -1,20 +1,23 @@
 import styles from './Footer.module.css';
 import Link from 'next/link';
+import { AppBar, Box, Button, Grid } from '@mui/material';
 export default function footer() {
   return (
-    <>
-      <div className={styles.footer}> 
-        <div className={styles.footer_inner}>
-          <div className={styles.footer_info}>
-            <p className={styles.footer_quote}>Style Transfer for Everyone</p>
-            <p className={styles.footer_year}>2023</p>
-          </div>
-          <div className={styles.footer_links}>
-            <Link href="/privacy">Privacy Policy</Link>
-            <Link href="/TOS">TOS</Link>
-          </div>
-        </div>
-      </div>
-    </>
+  
+    <AppBar sx={{  flexDirection:'row', justifyContent:'flex-end', alignItems: 'center'}} color='transparent' position='relative' >
+      <Box sx={{p:'2px'}}>
+        <Link href="/privacy">
+          <Button variant="text" color="primary">
+            Privacy Policy
+          </Button>
+        </Link>
+        <Link href="/TOS">
+          <Button variant="text" color="primary">
+            TOS
+          </Button>
+        </Link>
+      </Box>
+    </AppBar>
+
   );
 }

@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 import { Inter } from 'next/font/google';
 import Head from 'next/head';
-
+import { Box } from '@mui/material';
 const TFView = dynamic(() => import('@/components/TFView'));
 const TopBar = dynamic(() => import('@/components/TopBar'));
 const Footer = dynamic(() => import('@/components/Footer'));
@@ -17,11 +17,13 @@ export default function Home() {
       </Head>
       
       <main >
-        <TopBar />
+        <Box sx={{minHeight:'100svh', display:'flex', flexDirection:'column'}}>
+          <TopBar />
       
-        <TFView />
+          <TFView />
         
-        <Footer />
+          <Footer />
+        </Box>
       </main>
     </>
   );

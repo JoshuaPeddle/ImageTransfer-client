@@ -3,23 +3,15 @@ import { useEffect, useState, useCallback } from 'react';
 import { useSession } from 'next-auth/react';
 import { nextVariant, Model } from '../lib/models';
 import _predict from '../lib/predict';
-import styles from './TFView.module.css';
-import modelButtonStyle from './StyleButton.module.css';
+
 import { compressImage } from '../lib/compress';
 import { generateUUID } from '@/lib/uuid';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import StyleCarousel from './StyleCarousel';
-
+import { Accordion, AccordionSummary, AppBar, Box, Button, ButtonGroup, Card, CardContent, Typography } from '@mui/material';
+const StyleCarousel = dynamic(() => import('./StyleCarousel'), {ssr: false});
 const LocalImageLoader = dynamic(() => import('./LocalImageLoader'));
 const ImageView = dynamic(() => import('./imageView'));
 const ExportPopup = dynamic(() => import('./exportPopup'));
-const StyleSelector = dynamic(() => import('./StyleSelector'), { loading: () =>
-  <div className={modelButtonStyle.modelButtonsContainer}>
-    Loading...
-  </div> }
-);
-import { Accordion, AccordionSummary, AppBar, Button, ButtonGroup, Card, CardContent, Grid, Typography } from '@mui/material';
-
 export default function TFView() {
   const [ image, setImage ] = useState(null as null | string);
   const [ result, setResult ] = useState(null);
@@ -99,28 +91,28 @@ export default function TFView() {
   return (
     <>
       {image && result && exportPopup ? <ExportPopup image={image} result={result} setExportPopup={setExportPopup} /> : null}
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography>Instructions: </Typography>
-        </AccordionSummary>
-        <Card variant="outlined">
-          <CardContent>
-            <div >
-              <ol >
-                <li>Upload an image</li>
-                <li>Choose a style from the Style Selector</li>
-                <li>Export as a GIF or MP4</li>
-              </ol>
-            </div>
-          </CardContent>
-        </Card>
-      </Accordion>
-      <div className={styles.topContainer}>
 
+      <Box sx={{display:'flex', flexGrow:2, justifyContent:'center', alignItems:'center', flexDirection:'column'}} >
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography>Instructions: </Typography>
+          </AccordionSummary>
+          <Card variant="outlined">
+            <CardContent>
+              <div >
+                <ol >
+                  <li>Upload an image</li>
+                  <li>Choose a style from the Style Selector</li>
+                  <li>Export as a GIF or MP4</li>
+                </ol>
+              </div>
+            </CardContent>
+          </Card>
+        </Accordion>
         <br />
         
         <div className='flex flex-row flex-wrap justify-center'>
@@ -135,11 +127,11 @@ export default function TFView() {
           <ImageView image={image} result={result} loading={loading} size={sourceImageSize} />
           
         </div>
-        <StyleCarousel models={models} predict={predict} loading={loading}/>
-        {/* <StyleSelector models={models} predict={predict} loading={loading} /> */}
         
-      </div>
-      
+        {/* <StyleSelector models={models} predict={predict} loading={loading} /> */}
+        <StyleCarousel models={models} predict={predict} loading={loading}/>
+      </Box>
+    
       <br/>
       <br/>
       

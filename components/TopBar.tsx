@@ -14,7 +14,7 @@ declare module '@mui/material/AppBar' {
 
 export default function TopBar() {
   return (
-    <Box sx={{ flexGrow: 1}}>
+    <Box sx={{ flexGrow: 0}}>
       <AppBar sx={{  flexDirection:'row', alignItems: 'center' }} color='transparent' position="static" >
         <IconButton
           size="large"

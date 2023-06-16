@@ -8,8 +8,8 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Style Transfer</title>
-        <meta name="description" content="Style Transfer" />
+        <title>StyleSwap</title>
+        <meta name="description" content="StyleSwap" />
         <link rel="icon" href="/logo.jpg" type="image/jpg" />
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
       </Head>

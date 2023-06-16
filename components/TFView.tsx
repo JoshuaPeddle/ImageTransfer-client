@@ -77,7 +77,7 @@ export default function TFView() {
       // Make a call to /api/models to get the models
       const res = await fetch('/api/models', { method: 'GET' });
       const data = await res.json();
-      setModels(...[ data ]);
+      setModels(data);
     };
     fetchModels();
     fetchRandomImage();

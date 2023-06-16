@@ -34,24 +34,6 @@ const ParentComponent = ({ models, predict, loading }: { models: { [key: string]
   if (!styleItems) {
     return (<></>);
   }
-  Object.values(models).map((model: { style: string, label: string, background_url: string }) => {
-    return (
-      <Grid key={model.style} container justifyContent="center" alignItems={'center'}>
-        <Box sx={{ p: '0px', borderRadius: '5px' }}>
-          <button disabled={loading} id={'style_btn_' + model.style}
-            style={{ background: 'url(' + model.background_url + ') no-repeat top left' }}
-            className={styles.imageButton}
-            onClick={() =>
-              predict(model.style)}>
-            <p className={styles.imageButtonLabel}>
-              {model.label}
-            </p>
-          </button>
-        </Box>
-      </Grid>
-
-    );
-  });
   return <SimpleSlider items={styleItems} />;
 };
 export default ParentComponent;

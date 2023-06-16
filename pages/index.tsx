@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { Box } from '@mui/material';
+import Image from 'next/image';
 const TFView = dynamic(() => import('@/components/TFView'));
 const TopBar = dynamic(() => import('@/components/TopBar'));
 const Footer = dynamic(() => import('@/components/Footer'));
@@ -15,7 +16,9 @@ export default function Home() {
       </Head>
       
       <main >
-        <Box sx={{minHeight:'100svh', display:'flex', flexDirection:'column', backgroundImage:'url("/BG2.webp")', backgroundSize:'100% 100%'}}>
+        <Box sx={{minHeight:'100svh', display:'flex', flexDirection:'column'}}>
+          <Image alt="" src="/BG2.webp" width={900} height={800} style={{position:'absolute', zIndex:-1, height:'100%', width:'100%'}} />
+
           <TopBar />
       
           <TFView />

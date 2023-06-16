@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { AppBar, Box, Button, Grid } from '@mui/material';
+import { AppBar, Box, Button } from '@mui/material';
 export default function footer() {
   return (
   

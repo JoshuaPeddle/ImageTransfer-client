@@ -9,7 +9,7 @@ interface Props {
 const SimpleSlider: React.FC<Props> = ({ items, clickedButton }) => {
   const cauroselRef = useRef<Slider>(null);
   const settings: Settings = {
-    infinite: true,
+    infinite: false,
     dots: true,
     speed: 500,
     slidesToShow: 6,

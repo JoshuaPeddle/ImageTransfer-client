@@ -29,8 +29,6 @@ const fetchModels = async () => {
 const getModels = async () => {
   try {
     const models = await fetchModels();
-    lastFetch = new Date();
-    cachedModels = models;
     return models;
   } catch (error) {
     console.error(error);

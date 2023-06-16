@@ -1,13 +1,14 @@
 import { Box } from '@mui/material';
-import { useEffect, useRef } from 'react';
-import Slider from 'react-slick';
+import { useEffect, useRef, useState } from 'react';
+import Slider, { Settings } from 'react-slick';
 interface Props {
   items: JSX.Element[];
+  clickedButton: boolean;
 }
 
-const SimpleSlider: React.FC<Props> = ({ items }) => {
+const SimpleSlider: React.FC<Props> = ({ items, clickedButton }) => {
   const cauroselRef = useRef<Slider>(null);
-  const settings = {
+  const settings: Settings = {
     infinite: true,
     dots: true,
     speed: 500,
@@ -42,11 +43,10 @@ const SimpleSlider: React.FC<Props> = ({ items }) => {
     ]
   };
   useEffect(() => {
-    if (cauroselRef.current) {
+    if (!clickedButton && cauroselRef.current) {
       cauroselRef.current.slickGoTo(0, false);
     }
-  }
-  , []);
+  }, [ items, clickedButton ]);
   return (
     <Box className='modelButtonsContainer'
       sx={{

@@ -7,24 +7,27 @@ import { Box, Grid } from '@mui/material';
 
 const ParentComponent = ({ models, predict, loading }: { models: { [key: string]: Model }, predict: (model: string) => void, loading: boolean }) => {
   const [ styleItems, setStyleItems ] = useState(null as null | JSX.Element[]);
+  const [ clickedButton, setClickedButton ] = useState(false);
   useEffect(() => {
     if (!models) return;
     const styleItems = Object.values(models).map((model: { style: string, label: string, background_url: string }) => {
       return (
         <Grid key={model.style} container justifyContent="center" alignItems={'center'}>
           <Box sx={{ p: '0px', borderRadius: '5px' }}>
-            <button disabled={loading} id={'style_btn_' + model.style}
+            <button
+              disabled={loading}
+              id={'style_btn_' + model.style}
               style={{ background: 'url(' + model.background_url + ') no-repeat top left' }}
               className={styles.imageButton}
-              onClick={() =>
-                predict(model.style)}>
-              <p className={styles.imageButtonLabel}>
-                {model.label}
-              </p>
+              onClick={() => {
+                predict(model.style);
+                setClickedButton(true); // Set clickedButton to true
+              }}
+            >
+              <p className={styles.imageButtonLabel}>{model.label}</p>
             </button>
           </Box>
         </Grid>
-
       );
     });
     setStyleItems(styleItems);
@@ -34,6 +37,6 @@ const ParentComponent = ({ models, predict, loading }: { models: { [key: string]
   if (!styleItems) {
     return (<></>);
   }
-  return <SimpleSlider items={styleItems} />;
+  return <SimpleSlider items={styleItems} clickedButton={clickedButton} />;
 };
 export default ParentComponent;

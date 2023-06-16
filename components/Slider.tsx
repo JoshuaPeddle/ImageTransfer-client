@@ -9,7 +9,7 @@ interface Props {
 
 const SimpleSlider: React.FC<Props> = ({ items }) => {
   const settings = {
-    infinite: false,
+    infinite: true,
     dots:true,
     speed: 500,
     slidesToShow: 6,

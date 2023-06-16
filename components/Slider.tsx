@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import Slider from 'react-slick';
 interface Props {
   items: JSX.Element[];

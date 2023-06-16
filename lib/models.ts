@@ -27,12 +27,6 @@ const fetchModels = async () => {
   }, {});
 };
 const getModels = async () => {
-  let currentTime = new Date();
-  if (Object.keys(cachedModels).length > 1 && (currentTime.valueOf() - lastFetch.valueOf()) < 300000) {
-    console.log('Using cached models');
-    return cachedModels;
-  }
-  console.log('Fetching models');
   try {
     const models = await fetchModels();
     lastFetch = new Date();

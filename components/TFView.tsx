@@ -11,6 +11,8 @@ const StyleCarousel = dynamic(() => import('./StyleCarousel'), { ssr: false });
 const LocalImageLoader = dynamic(() => import('./LocalImageLoader'));
 const ImageView = dynamic(() => import('./imageView'));
 const ExportPopup = dynamic(() => import('./exportPopup'));
+const EditorButtons = dynamic(() => import('./EditorButtons'));
+const Instructions = dynamic(() => import('./Instructions'));
 export default function TFView() {
   const [ image, setImage ] = useState(null as null | string);
   const [ result, setResult ] = useState(null);
@@ -89,47 +91,17 @@ export default function TFView() {
   };
   return (
     <>
-      {image && result && exportPopup ? <ExportPopup image={image} result={result} setExportPopup={setExportPopup} /> : null}
+      {image && result && exportPopup ? <ExportPopup image={image} result={result} setExportPopup={setExportPopup} /> : <></>}
 
       <Box sx={{ display: 'flex', flexGrow: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }} >
         <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <Typography>Instructions: </Typography>
-            </AccordionSummary>
-            <Card variant="outlined">
-              <CardContent>
-                <div >
-                  <ol >
-                    <li>Upload an image</li>
-                    <li>Choose a style from the Style Selector</li>
-                    <li>Export as a GIF or MP4</li>
-                  </ol>
-                </div>
-              </CardContent>
-            </Card>
-          </Accordion>
+          <Instructions/>
         </Box>
-
         <Box sx={{ display: 'flex', flexGrow: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', maxWidth: 'fit-content', mx: 'auto' }} color='transparent'>
-          <Box justifyContent="center" alignItems={'center'} sx={{width:'100%', display:'flex', flexWrap:'wrap'}} >
-            <ButtonGroup variant="contained" aria-label="outlined primary button group">
-              <LocalImageLoader setImage={_setImage} setSize={setSourceImageSize} loading={loading} />
-              <Button sx={{width:'140px'}} disabled={loading ? true : false} id='random_image_btn' className='' onClick={fetchRandomImage} >Random</Button>
-            </ButtonGroup>
-            <ButtonGroup color="secondary" variant="contained" aria-label="outlined primary button group">
-              <Button sx={{width:'140px'}} disabled={result && !loading ? false : true} className='' onClick={resultToImage} >Source</Button>
-              <Button sx={{width:'140px'}} disabled={result && !loading ? false : true} id="export_popup_btn" className='' onClick={_open_export_popup} >Export</Button>
-            </ButtonGroup>
-          </Box>
+          <EditorButtons _setImage={_setImage} fetchRandomImage={fetchRandomImage} resultToImage={resultToImage} result={result} loading={loading} _open_export_popup={_open_export_popup} setSourceImageSize={setSourceImageSize} />
           <ImageView image={image} result={result} loading={loading} size={sourceImageSize} />
         </Box >
-        {/* <StyleSelector models={models} predict={predict} loading={loading} /> */}
-        <Box sx={{ width: 'min(86%, 1200px)', maxWidth: '1200px', flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Box sx={{ width: 'min(86vw, 1200px)', maxWidth: '1200px', flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <StyleCarousel models={models} predict={predict} loading={loading} />
         </Box>
       </Box>

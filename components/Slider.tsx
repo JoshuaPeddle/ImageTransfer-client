@@ -43,7 +43,6 @@ const SimpleSlider: React.FC<Props> = ({ items }) => {
   };
   useEffect(() => {
     if (cauroselRef.current) {
-      console.log('cauroselRef.current', cauroselRef.current);
       cauroselRef.current.slickGoTo(0, false);
     }
   }

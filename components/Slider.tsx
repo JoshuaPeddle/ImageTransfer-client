@@ -1,8 +1,5 @@
 import { Box } from '@mui/material';
-//import Slider from 'react-slick';
-import dynamic from 'next/dynamic';
-
-const Slider = dynamic(import('react-slick'), {ssr: false} );
+import Slider  from 'react-slick';
 interface Props {
   items: JSX.Element[];
 }

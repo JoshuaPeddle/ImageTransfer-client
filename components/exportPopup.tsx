@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styles from './exportPopup.module.css';
 import {exportImages, exportGIF, exportMP4} from '../lib/ImageExporter';
+import Script from 'next/script';
 export default function ExportPopup({image, result, setExportPopup}: {image: string, result: string, setExportPopup: Function}) {
   const [ exportType, setExportType ] = useState('image');
   const [ exportLoading, setExportLoading ] = useState(false);
@@ -41,6 +42,8 @@ export default function ExportPopup({image, result, setExportPopup}: {image: str
   return (
     <>
       <div className={styles.popup}>
+        <Script src="//cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js" strategy='afterInteractive'  />
+        <Script src="/js/gif.js" strategy='afterInteractive'  />
         <div className={styles.popup_inner}>
           <div className={styles.popup_header}>
             <h1>Exporter</h1>

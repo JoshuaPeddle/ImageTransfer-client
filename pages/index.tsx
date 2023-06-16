@@ -10,7 +10,7 @@ export default function Home() {
       <Head>
         <title>StyleSwap</title>
         <meta name="description" content="StyleSwap" />
-        <link rel="icon" href="/logo.jpg" type="image/jpg" />
+        <link rel="icon" href="/logo.webp" type="image/jpg" />
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
       </Head>
       

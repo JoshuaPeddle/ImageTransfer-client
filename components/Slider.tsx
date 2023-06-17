@@ -9,6 +9,14 @@ export default function SimpleSlider({ items, clickedButton }: { items: JSX.Elem
     dots: true,
     speed: 500,
     lazyLoad: 'progressive',
+    onLazyLoad: () => {
+      if (clickedButton) {
+        return; 
+      }
+      if (cauroselRef.current) {
+        cauroselRef.current.slickGoTo(0, false);
+      }
+    },
     slidesToShow: 6,
     slidesToScroll: 6,
     initialSlide: 0,

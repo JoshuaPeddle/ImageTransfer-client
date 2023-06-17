@@ -30,8 +30,8 @@ function centerCropByAspectRatio(img: HTMLImageElement, aspectRatio=1.4, setSize
   const lowerBound = 1 / aspectRatio;
   const originalWidth = img.width;
   const originalHeight = img.height;
-  const targetWidth = 384;
-  const targetHeight = 384;
+  const targetWidth = 512;
+  const targetHeight = 512;
   //console.log('here', imgAspectRatio, upperBound, lowerBound);
   if (imgAspectRatio > upperBound) {
     // Crop the image horizontally
@@ -85,8 +85,8 @@ function resizeImage(imgToResize: HTMLImageElement, setSize: Function) {
   const context = canvas.getContext('2d', { willReadFrequently: true });
   const originalWidth = imgToResize.width;
   const originalHeight = imgToResize.height;
-  const targetWidth = 384;
-  const targetHeight = 384;
+  const targetWidth = 512;
+  const targetHeight = 512;
   const resizingFactor = Math.min(
     targetWidth / originalWidth,
     targetHeight / originalHeight

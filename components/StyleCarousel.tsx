@@ -5,6 +5,8 @@ const SimpleSlider = dynamic(import('./Slider'), { ssr: false });
 import { Model } from '../lib/models';
 import { Box, Grid } from '@mui/material';
 
+import 'slick-carousel/slick/slick.css'; 
+import 'slick-carousel/slick/slick-theme.css';
 const ParentComponent = ({ models, predict, loading }: { models: { [key: string]: Model }, predict: (model: string) => void, loading: boolean }) => {
   const [ styleItems, setStyleItems ] = useState(null as null | JSX.Element[]);
   const [ clickedButton, setClickedButton ] = useState(false);

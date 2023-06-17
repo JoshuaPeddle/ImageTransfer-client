@@ -6,7 +6,24 @@ import _predict from '../lib/predict';
 import { compressImage } from '../lib/compress';
 import { generateUUID } from '@/lib/uuid';
 import { Box } from '@mui/material';
-const StyleCarousel = dynamic(() => import('./StyleCarousel'), { ssr: false });
+import styleButtonStyle from './StyleButton.module.css';
+const StyleCarousel = dynamic(() => import('./StyleCarousel'), { ssr: false, loading: () =>  
+  <Box className='modelButtonsContainer'
+    sx={{
+      maxWidth: '100%',
+      backgroundColor: 'rgb(255,255,255,0.02)',
+      boxShadow: '0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)',
+      width: '100%',
+      minWidth: '100%',
+      pt: '30px',
+      pb: '30px',
+      px: '30px',
+      borderRadius: '10px',
+      height: 'fit-content'
+    }}>
+    <button style={{ background: 'transparent'}} className={styleButtonStyle.imageButton}/>
+  </Box> 
+} );
 const ImageView = dynamic(() => import('./imageView'));
 const ExportPopup = dynamic(() => import('./exportPopup'));
 const EditorButtons = dynamic(() => import('./EditorButtons'));

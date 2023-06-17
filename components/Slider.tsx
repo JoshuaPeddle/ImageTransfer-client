@@ -1,17 +1,14 @@
 import { Box } from '@mui/material';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef} from 'react';
 import Slider, { Settings } from 'react-slick';
-interface Props {
-  items: JSX.Element[];
-  clickedButton: boolean;
-}
 
-const SimpleSlider: React.FC<Props> = ({ items, clickedButton }) => {
+export default function SimpleSlider({ items, clickedButton }: { items: JSX.Element[], clickedButton: boolean })  {
   const cauroselRef = useRef<Slider>(null);
-  const settings: Settings = {
+  const settings :Settings = {
     infinite: false,
     dots: true,
     speed: 500,
+    lazyLoad: 'progressive',
     slidesToShow: 6,
     slidesToScroll: 6,
     initialSlide: 0,
@@ -70,4 +67,3 @@ const SimpleSlider: React.FC<Props> = ({ items, clickedButton }) => {
 
   );
 };
-export default SimpleSlider;

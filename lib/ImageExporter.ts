@@ -90,7 +90,6 @@ async function blendImages(image1:string, image2:string, bias = 0.5, data_url = 
   while (pixels--) {
     image1Data[pixels] = (image1Data[pixels] * (1.0 - bias)) + (image2Data[pixels] * (bias));
   }
-
   ctx.putImageData(new ImageData(image1Data, w, h), 0, 0);
 
   return data_url ? canvas.toDataURL('image/webp') : canvas;
@@ -107,7 +106,7 @@ export async function exportGIF(image: string, result: string, setLoading: Funct
   const [ canvas, canvas2 ] = await Promise.all([ imgToCanvas(image, false), imgToCanvas(result, false) ]);
   setMessage('Adding frame 1');
   gif.addFrame(canvas, { delay: 1000 });
-
+  
   const blendPromises = Array.from({ length: num_blend }, (_, i) => blendImages(image, result, i / num_blend, false));
   const blendFrames = await Promise.all(blendPromises);
   for (const frame of blendFrames) {
@@ -118,7 +117,6 @@ export async function exportGIF(image: string, result: string, setLoading: Funct
   gif.addFrame(canvas2, { delay: 2000 });
   setMessage('Rendering GIF...');
   gif.render();
-
   gif.on('finished', function (blob: Blob) {
     setMessage('Downloading GIF...');
     const link = document.createElement('a');
@@ -139,7 +137,6 @@ const writeCanvasToFile = (canvas: HTMLCanvasElement, filename: string, ffmpeg: 
       let arrayBuffer = await new Response(blob).arrayBuffer();
       let uint8Array = new Uint8Array(arrayBuffer);
       ffmpeg.FS('writeFile', filename, uint8Array);
-      //console.log('wrote file', filename);
       resolve(true);
     }, 'image/png');
   });
@@ -158,7 +155,6 @@ export async function exportMP4(image:string, result:string, setLoading: Functio
   });
   setMessage('Loading ffmpeg...');
   await ffmpeg.load();
-
   const headPromises = Array.from({ length: head_frames }, (_, i) =>
     imgToCanvas(image, false)
       .then(async (img) => await writeCanvasToFile(img as HTMLCanvasElement, `${i + 1}.png`, ffmpeg))
@@ -173,8 +169,7 @@ export async function exportMP4(image:string, result:string, setLoading: Functio
       .then(async (img) => await writeCanvasToFile(img  as HTMLCanvasElement, `${head_frames + num_blend + i + 1}.png`, ffmpeg))
   );
   await Promise.all([ ...headPromises, ...blendPromises, ...tailFramesPromises ]);
-
-  await ffmpeg.run('-framerate', '15', '-i', '%d.png', '-c:v', 'libx264', '-r', '30', '-pix_fmt', 'yuv420p', 'out.mp4');
+  await ffmpeg.run('-framerate', '15', '-i', '%d.png', '-vf', 'scale=768:512', '-c:v', 'libx264', '-r', '30', '-pix_fmt', 'yuv420p', 'out.mp4');
   const data = ffmpeg.FS('readFile', 'out.mp4');
   const src = URL.createObjectURL(new Blob([ data.buffer ], { type: 'video/mp4' }));
   // Download

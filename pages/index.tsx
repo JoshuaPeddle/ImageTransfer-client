@@ -1,7 +1,6 @@
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { Box } from '@mui/material';
-import Image from 'next/image';
 const TFView = dynamic(() => import('@/components/TFView'));
 const TopBar = dynamic(() => import('@/components/TopBar'));
 const Footer = dynamic(() => import('@/components/Footer'));

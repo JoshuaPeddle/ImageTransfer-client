@@ -14,8 +14,8 @@ export default function ImageView({ image, result, loading, size }: { image: str
   const calcHeight = useCallback(() => {
     const img = src_ref.current;
     if (!img) return;
-    setHeight(img.clientHeight);
-  }, []);
+    setHeight(size[1]);
+  }, [ size ]);
   useEffect(() => {
     window.addEventListener('resize', calcHeight);
     return () => {

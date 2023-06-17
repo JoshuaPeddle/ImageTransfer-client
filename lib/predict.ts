@@ -21,7 +21,7 @@ export default async function predict(model: string, blob: Blob, setResult: Func
       });
     }) 
     .catch((err) => {
-      console.log(err);setError(true); setLoading(false); 
+      setError(true); setLoading(false); 
     });
 }
 

@@ -15,7 +15,7 @@ export default function Home() {
       </Head>
       
       <main >
-        <Box sx={{minHeight:'100svh', display:'flex', flexDirection:'column', backgroundImage:'url("/BG2.webp")', backgroundSize:'100% 100%'}}>
+        <Box sx={{minHeight:'100svh', display:'flex', flexDirection:'column', backgroundImage:'url("https://ik.imagekit.io/4adj1pc55/tr:w-900/BG2.webp?updatedAt=1686962735576")', backgroundSize:'100% 100%'}}>
 
           <TopBar />
       

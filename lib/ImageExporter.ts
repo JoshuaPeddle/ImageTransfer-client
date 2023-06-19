@@ -131,7 +131,6 @@ export async function exportGIF(image: string, result: string, setLoading: Funct
 }
 
 const writeCanvasToFile = (canvas: HTMLCanvasElement, filename: string, ffmpeg: any) => {
-  //console.log('writing file', filename);
   return new Promise((resolve) => {
     canvas.toBlob(async (blob) => {
       let arrayBuffer = await new Response(blob).arrayBuffer();
@@ -141,9 +140,11 @@ const writeCanvasToFile = (canvas: HTMLCanvasElement, filename: string, ffmpeg: 
     }, 'image/png');
   });
 };
+const aspectRatio = (canvas: HTMLCanvasElement) => (canvas.width / canvas.height);
 export async function exportMP4(image:string, result:string, setLoading: Function, setError: Function, setMessage: Function, num_blend = 50) {
   let head_frames = num_blend * 0.2;
   let tail_frames = num_blend * 0.5;
+  const aspect = aspectRatio(await imgToCanvas(image, false) as HTMLCanvasElement);
   const {
     createFFmpeg,
     // @ts-ignore
@@ -169,7 +170,13 @@ export async function exportMP4(image:string, result:string, setLoading: Functio
       .then(async (img) => await writeCanvasToFile(img  as HTMLCanvasElement, `${head_frames + num_blend + i + 1}.png`, ffmpeg))
   );
   await Promise.all([ ...headPromises, ...blendPromises, ...tailFramesPromises ]);
-  await ffmpeg.run('-framerate', '15', '-i', '%d.png', '-vf', 'scale=768:512', '-c:v', 'libx264', '-r', '30', '-pix_fmt', 'yuv420p', 'out.mp4');
+  if (aspect > 1) {
+  // Horizontal Video
+    await ffmpeg.run('-framerate', '15', '-i', '%d.png', '-vf', 'scale=768:512', '-c:v', 'libx264', '-r', '30', '-pix_fmt', 'yuv420p', 'out.mp4');
+  } else {
+  // Vertical Video 
+    await ffmpeg.run('-framerate', '15', '-i', '%d.png', '-vf', 'scale=512:768', '-c:v', 'libx264', '-r', '30', '-pix_fmt', 'yuv420p', 'out.mp4');
+  }
   const data = ffmpeg.FS('readFile', 'out.mp4');
   const src = URL.createObjectURL(new Blob([ data.buffer ], { type: 'video/mp4' }));
   // Download

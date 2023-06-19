@@ -1,12 +1,13 @@
 import dynamic from 'next/dynamic';
 import { useEffect, useState, useCallback } from 'react';
-import { useSession } from 'next-auth/react';
+
 import { nextVariant, Model } from '../lib/models';
 import _predict from '../lib/predict';
 import { compressImage } from '../lib/compress';
 import { generateUUID } from '@/lib/uuid';
 import { Box } from '@mui/material';
 import styleButtonStyle from './StyleButton.module.css';
+
 const StyleCarousel = dynamic(() => import('./StyleCarousel'), { ssr: false, loading: () =>  
   <Box className='modelButtonsContainer'
     sx={{
@@ -38,16 +39,12 @@ export default function TFView() {
   const [ compressed, setCompressed ] = useState(null as null | Blob);
   const [ exportPopup, setExportPopup ] = useState(false);
   const [ sourceImageSize, setSourceImageSize ] = useState([ 384, 256 ] as [number, number]);
-  const { data: session, update } = useSession();
   useEffect(() => {
     if (!image) return;
     generateUUID().then(setUuid);
     compressImage(image, setCompressed);
   }, [ image ]);
   const predict = async (model: string) => {
-    if ((session && session?.user.num_tokens <= 0)) {
-      return alert('Out of tokens? Don\'t worry! Registered users receive 300 free tokens daily, up to a 1000-token cap. Check back in 24 hours!');
-    }
     if (!compressed) return;
     if (loading) return;
     setResult(null);
@@ -57,15 +54,8 @@ export default function TFView() {
     const variant = nextVariant(models[model]);
     if (!uuid) return setLoading(false);
     const pred = _predict(model, compressed, setResult, setError, setLoading, variant, uuid);
-    if (!session) {
-      await pred;
-      return setLoading(false);
-    }
-    const res = await fetch(`/api/charge/${session.user.uuid}`, { method: 'POST' });
-    const data = await res.json();
     await pred;
-    await update({ num_tokens: data.num_tokens });
-    setLoading(false);
+    return setLoading(false);
   };
   const resultToImage = () => {
     if (!result) return;

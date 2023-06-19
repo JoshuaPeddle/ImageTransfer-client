@@ -1,6 +1,6 @@
 import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
-import { SessionProvider } from 'next-auth/react';
+// import { SessionProvider } from 'next-auth/react';
 import { Session } from 'next-auth';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
@@ -40,9 +40,9 @@ export default function App({
 } : AppProps<{session:Session}>) {
   return (
     <ThemeProvider theme={theme}>
-      <SessionProvider session={pageProps.session}>
-        <Component {...pageProps} />
-      </SessionProvider>
+      {/* <SessionProvider session={pageProps.session}> */}
+      <Component {...pageProps} />
+      {/* </SessionProvider> */}
     </ThemeProvider>
   );
 }

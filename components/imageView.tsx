@@ -28,7 +28,7 @@ export default function ImageView({ image, result, loading, size }: { image: str
       className='image-view'
       sx={{ 
         display: 'flex',
-   
+        alignItems: 'center',
         flexDirection: 'row', 
         flexWrap: 'wrap', 
         justifyContent: 'space-around',

@@ -27,15 +27,7 @@ export default function TopBar() {
         <Typography variant="h5" component="div" sx={{  flexGrow: 1, textShadow: '2px 2px 8px #000000'}} >
             StyleSwap.art
         </Typography>
-        <IconButton
-          size="large"
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          sx={{ ml: 0}}
-        >
-          <LoginIcon/>
-        </IconButton>
+
       </AppBar>
     </Box>
    

@@ -50,7 +50,7 @@ export default function SimpleSlider({ items, clickedButton }: { items: JSX.Elem
   useEffect(() => {
     if (!clickedButton && cauroselRef.current && loaded.current) {
       cauroselRef.current.slickGoTo(0);
-      loaded.current = true;
+      loaded.current = false;
     }
   }, [ items, clickedButton ]);
   return (

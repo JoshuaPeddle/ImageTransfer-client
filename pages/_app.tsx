@@ -17,6 +17,9 @@ declare module '@mui/material/styles' {
 }
 
 const theme = createTheme({
+  typography: {
+    fontFamily: 'inherit',
+  },
   palette: {
  
     primary: {

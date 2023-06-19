@@ -5,7 +5,12 @@ const TFView = dynamic(() => import('@/components/TFView'));
 const TopBar = dynamic(() => import('@/components/TopBar'));
 const Footer = dynamic(() => import('@/components/Footer'));
 import useMediaQuery from '@mui/material/useMediaQuery';
-
+import { Roboto } from 'next/font/google';
+ 
+const roboto = Roboto({
+  weight: [ '300', '400', '500', '700' ],
+  subsets: [ 'latin' ],
+});
 export default function Home() {
   const large_width = useMediaQuery('(min-width:1023px)');
   return (
@@ -17,7 +22,7 @@ export default function Home() {
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
       </Head>
       
-      <main >
+      <main className={roboto.className}>
         <Box 
           sx={{
             minHeight:'100svh', 

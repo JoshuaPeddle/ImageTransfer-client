@@ -4,15 +4,18 @@ import Slider, { Settings } from 'react-slick';
 
 export default function SimpleSlider({ items, clickedButton }: { items: JSX.Element[], clickedButton: boolean })  {
   const cauroselRef = useRef<Slider>(null);
+  const loaded = useRef(false);
   const settings :Settings = {
     infinite: false,
     dots: true,
     speed: 500,
     lazyLoad: 'progressive',
     onLazyLoad: () => {
-      // if (!clickedButton && cauroselRef.current) {
-      //   cauroselRef.current.slickGoTo(0);
-      // }
+      if (!clickedButton && cauroselRef.current
+        && !loaded.current) {
+        cauroselRef.current.slickGoTo(0);
+        loaded.current = true;
+      }
     },
     slidesToShow: 6,
     slidesToScroll: 6,
@@ -45,8 +48,9 @@ export default function SimpleSlider({ items, clickedButton }: { items: JSX.Elem
     ]
   };
   useEffect(() => {
-    if (!clickedButton && cauroselRef.current) {
+    if (!clickedButton && cauroselRef.current && loaded.current) {
       cauroselRef.current.slickGoTo(0);
+      loaded.current = true;
     }
   }, [ items, clickedButton ]);
   return (

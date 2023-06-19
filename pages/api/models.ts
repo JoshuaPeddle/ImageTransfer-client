@@ -16,7 +16,7 @@ export default async function handler(
   }
   res.setHeader(
     'Cache-Control',
-    'public, maxage=120, stale-while-revalidate=3600'
+    'max-age=0, s-maxage=86400'
   );
   const styles = await  getModels();
   res.status(200).json(styles);

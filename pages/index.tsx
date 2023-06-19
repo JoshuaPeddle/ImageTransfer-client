@@ -5,9 +5,9 @@ const TFView = dynamic(() => import('@/components/TFView'));
 const TopBar = dynamic(() => import('@/components/TopBar'));
 const Footer = dynamic(() => import('@/components/Footer'));
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { Roboto } from 'next/font/google';
+import { Roboto_Serif }  from 'next/font/google';
  
-const roboto = Roboto({
+const roboto = Roboto_Serif({
   weight: [ '300', '400', '500', '700' ],
   subsets: [ 'latin' ],
 });

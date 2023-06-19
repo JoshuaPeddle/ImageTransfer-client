@@ -36,12 +36,12 @@ export default function ImageView({ image, result, loading, size }: { image: str
       }}>
 
       <Box ref={src_ref} sx={{ display: 'flex', minWidth: 'min(384px,100vw)', maxWidth: 'min(512x,100vw)', width:'min(512px,100vw)' }}>
-        <Image onLoadingComplete={calcHeight} style={imageStyle} placeholder="blur" blurDataURL={'/blank-dark.png'} priority={true} id='src_img' src={image ? image : '/loader-dark.gif'} width={size[0]} height={size[1]} quality={85} alt="" loader={({ src }) => {
+        <Image onLoadingComplete={calcHeight} style={imageStyle} placeholder="blur" blurDataURL={'/blank-dark.webp'} priority={true} id='src_img' src={image ? image : '/loader-dark-min.gif'} width={size[0]} height={size[1]} quality={85} alt="" loader={({ src }) => {
           return src;
         }} unoptimized />
       </Box>
       <Box style={{ display: 'flex', minWidth: 'min(384px,100vw)', maxWidth: 'min(512px,100vw)', width:'min(512px,100vw)', height: height }}>
-        <Image style={imageStyle} placeholder="blur" blurDataURL={'/blank-dark.png'} id='res_img' src={loading ? '/loader-dark.gif' : result ? result : '/blank-dark.png'} width={size[0]} height={size[1]} alt="" quality={85} />
+        <Image style={imageStyle} placeholder="blur" blurDataURL={'/blank-dark.webp'} id='res_img' src={loading ? '/loader-dark-min.gif' : result ? result : '/blank-dark.webp'} width={size[0]} height={size[1]} alt="" quality={85} />
       </Box>
     </Box>
 

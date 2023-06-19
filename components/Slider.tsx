@@ -10,11 +10,8 @@ export default function SimpleSlider({ items, clickedButton }: { items: JSX.Elem
     speed: 500,
     lazyLoad: 'progressive',
     onLazyLoad: () => {
-      if (clickedButton) {
-        return; 
-      }
-      if (cauroselRef.current) {
-        cauroselRef.current.slickGoTo(0, false);
+      if (!clickedButton && cauroselRef.current) {
+        cauroselRef.current.slickGoTo(0);
       }
     },
     slidesToShow: 6,
@@ -49,7 +46,7 @@ export default function SimpleSlider({ items, clickedButton }: { items: JSX.Elem
   };
   useEffect(() => {
     if (!clickedButton && cauroselRef.current) {
-      cauroselRef.current.slickGoTo(0, false);
+      cauroselRef.current.slickGoTo(0);
     }
   }, [ items, clickedButton ]);
   return (

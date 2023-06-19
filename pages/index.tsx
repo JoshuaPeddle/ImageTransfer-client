@@ -4,7 +4,10 @@ import { Box } from '@mui/material';
 const TFView = dynamic(() => import('@/components/TFView'));
 const TopBar = dynamic(() => import('@/components/TopBar'));
 const Footer = dynamic(() => import('@/components/Footer'));
+import useMediaQuery from '@mui/material/useMediaQuery';
+
 export default function Home() {
+  const small_width = useMediaQuery('(max-width:1023px)');
   return (
     <>
       <Head>
@@ -15,10 +18,16 @@ export default function Home() {
       </Head>
       
       <main >
-        <Box sx={{minHeight:'100svh', display:'flex', flexDirection:'column', backgroundImage:'url("https://ik.imagekit.io/4adj1pc55/tr:w-900/BG2.webp?updatedAt=1686962735576")', backgroundSize:'100% 100%'}}>
+        <Box 
+          sx={{
+            minHeight:'100svh', 
+            display:'flex',
+            flexDirection:'column',
+            backgroundImage: small_width ? '' : 'url("https://ik.imagekit.io/4adj1pc55/tr:w-900/BG2.webp?updatedAt=1686962735576")',
+            backgroundSize:'100% 100%'}}>
 
           <TopBar />
-      
+          
           <TFView />
         
           <Footer />
@@ -27,3 +36,4 @@ export default function Home() {
     </>
   );
 }
+//url("https://ik.imagekit.io/4adj1pc55/tr:w-900/00007-1739593243__1_.png?updatedAt=1687193198934")

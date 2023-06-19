@@ -8,7 +8,7 @@
     cursor: pointer;
     width: 150px;
     height: 60px;
-    margin: 5px 5px;
+
 }
 .imageButtonLabel{
     width: fit-content;
@@ -25,9 +25,8 @@
 
 @media screen and (max-width: 768px) {
     .imageButton{
-        width: 113px;
-        height: 55px;
-        margin: 0.5vh auto;
+
+
     }
     .imageButtonLabel{
         font-size: 0.95rem;
